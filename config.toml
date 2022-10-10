@@ -1,8 +1,0 @@
-baseURL = "https://sogo.dev/"
-languageCode = "ja-jp"
-title = "Sogo.dev"
-
-theme = "hugo-theme-monochrome"
-
-[build]
-  writeStats = true
