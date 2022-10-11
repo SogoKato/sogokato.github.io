@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type FooterProps = {
   className?: string;
 };
@@ -5,7 +7,8 @@ type FooterProps = {
 const Footer: React.FC<FooterProps> = ({ className }) => {
   return (
     <footer className={className}>
-      <div className="flex justify-center py-10">
+      <div className="flex flex-col items-center py-10">
+        <Link href="/privacy"><a className="mb-2 text-xs">プライバシーポリシー</a></Link>
         <small>Copyright © {(new Date).getFullYear()} Sogo Kato All rights reserved.</small>
       </div>
     </footer>
