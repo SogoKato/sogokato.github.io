@@ -1,8 +1,8 @@
 import { orderBy, range } from "lodash";
 import type { GetStaticProps, NextPage } from "next";
-import Head from "next/head";
 import Pagination from "../../components/Pagination";
 import PostCard from "../../components/PostCard";
+import Seo from "../../components/Seo";
 import type { SerializablePostData } from "../../types/post";
 import { basePostDir, postsPerPage, siteDescription, siteTitle } from "../../utils/const";
 import { convertSerializablePostDataToPostData } from "../../utils/posts";
@@ -58,10 +58,12 @@ const Page: NextPage<PageProps> = ({ slicedPosts, pages, currentPage }) => {
   });
   return (
     <div>
-      <Head>
-        <title>{siteTitle}</title>
-        <meta name="description" content={siteDescription} />
-      </Head>
+      <Seo
+        title={siteTitle}
+        description={siteDescription}
+        path={`/page/${currentPage}`}
+        type="website"
+      />
 
       {postCards}
       <Pagination

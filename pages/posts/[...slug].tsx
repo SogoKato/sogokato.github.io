@@ -1,8 +1,8 @@
 import { orderBy } from "lodash";
 import type { GetStaticProps, NextPage } from "next";
-import Head from "next/head";
 import PostCard from "../../components/PostCard";
 import PostPagination from "../../components/PostPagination";
+import Seo from "../../components/Seo";
 import type { SerializablePostData } from "../../types/post";
 import { basePostDir, siteTitle } from "../../utils/const";
 import { convertSerializablePostDataToPostData } from "../../utils/posts";
@@ -53,10 +53,12 @@ const Post: NextPage<PostProps> = ({ posts, post }) => {
   const prevPost = currentPostIndex < posts.length - 1 ? convertSerializablePostDataToPostData(posts[currentPostIndex + 1]) : null;
   return (
     <article>
-      <Head>
-        <title>{`${post.title} - ${siteTitle}`}</title>
-        <meta name="description" content={post.desc} />
-      </Head>
+      <Seo
+        title={`${post.title} - ${siteTitle}`}
+        description={post.desc}
+        path={post.ref}
+        type="article"
+      />
 
       <PostCard
         className="prose dark:prose-invert prose-neutral"

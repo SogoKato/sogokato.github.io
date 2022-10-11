@@ -2,8 +2,8 @@ import fs from "fs";
 import matter from "gray-matter";
 import { orderBy } from "lodash";
 import type { GetStaticProps, NextPage } from "next";
-import Head from "next/head";
 import PostCard from "../components/PostCard";
+import Seo from "../components/Seo";
 import type { SerializablePostData } from "../types/post";
 import { siteDescription, siteTitle } from "../utils/const";
 import { convertSerializablePostDataToPostData } from "../utils/posts";
@@ -37,10 +37,12 @@ const Post: NextPage<PostProps> = ({ post }) => {
   const post_ = convertSerializablePostDataToPostData(post);
   return (
     <article>
-      <Head>
-        <title>{`${post.title} - ${siteTitle}`}</title>
-        <meta name="description" content={siteDescription} />
-      </Head>
+      <Seo
+        title={`${post.title} - ${siteTitle}`}
+        description={siteDescription}
+        path="/profile"
+        type="profile"
+      />
 
       <PostCard
         className="prose dark:prose-invert prose-neutral"

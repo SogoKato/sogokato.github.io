@@ -1,8 +1,8 @@
 import { orderBy, range, union } from "lodash";
 import type { GetStaticProps, NextPage } from "next";
-import Head from "next/head";
 import Pagination from "../../../../components/Pagination";
 import PostCard from "../../../../components/PostCard";
+import Seo from "../../../../components/Seo";
 import type { SerializablePostData } from "../../../../types/post";
 import { postsPerPage, siteDescription, siteTitle } from "../../../../utils/const";
 import { convertSerializablePostDataToPostData } from "../../../../utils/posts";
@@ -69,10 +69,12 @@ const TagPage: NextPage<PageProps> = ({ slicedPosts, pages, currentPage, tag }) 
   const capitalizedTag = tag[0].toUpperCase() + tag.slice(1);
   return (
     <div>
-      <Head>
-        <title>{`${capitalizedTag} - ${siteTitle}`}</title>
-        <meta name="description" content={siteDescription + `${capitalizedTag}についての記事を表示しています。`} />
-      </Head>
+      <Seo
+        title={`${capitalizedTag} - ${siteTitle}`}
+        description={siteDescription + `${capitalizedTag}についての記事を表示しています。`}
+        path={`/tags/${tag}/page/${currentPage}`}
+        type="website"
+      />
 
       {postCards}
       <Pagination
