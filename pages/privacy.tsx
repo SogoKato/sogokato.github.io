@@ -48,7 +48,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
         className="prose dark:prose-invert prose-neutral"
         post={post_}
         isPostPage={true}
-        isProfilePage={true}
+        isStaticPostPage={true}
       />
     </article>
   );
