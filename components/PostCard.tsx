@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import Script from "next/script";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -19,6 +20,7 @@ const PostCard: React.FC<PostCardProps> = ({ className, post, isPostPage, isStat
   const title = isPostPage ? <h1 className={"mb-3 " + titleClassName}>{post.title}</h1> : <h2 className={titleClassName}>{post.title}</h2>;
   const content = isPostPage ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown> : <p className="line-clamp-3 my-5 text-neutral-600 dark:text-neutral-300">{post.desc}</p>;
   const shareButtons = !isStaticPostPage ? <div className="flex">{twitterShareButton}{hatenaShareButton}</div> : null;
+  const LikeButtons = dynamic(() => import("./Like"), { ssr: false });
   const elements = isPostPage ? (
     <div>
       {date}
@@ -28,6 +30,7 @@ const PostCard: React.FC<PostCardProps> = ({ className, post, isPostPage, isStat
       <div className={"my-5 " + className}>
         {content}
       </div>
+      {!isStaticPostPage ? <LikeButtons /> : null}
       {shareButtons}
       {tagsEnd}
     </div>
