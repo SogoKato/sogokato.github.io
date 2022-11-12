@@ -58,7 +58,7 @@ export default function Like() {
           <div class="headlessLike__desc mr-2"></div>
           <div class="headlessLike__count"></div>
           </button>`}} />
-      <Script src="https://cdn.jsdelivr.net/npm/@noroch/like-widget@1.0.0/dist/main.min.js"
+      <Script src="https://cdn.jsdelivr.net/npm/@noroch/like-widget@1.0.2/dist/main.min.js"
         onLoad={
           () => {
             HeadlessLike.init("58fcbf0d-e6c1-4e2d-a56f-f95aa56d5be4", {
