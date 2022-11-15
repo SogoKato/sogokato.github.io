@@ -2,6 +2,7 @@ import fs from "fs";
 import matter from "gray-matter";
 import { basePostDir } from "./const";
 import type { SerializablePostData } from "../types/post";
+import { getTagRef } from "./tag";
 
 export const listPosts = (): SerializablePostData[] => {
   const posts: string[][] = [];
@@ -19,7 +20,7 @@ export const listPosts = (): SerializablePostData[] => {
       content: content,
       tags: (data.tags as string[]).map(tag => ({
         name: tag,
-        ref: `/tags/${tag.toLowerCase()}`,
+        ref: getTagRef(tag),
       })),
     };
   });

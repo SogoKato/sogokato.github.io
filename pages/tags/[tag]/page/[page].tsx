@@ -1,28 +1,35 @@
-import { orderBy, range, union } from "lodash";
+import { orderBy, range } from "lodash";
 import type { GetStaticProps, NextPage } from "next";
 import Pagination from "../../../../components/Pagination";
 import PostCard from "../../../../components/PostCard";
 import Seo from "../../../../components/Seo";
 import type { SerializablePostData } from "../../../../types/post";
+import { TagData } from "../../../../types/tag";
 import { postsPerPage, siteDescription, siteTitle } from "../../../../utils/const";
 import { convertSerializablePostDataToPostData } from "../../../../utils/posts";
 import { listPosts } from "../../../../utils/readPosts"
+import { aggregateTags, getTagRef } from "../../../../utils/tag";
 
 type PageProps = {
   posts: SerializablePostData[];
   slicedPosts: SerializablePostData[];
   pages: number[];
   currentPage: number;
-  tag: string;
+  tag: TagData;
 };
 
 export const getStaticProps: GetStaticProps<PageProps> = ({ params }) => {
   if (typeof params?.tag !== "string") throw new Error("`tag` parameter is not a string");
-  const tag = params.tag;
-  const currentPage = Number(params.page);
+  const tagRef = params.tag;
+  const posts_ = listPosts().map(serializedPost => convertSerializablePostDataToPostData(serializedPost));
+  const tags = aggregateTags(posts_);
+  const matched_tags = tags.filter(tag => tag.ref === tagRef);
+  if (matched_tags.length !== 1) throw new Error("Multiple tags or nothing found but 1 is expected.");
+  const matched_tag = matched_tags[0];
+  const currentPage = Number(params?.page);
   const posts = orderBy(listPosts(), o => new Date(o.date), "desc");
   const filteredPosts = posts.filter(post => {
-    if (post.tags.map(tag => tag.name.toLowerCase()).includes(tag)) return post;
+    if (post.tags.map(tag => getTagRef(tag.name)).includes(matched_tag.ref)) return post;
   });
   const slicedPosts = filteredPosts.slice(
     postsPerPage * (currentPage - 1),
@@ -35,7 +42,7 @@ export const getStaticProps: GetStaticProps<PageProps> = ({ params }) => {
       slicedPosts,
       pages,
       currentPage,
-      tag,
+      tag: matched_tag,
     },
   };
 };
@@ -43,16 +50,17 @@ export const getStaticProps: GetStaticProps<PageProps> = ({ params }) => {
 export const getStaticPaths = () => {
   const posts = listPosts();
   const posts_ = posts.map(serializedPost => convertSerializablePostDataToPostData(serializedPost));
-  const tagNames = union(posts_.map(post => post.tags.map(tag => tag.name)).flat());
-  const paths = tagNames.map(tagName => {
+  const tags = aggregateTags(posts_);
+  const paths = tags.map(tag => {
     const count = posts.length;
     return range(1, Math.ceil(count / postsPerPage) + 1).map(i => ({
       params: {
-        tag: tagName.toLowerCase(),
+        tag: tag.ref.replace("/tags/", ""),
         page: i.toString(),
       }
     }));
   }).flat();
+  console.log(paths)
   return {
     paths,
     fallback: false,
@@ -66,13 +74,12 @@ const TagPage: NextPage<PageProps> = ({ slicedPosts, pages, currentPage, tag }) 
       <PostCard key={index} post={post} isPostPage={false} />
     );
   });
-  const capitalizedTag = tag[0].toUpperCase() + tag.slice(1);
   return (
     <div>
       <Seo
-        title={`${capitalizedTag} - ${siteTitle}`}
-        description={siteDescription + `${capitalizedTag}についての記事を表示しています。`}
-        path={`/tags/${tag}/page/${currentPage}`}
+        title={`${tag.name} - ${siteTitle}`}
+        description={siteDescription + `${tag.name}についての記事を表示しています。`}
+        path={`${tag.ref}/page/${currentPage}`}
         type="website"
       />
 
@@ -80,8 +87,8 @@ const TagPage: NextPage<PageProps> = ({ slicedPosts, pages, currentPage, tag }) 
       <Pagination
         pages={pages}
         currentPage={currentPage}
-        parentPath={`/tags/${tag}/page`}
-        topPath={`/tags/${tag}`}
+        parentPath={`${tag.ref}/page`}
+        topPath={tag.ref}
       />
     </div>
   );

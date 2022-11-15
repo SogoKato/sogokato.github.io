@@ -1,9 +1,9 @@
-import { orderBy, union } from "lodash";
 import Image from "next/image";
 import Link from "next/link";
 import Tags from "./Tags";
 import type { SerializablePostData } from "../types/post";
 import { convertSerializablePostDataToPostData } from "../utils/posts";
+import { aggregateTags } from "../utils/tag";
 
 type AsideProps = {
   className?: string;
@@ -26,27 +26,7 @@ const Aside: React.FC<AsideProps> = ({ className, posts }) => {
       </Link>
     );
   });
-  // タグを集計する
-  const tagNames = union(posts_.map(post => post.tags.map(tag => tag.name)).flat());
-  type Count = {
-    tagName: string;
-    count: number;
-  }
-  const countsByTagName: Count[] = tagNames.map(tagName => {
-    let count = 0;
-    posts_.forEach(post => post.tags.forEach(tag => {
-      if (tag.name === tagName) count++;
-    }));
-    return {
-      tagName: tagName,
-      count: count,
-    };
-  });
-  const tagNamesByDescOrder = orderBy(countsByTagName, "count", "desc").map(count => count.tagName);
-  const tags = tagNamesByDescOrder.map(tagName => ({
-    name: tagName,
-    ref: `/tags/${tagName.toLowerCase()}`,
-  }));
+  const tags = aggregateTags(posts_);
   return (
     <aside className={className}>
       <div className="mb-8">
