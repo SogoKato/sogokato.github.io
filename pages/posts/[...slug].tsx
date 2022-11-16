@@ -32,13 +32,15 @@ export const getStaticProps: GetStaticProps<PostProps> = ({ params }) => {
 };
 
 export const getStaticPaths = () => {
-  const posts: string[][] = [];
-  getPostsRecursively(basePostDir, posts);
-  const paths = posts.map(path => ({
-    params: {
-      slug: path.slice(1, path.length),
-    }
-  }));
+  const posts = listPosts();
+  const paths = posts.map(post => {
+    const split = post.ref.split("/");
+    return {
+      params: {
+        slug: split.slice(1, split.length),
+      }
+    };
+  });
   return {
     paths,
     fallback: false,

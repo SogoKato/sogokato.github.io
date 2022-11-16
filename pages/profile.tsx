@@ -26,6 +26,7 @@ export const getStaticProps: GetStaticProps<PostProps> = ({ params }) => {
         date: "",
         ref: "",
         desc: "",
+        draft: false,
         content: content,
         tags: [],
       },
