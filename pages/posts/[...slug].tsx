@@ -65,9 +65,9 @@ const Post: NextPage<PostProps> = ({ posts, post }) => {
         post={post_}
         isPostPage={true}
       />
-      <div className="flex justify-between mx-auto w-11/12">
-        {nextPost ? <PostPagination post={nextPost} isNext={true} /> : <div></div>}
-        {prevPost ? <PostPagination post={prevPost} isNext={false} /> : <div></div>}
+      <div className="flex flex-col sm:flex-row justify-between mx-auto w-11/12">
+        {nextPost ? <PostPagination className="w-full sm:w-1/2" post={nextPost} isNext={true} /> : <div></div>}
+        {prevPost ? <PostPagination className="w-full sm:w-1/2" post={prevPost} isNext={false} /> : <div></div>}
       </div>
     </article>
   );
