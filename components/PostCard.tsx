@@ -30,7 +30,7 @@ const PostCard: React.FC<PostCardProps> = ({ className, post, isPostPage, isStat
       <div className={"my-5 " + className}>
         {content}
       </div>
-      {!isStaticPostPage ? <LikeButtons /> : null}
+      {!isStaticPostPage ? <LikeButtons path={post.ref} /> : null}
       {shareButtons}
       {tagsEnd}
     </div>

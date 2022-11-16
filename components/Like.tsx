@@ -1,8 +1,92 @@
-import { HeadlessLike } from "@noroch/like-widget";
-import Script from "next/script";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function Like() {
+type LikeProps = {
+  path: string;
+};
+
+const Like: React.FC<LikeProps> = ({ path }) => {
+  const [reactions, setReactions] = useState<IAPIReaction[]>([]);
+  const [buttonStates, setButtonStates] = useState<ButtonStates>({});
+  const baseUrl = window.location.hostname !== "localhost" ?
+                  "https://tcfqlqcnw3.execute-api.ap-northeast-1.amazonaws.com/production" :
+                  "https://tc8py36661.execute-api.ap-northeast-1.amazonaws.com/staging";
+  const clientId = "58fcbf0d-e6c1-4e2d-a56f-f95aa56d5be4";
+  const getPageId = async () => {
+    return await pathToSha256(path);
+  };
+  const getUrl = async () => {
+    const pathSha256 = await getPageId();
+    return `${baseUrl}/${clientId}/${pathSha256}`;
+  };
+  useEffect(() => {
+    (async () => {
+      const url = await getUrl();
+      const response = await fetch(url);
+      const json = await response.json() as IAPIReactionsResponse;
+      setReactions(json.reactions);
+      const records = getRecords();
+      const tmpStates: ButtonStates = {};
+      const pageId = await getPageId();
+      const disabled = Object.keys(records).includes(pageId);
+      json.reactions.forEach(reaction => {
+        tmpStates[reaction.id] = {
+          clicked: false,
+          clickedBefore: disabled && records[pageId] === reaction.id,
+          disabled: disabled,
+        };
+      });
+      setButtonStates(tmpStates);
+    })();
+  }, []);
+  const buttons = reactions.map(reaction => {
+    const onClick = async () => {
+      const url = await getUrl();
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ "reactionId": reaction.id }),
+      });
+      const json = await response.json() as IAPIReactionResponse;
+      const index = reactions.findIndex(r => r.id === reaction.id);
+      const tmp = Array.from(reactions);
+      tmp.splice(index, 1, json.reaction);
+      setReactions(tmp);
+      const tmpStates: ButtonStates = {};
+      Object.keys(buttonStates).forEach(reactionId => {
+        if (reactionId == reaction.id) {
+          tmpStates[reactionId] = {
+            clicked: true,
+            clickedBefore: false,
+            disabled: true,
+          };
+        } else {
+          tmpStates[reactionId] = {
+            clicked: false,
+            clickedBefore: false,
+            disabled: true,
+          };
+        }
+      });
+      const records = getRecords();
+      const pageId = await getPageId();
+      records[pageId] = reaction.id;
+      localStorage.setItem("headlessLikeRecords", JSON.stringify(records));
+      setButtonStates(tmpStates);
+    };
+    const statefulClassName = getStatefulClassName(buttonStates[reaction.id]);
+    return (
+      <button
+        className={"headlessLike__item bg-duchs-500 flex font-bold items-center p-2 rounded-lg shadow-neutral-500 shadow text-neutral-50 transition-all " + statefulClassName}
+        onClick={() => onClick()}
+        key={reaction.id}
+        disabled={buttonStates[reaction.id] ? buttonStates[reaction.id].disabled : false}
+      >
+        <div className="headlessLike__name bg-neutral-50 flex items-center justify-center h-8 mr-1 rounded-full text-lg transition-all w-8">{reaction.name}</div>
+        <div className="mr-2">{reaction.description}</div>
+        <div>{reaction.count}</div>
+      </button>
+    );
+  });
   const style = document.createElement("style");
   style.innerText = `
     .headlessLike__item:disabled {
@@ -51,31 +135,57 @@ export default function Like() {
   return (
     <div>
       <div id="likeMessage" className="max-w-xs mx-auto my-5 text-center">＼ いいねしてもらえると喜びます！ ／</div>
-      <div className="headlessLike flex flex-wrap justify-between max-w-xs mx-auto my-5"></div>
-      <template id="headlessLikeTmpl" dangerouslySetInnerHTML={{
-        __html: `<button class="headlessLike__item bg-duchs-500 flex font-bold items-center p-2 rounded-lg shadow-neutral-500 shadow text-neutral-50 transition-all">
-          <div class="headlessLike__name bg-neutral-50 flex items-center justify-center h-8 mr-1 rounded-full text-lg transition-all w-8"></div>
-          <div class="headlessLike__desc mr-2"></div>
-          <div class="headlessLike__count"></div>
-          </button>`}} />
-      <Script src="https://cdn.jsdelivr.net/npm/@noroch/like-widget@1.0.2/dist/main.min.js"
-        onLoad={
-          () => {
-            HeadlessLike.init("58fcbf0d-e6c1-4e2d-a56f-f95aa56d5be4", {
-              postUpdate: (evt, count) => {
-                const message = document.getElementById("likeMessage");
-                if (message) message.textContent = "いつもありがとうございます！";
-              },
-            }).then(hl => {
-              const elementsClickedBefore = document.querySelectorAll(".headlessLike__item.clicked-before");
-              if (elementsClickedBefore.length > 0) {
-                const message = document.getElementById("likeMessage");
-                if (message) message.textContent = "いつもありがとうございます！";
-              }
-            });
-          }
-        }
-      />
+      <div className="headlessLike flex flex-wrap justify-between max-w-xs mx-auto my-5">{buttons}</div>
     </div>
   )
+};
+
+export default Like;
+
+async function pathToSha256(path: string) {
+  const uint8 = new TextEncoder().encode(path);
+  const digest = await crypto.subtle.digest("SHA-256", uint8);
+  return Array.from(new Uint8Array(digest)).map(v => v.toString(16).padStart(2, "0")).join("");
+}
+
+const getStatefulClassName = (state: ButtonState | undefined): string => {
+  if (!state) return "";
+  if (state.clicked) return "clicked";
+  if (state.clickedBefore) return "clicked-before";
+  return "";
+};
+
+const getRecords = (): Records => {
+  const rawRecords = localStorage.getItem("headlessLikeRecords");
+  if (!rawRecords) return {};
+  return JSON.parse(rawRecords);
+};
+
+interface IAPIReaction {
+  id: string;
+  name: string;
+  description: string;
+  count: number;
+}
+
+interface IAPIReactionsResponse {
+  reactions: IAPIReaction[];
+}
+
+interface IAPIReactionResponse {
+  reaction: IAPIReaction;
+}
+
+interface ButtonState {
+  clicked: boolean;
+  clickedBefore: boolean;
+  disabled: boolean;
+}
+
+interface ButtonStates {
+  [key: string]: ButtonState;
+}
+
+interface Records {
+  [key: string]: string;
 };
