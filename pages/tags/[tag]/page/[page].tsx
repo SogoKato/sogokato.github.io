@@ -23,13 +23,13 @@ export const getStaticProps: GetStaticProps<PageProps> = ({ params }) => {
   const tagRef = params.tag;
   const posts_ = listPosts().map(serializedPost => convertSerializablePostDataToPostData(serializedPost));
   const tags = aggregateTags(posts_);
-  const matched_tags = tags.filter(tag => tag.ref === tagRef);
-  if (matched_tags.length !== 1) throw new Error("Multiple tags or nothing found but 1 is expected.");
-  const matched_tag = matched_tags[0];
+  const matchedTags = tags.filter(tag => tag.ref.replace("/tags/", "") === tagRef);
+  if (matchedTags.length !== 1) throw new Error("Multiple tags or nothing found but 1 is expected.");
+  const matchedTag = matchedTags[0];
   const currentPage = Number(params?.page);
   const posts = orderBy(listPosts(), o => new Date(o.date), "desc");
   const filteredPosts = posts.filter(post => {
-    if (post.tags.map(tag => getTagRef(tag.name)).includes(matched_tag.ref)) return post;
+    if (post.tags.map(tag => getTagRef(tag.name)).includes(matchedTag.ref)) return post;
   });
   const slicedPosts = filteredPosts.slice(
     postsPerPage * (currentPage - 1),
@@ -42,7 +42,7 @@ export const getStaticProps: GetStaticProps<PageProps> = ({ params }) => {
       slicedPosts,
       pages,
       currentPage,
-      tag: matched_tag,
+      tag: matchedTag,
     },
   };
 };
@@ -60,7 +60,6 @@ export const getStaticPaths = () => {
       }
     }));
   }).flat();
-  console.log(paths)
   return {
     paths,
     fallback: false,

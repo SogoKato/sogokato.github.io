@@ -37,7 +37,7 @@ export const getStaticPaths = () => {
     const split = post.ref.split("/");
     return {
       params: {
-        slug: split.slice(1, split.length),
+        slug: split.slice(2, split.length),
       }
     };
   });
