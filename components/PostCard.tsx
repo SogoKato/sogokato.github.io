@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import Script from "next/script";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import Tags from "./Tags";
@@ -19,8 +18,9 @@ const PostCard: React.FC<PostCardProps> = ({ className, post, isPostPage, isStat
   const titleClassName = "font-bold mt-3 text-4xl";
   const title = isPostPage ? <h1 className={"mb-3 " + titleClassName}>{post.title}</h1> : <h2 className={titleClassName}>{post.title}</h2>;
   const content = isPostPage ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown> : <p className="line-clamp-3 my-5 text-neutral-600 dark:text-neutral-300">{post.desc}</p>;
-  const shareButtons = !isStaticPostPage ? <div className="flex">{twitterShareButton}{hatenaShareButton}</div> : null;
   const LikeButtons = dynamic(() => import("./Like"), { ssr: false });
+  const SocialButtons = dynamic(() => import("./Social"), { ssr: false });
+  const shareButtons = !isStaticPostPage ? <SocialButtons className="flex" path={post.ref} /> : null;
   const elements = isPostPage ? (
     <div>
       {date}
@@ -50,21 +50,5 @@ const PostCard: React.FC<PostCardProps> = ({ className, post, isPostPage, isStat
     </div>
   );
 };
-
-const twitterShareButton = (
-  <div className="mr-2">
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="twitter-share-button" data-show-count="false">Tweet</a>
-    <Script async src="https://platform.twitter.com/widgets.js" strategy="afterInteractive" />
-  </div>
-);
-
-const hatenaShareButton = (
-  <div className="mr-2">
-    <a href="https://b.hatena.ne.jp/entry/" className="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加">
-      <img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style={{border: "none"}} />
-    </a>
-    <Script async type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" />
-  </div>
-)
 
 export default PostCard;
