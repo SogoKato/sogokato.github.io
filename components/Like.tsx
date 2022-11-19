@@ -5,33 +5,27 @@ type LikeProps = {
 };
 
 const Like: React.FC<LikeProps> = ({ path }) => {
+  migrateLocalStorage(path);
   const [reactions, setReactions] = useState<IAPIReaction[]>([]);
   const [buttonStates, setButtonStates] = useState<ButtonStates>({});
   const baseUrl = window.location.hostname !== "localhost" ?
                   "https://tcfqlqcnw3.execute-api.ap-northeast-1.amazonaws.com/production" :
                   "https://tc8py36661.execute-api.ap-northeast-1.amazonaws.com/staging";
   const clientId = "58fcbf0d-e6c1-4e2d-a56f-f95aa56d5be4";
-  const getPageId = async () => {
-    return await pathToSha256(path);
-  };
-  const getUrl = async () => {
-    const pathSha256 = await getPageId();
-    return `${baseUrl}/${clientId}/${pathSha256}`;
-  };
+  const getReactionsUrl = `${baseUrl}/${clientId}/reactions?pageId=${path}`;
   useEffect(() => {
     (async () => {
-      const url = await getUrl();
+      const url = getReactionsUrl;
       const response = await fetch(url);
       const json = await response.json() as IAPIReactionsResponse;
       setReactions(json.reactions);
       const records = getRecords();
       const tmpStates: ButtonStates = {};
-      const pageId = await getPageId();
-      const disabled = Object.keys(records).includes(pageId);
+      const disabled = Object.keys(records).includes(path);
       json.reactions.forEach(reaction => {
         tmpStates[reaction.id] = {
           clicked: false,
-          clickedBefore: disabled && records[pageId] === reaction.id,
+          clickedBefore: disabled && records[path] === reaction.id,
           disabled: disabled,
         };
       });
@@ -40,7 +34,7 @@ const Like: React.FC<LikeProps> = ({ path }) => {
   }, []);
   const buttons = reactions.map(reaction => {
     const onClick = async () => {
-      const url = await getUrl();
+      const url = `${baseUrl}/${clientId}/reactions/${reaction.id}?pageId=${path}`;
       const response = await fetch(url, {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -68,8 +62,7 @@ const Like: React.FC<LikeProps> = ({ path }) => {
         }
       });
       const records = getRecords();
-      const pageId = await getPageId();
-      records[pageId] = reaction.id;
+      records[path] = reaction.id;
       localStorage.setItem("headlessLikeRecords", JSON.stringify(records));
       setButtonStates(tmpStates);
     };
@@ -147,6 +140,20 @@ async function pathToSha256(path: string) {
   const digest = await crypto.subtle.digest("SHA-256", uint8);
   return Array.from(new Uint8Array(digest)).map(v => v.toString(16).padStart(2, "0")).join("");
 }
+
+const migrateLocalStorage = async (path: string) => {
+  const records = getRecords();
+  const oldKeys = Object.keys(records).filter(key => key[0] !== "/");
+  for (let i=0; i<oldKeys.length; i++) {
+    const pathSha256 = await pathToSha256(path);
+    console.log(oldKeys[i] === pathSha256)
+    if (oldKeys[i] === pathSha256) {
+      records[path] = records[oldKeys[i]];
+      delete records[oldKeys[i]];
+    }
+  }
+  localStorage.setItem("headlessLikeRecords", JSON.stringify(records));
+};
 
 const getStatefulClassName = (state: ButtonState | undefined): string => {
   if (!state) return "";
