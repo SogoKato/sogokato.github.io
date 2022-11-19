@@ -1,13 +1,7 @@
-type ContactEvent = {
-  action: "submit_form"
-  category: "contact"
+export type LikeEvent = {
+  action: "like"
+  category: "button"
   label: string
 };
 
-type ClickEvent = {
-  action: "click"
-  category: "other"
-  label: string
-};
-
-export type Event = ContactEvent | ClickEvent;
+export type Event = LikeEvent;

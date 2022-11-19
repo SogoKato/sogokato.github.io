@@ -7,10 +7,10 @@ export const pageview = (path: string) => {
   });
 };
 
-export const event = ({action, category, label}: Event) => {
+export const trackEvent = ({action, category, label}: Event, value = "") => {
   window.gtag("event", action, {
     event_category: category,
     event_label: JSON.stringify(label),
-    value: "",
+    value: value,
   });
 };

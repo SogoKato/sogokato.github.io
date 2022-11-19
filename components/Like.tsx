@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { LikeEvent } from "../types/ga";
+import { trackEvent } from "../utils/gtag";
 
 type LikeProps = {
   path: string;
@@ -65,6 +67,7 @@ const Like: React.FC<LikeProps> = ({ path }) => {
       records[path] = reaction.id;
       localStorage.setItem("headlessLikeRecords", JSON.stringify(records));
       setButtonStates(tmpStates);
+      trackLikeEvent(reaction.description);
     };
     const statefulClassName = getStatefulClassName(buttonStates[reaction.id]);
     return (
@@ -167,6 +170,15 @@ const getRecords = (): Records => {
   if (!rawRecords) return {};
   return JSON.parse(rawRecords);
 };
+
+const trackLikeEvent = (label: string) => {
+  const event: LikeEvent = {
+    action: "like",
+    category: "button",
+    label: label,
+  };
+  trackEvent(event);
+}
 
 interface IAPIReaction {
   id: string;
