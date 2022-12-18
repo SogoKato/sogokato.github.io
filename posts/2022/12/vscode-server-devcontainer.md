@@ -150,6 +150,10 @@ simple-devenv-py-app-1  | Open this link in your browser https://insiders.vscode
 
 また、ちょいちょい接続が切れて `Connecting to hogehoge...` と出てくるのですが、これはおそらくうちのネットワーク環境のせいな気がします。。
 
+### 2022/12/18 追記
+
+Micro SD から SSD に変えてみたら体感が大きく改善され、ストレスを感じない程度に快適になりました。SSD しか勝たん。
+
 ## まとめ
 
 今までこれと同様のことを実現する選択肢として [code-server](https://coder.com/docs/code-server/latest) がありましたが、Pylance などオープンソースでは利用できない拡張機能があったりして、ローカルの VSCode と同じ環境を整えることは困難でした。
