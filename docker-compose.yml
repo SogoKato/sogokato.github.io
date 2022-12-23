@@ -8,3 +8,6 @@ services:
       - type: bind
         source: ./
         target: /workspace
+      - type: bind
+        source: ${HOME}/.gitconfig
+        target: /home/node/.gitconfig

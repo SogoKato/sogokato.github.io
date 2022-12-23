@@ -9,8 +9,7 @@ RUN apt-get update \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
-RUN apt update && \
-    apt install curl git
+RUN apt install -y curl git vim
 
 RUN wget -O- https://aka.ms/install-vscode-server/setup.sh | sh
 
