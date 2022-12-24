@@ -1,0 +1,104 @@
+<?xml version="1.0" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sogo.dev</title>
+    <link>https://sogo.dev</link>
+    <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
+    <language>ja</language>
+    <lastBuildDate>Tue, 11 Oct 2022 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>KubernetesでCoreDNSがループしてしまう問題への対処</title>
+      <link>https://sogo.dev/posts/2022/12/kubernetes-coredns-loop</link>
+      <guid>https://sogo.dev/posts/2022/12/kubernetes-coredns-loop</guid>
+      <pubDate>Sat, 24 Dec 2022 00:00:00 GMT</pubDate>
+      <description>
+1年前にも Kubernetes クラスターを自力で組んでトラブルシューティングしてみる【The Hard Way】の記事の中で軽く解説したネタです。
+
+## 問題
+
+Kubernetes クラスター内で名前解決に使われる CoreDNS の Pod が `CrashLoopBackOff` になってしまい再起動を繰り返す問題が発生することがあります。
+
+```
+# kubectl -n kube-system logs coredns-787d4945fb-6kb5t
+.:53
+[I</description>
+    </item>
+    <item>
+      <title>VS Code Serverでリモートホストのコンテナ上開発環境に直接アクセスする</title>
+      <link>https://sogo.dev/posts/2022/12/vscode-server-devcontainer</link>
+      <guid>https://sogo.dev/posts/2022/12/vscode-server-devcontainer</guid>
+      <pubDate>Sat, 17 Dec 2022 00:00:00 GMT</pubDate>
+      <description>
+今回は「ぼくのかんがえたさいきょうのかいはつかんきょう」を紹介したいと思います。
+
+VS Code Server を使い、リモートサーバー上でコンテナとして動かしている開発環境に直接乗り込んでみよう、というアイデアです。
+
+SSH もポート開放も不要なのでとてもお手軽です。
+
+## 環境
+
+サーバー
+* Raspberry Pi 400 (Ubuntu 22.04.1, arm64)
+  * Docker & Docker Compose がインストールされていること
+
+クラ</description>
+    </item>
+    <item>
+      <title>よくあるSPA+API構成でのOpenID Connectクライアント実装</title>
+      <link>https://sogo.dev/posts/2022/12/openid-connect-fastapi</link>
+      <guid>https://sogo.dev/posts/2022/12/openid-connect-fastapi</guid>
+      <pubDate>Fri, 02 Dec 2022 00:00:00 GMT</pubDate>
+      <description>
+この記事はニフクラ等を提供している、富士通クラウドテクノロジーズ Advent Calendar 2022の2日目の記事です。
+
+昨日は @ntoofu さんの パケットキャプチャからKubernetes APIのTLS通信を解析する でした。  
+私は </description>
+    </item>
+    <item>
+      <title>GitLab CIのrulesとworkflowを理解する</title>
+      <link>https://sogo.dev/posts/2022/11/gitlab-rules-workflow</link>
+      <guid>https://sogo.dev/posts/2022/11/gitlab-rules-workflow</guid>
+      <pubDate>Thu, 17 Nov 2022 00:00:00 GMT</pubDate>
+      <description>
+GitLab CI の rules を使って Dockerfile などの特定のファイルの変更時のみ Docker イメージを作成するパイプラインを回して、それ以外の時には既存の Docker イメージを使用して CI を実行する、という組み方をしたかったのですが、書き方に結構手間取ったのでメモ。
+
+環境: GitLab.com 15.6.0-pre
+
+## rules とは
+
+https://docs.gitlab.com/ee/ci/yaml/#rules
+
+それぞれのジョブについて、パイプラインに追加するかしないかの条件を記述するものです。
+
+rules では下記の条件が指定できます。</description>
+    </item>
+    <item>
+      <title>Next.jsとTailwind CSSでブログを作るときに考えたこと</title>
+      <link>https://sogo.dev/posts/2022/11/blog-with-nextjs-and-tailwindcss</link>
+      <guid>https://sogo.dev/posts/2022/11/blog-with-nextjs-and-tailwindcss</guid>
+      <pubDate>Sun, 13 Nov 2022 00:00:00 GMT</pubDate>
+      <description>
+このブログは Next.js の SSG（Static Site Generation; 静的サイト生成）機能を使いながら、デザインの大半は Tailwind CSS を使用して整えています。そして生成された HTML, CSS, JS は GitHub Pages でホストさせてもらっています。
+
+そこそこの出来栄えになったので、今回はこのブログができるまでのお話をしたいなと思ったのですが、正直なところ、以下のリンク先のページを~~まるパク~~参考にさせてもらいながら作成したので、具体的な構築方法についてはそちらをご覧いただけると良いかと思います。1ステップずつ丁寧に解説されておりとても有</description>
+    </item>
+    <item>
+      <title>Hello World!</title>
+      <link>https://sogo.dev/posts/2022/10/hello-world</link>
+      <guid>https://sogo.dev/posts/2022/10/hello-world</guid>
+      <pubDate>Tue, 11 Oct 2022 00:00:00 GMT</pubDate>
+      <description>
+はじめまして。  
+これは初めての投稿です。
+
+今までブログが長く続いたことがないのですが、n度目の正直ということで今回こそは長く続くように頑張りたいと思います（とても固い決意）。
+
+@SogoKato といいます。どんな人か気になってくれた方は 自己紹介ページ をご覧いただければと思います。
+
+このブログの制作にあたっては、初めて React + Next.js + Tailwind CSS を触って作ってみましたが、結構いい開発者体験だったのでこれについてもまた記事に起こしていきたいな〜と思っています。。（少しゆるい決意）
+
+今まで書いてきた記事については、[私の</description>
+    </item>
+  </channel>
+</rss>

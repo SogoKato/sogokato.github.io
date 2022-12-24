@@ -1,13 +1,23 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
-import { gaId } from "../utils/const";
+import { gaId, siteTitle } from "../utils/const";
 
 export default function Document() {
   return (
     <Html>
       <Head>
         <link rel="stylesheet" href="https://use.typekit.net/suf5fdm.css" />
-        <Script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
+        <link
+          rel="alternate"
+          href="feed.xml"
+          type="application/rss+xml"
+          title={siteTitle}
+        />
+        <Script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+          strategy="afterInteractive"
+        />
         <Script
           id="_gtag"
           defer
@@ -29,4 +39,4 @@ export default function Document() {
       </body>
     </Html>
   );
-};
+}
