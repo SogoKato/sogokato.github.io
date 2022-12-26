@@ -8,6 +8,26 @@
     <lastBuildDate>Tue, 11 Oct 2022 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Ubuntu 22.04でのKubernetesクラスター構築（ContainerdとSystemdCgroup）</title>
+      <link>https://sogo.dev/posts/2022/12/kubernetes-ubuntu22.04-cgroup-systemd</link>
+      <guid>https://sogo.dev/posts/2022/12/kubernetes-ubuntu22.04-cgroup-systemd</guid>
+      <pubDate>Mon, 26 Dec 2022 00:00:00 GMT</pubDate>
+      <description>
+公式ドキュメントのコマンドを手順通り流し込めば割と簡単に構築できる Kubernetes クラスターですが、Ubuntu 22.04 になってから少し手を入れる必要が出てきたので差分を紹介しておきます。
+
+## 環境
+
+* Ubuntu 22.04
+* Kubernetes v1.26.0
+* kubeadm v1.26.0
+* Containerd v1.6.14
+
+## 何が変わった？
+
+Ubuntu 21.10 以降、Cgroup v2 がデフォルトになりました[^1]。  
+Cgroup について詳しく知りたい方は [第37回 Linuxカーネルのコンテナ機能 ― cgroupの改良</description>
+    </item>
+    <item>
       <title>KubernetesでCoreDNSがループしてしまう問題への対処</title>
       <link>https://sogo.dev/posts/2022/12/kubernetes-coredns-loop</link>
       <guid>https://sogo.dev/posts/2022/12/kubernetes-coredns-loop</guid>
@@ -15,14 +35,18 @@
       <description>
 1年前にも Kubernetes クラスターを自力で組んでトラブルシューティングしてみる【The Hard Way】の記事の中で軽く解説したネタです。
 
+## 環境
+
+* Ubuntu 22.04
+* Kubernetes v1.26.0
+* kubeadm v1.26.0
+
 ## 問題
 
 Kubernetes クラスター内で名前解決に使われる CoreDNS の Pod が `CrashLoopBackOff` になってしまい再起動を繰り返す問題が発生することがあります。
 
 ```
-# kubectl -n kube-system logs coredns-787d4945fb-6kb5t
-.:53
-[I</description>
+</description>
     </item>
     <item>
       <title>VS Code Serverでリモートホストのコンテナ上開発環境に直接アクセスする</title>
