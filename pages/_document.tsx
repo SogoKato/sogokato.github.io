@@ -9,7 +9,7 @@ export default function Document() {
         <link rel="stylesheet" href="https://use.typekit.net/suf5fdm.css" />
         <link
           rel="alternate"
-          href="feed.xml"
+          href="/feed.xml"
           type="application/rss+xml"
           title={siteTitle}
         />

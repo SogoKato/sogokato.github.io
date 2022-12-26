@@ -46,7 +46,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
       />
 
       <PostCard
-        className="prose dark:prose-invert prose-neutral"
+        className="max-w-none prose dark:prose-invert prose-neutral"
         post={post_}
         isPostPage={true}
         isStaticPostPage={true}
