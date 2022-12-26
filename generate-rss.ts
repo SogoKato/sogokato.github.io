@@ -32,7 +32,7 @@ const generateRss = async () => {
     (o) => o.date,
     "desc"
   );
-  const lastBuildDate = posts.slice(-1)[0].date.toUTCString();
+  const lastBuildDate = posts[0].date.toUTCString();
   const feeds = posts.map((post) => createFeed(post));
 
   const rss = `<?xml version="1.0" ?>
