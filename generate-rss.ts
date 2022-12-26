@@ -8,13 +8,15 @@ import { listPosts } from "./utils/readPosts";
 
 const RSS_URL = `${baseUrl}/feed.xml`;
 
-const createFeed = (post: PostData) => `    <item>
+const createFeed = (post: PostData) => {
+  const desc = post.desc.replace("&", "&amp;")
+  return `    <item>
       <title>${post.title}</title>
       <link>${baseUrl}${post.ref}</link>
       <guid>${baseUrl}${post.ref}</guid>
       <pubDate>${post.date.toUTCString()}</pubDate>
-      <description>${post.desc}</description>
-    </item>`;
+      <description>${desc}</description>
+    </item>`;}
 
 const writeRss = async (filePath: string, content: string) => {
   try {

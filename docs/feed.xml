@@ -64,7 +64,7 @@ SSH もポート開放も不要なのでとてもお手軽です。
 
 サーバー
 * Raspberry Pi 400 (Ubuntu 22.04.1, arm64)
-  * Docker & Docker Compose がインストールされていること
+  * Docker &amp; Docker Compose がインストールされていること
 
 クラ</description>
     </item>
