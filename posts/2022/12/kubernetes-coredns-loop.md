@@ -1,10 +1,16 @@
 ---
 title: "KubernetesでCoreDNSがループしてしまう問題への対処"
 date: "2022-12-24"
-tags: ["Kubernetes", "小ネタ"]
+tags: ["Kubernetes"]
 ---
 
 1年前にも [Kubernetes クラスターを自力で組んでトラブルシューティングしてみる【The Hard Way】](https://qiita.com/SogoK/items/192d475c20e07dd38984)の記事の中で軽く解説したネタです。
+
+## 環境
+
+* Ubuntu 22.04
+* Kubernetes v1.26.0
+* kubeadm v1.26.0
 
 ## 問題
 
