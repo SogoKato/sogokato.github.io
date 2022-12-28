@@ -1,0 +1,9 @@
+name: Deploy
+on: [push]
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Google Ping Sitemap
+        run: |
+          curl -X GET "https://www.google.com/ping?sitemap=https://sogo.dev/sitemap.xml"
