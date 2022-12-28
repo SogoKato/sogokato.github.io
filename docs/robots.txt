@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://sogo.dev
+
+# Sitemaps
+Sitemap: https://sogo.dev/sitemap.xml

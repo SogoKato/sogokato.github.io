@@ -4,16 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export -o docs/ && tsc generate-rss.ts --esModuleInterop && node generate-rss.js && touch docs/.nojekyll && echo 'sogo.dev' > docs/CNAME",
+    "build": "next build && next-sitemap",
+    "postbuild": "next export -o docs/ && tsc generate-rss.ts --esModuleInterop && node generate-rss.js && touch docs/.nojekyll && echo 'sogo.dev' > docs/CNAME",
     "start": "next start",
-    "lint": "next lint",
-    "generate-rss": "tsc generate-rss.ts --esModuleInterop && node generate-rss.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@noroch/like-widget": "^1.0.2",
     "gray-matter": "^4.0.3",
     "lodash": "^4.17.21",
     "next": "12.3.1",
+    "next-sitemap": "^3.1.43",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-markdown": "^8.0.3",
