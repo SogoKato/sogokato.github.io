@@ -9,7 +9,7 @@
 	// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
 	"dockerFile": "./local.dockerfile",
 
-	"extensions": ["dsznajder.es7-react-js-snippets", "bradlc.vscode-tailwindcss", "yzhang.markdown-all-in-one"],
+	"extensions": ["dsznajder.es7-react-js-snippets", "bradlc.vscode-tailwindcss", "yzhang.markdown-all-in-one", "esbenp.prettier-vscode"],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

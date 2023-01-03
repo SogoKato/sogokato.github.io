@@ -7,10 +7,12 @@
     "build": "next build && next-sitemap",
     "postbuild": "next export -o docs/ && tsc generate-rss.ts --esModuleInterop && node generate-rss.js && touch docs/.nojekyll && echo 'sogo.dev' > docs/CNAME",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "requestIndexing": "tsc request-indexing.ts --esModuleInterop && node --inspect request-indexing.js"
   },
   "dependencies": {
     "@noroch/like-widget": "^1.0.2",
+    "googleapis": "^110.0.0",
     "gray-matter": "^4.0.3",
     "lodash": "^4.17.21",
     "next": "12.3.1",
