@@ -12,138 +12,80 @@
       <link>https://sogo.dev/posts/2022/12/kubernetes-behind-proxy</link>
       <guid>https://sogo.dev/posts/2022/12/kubernetes-behind-proxy</guid>
       <pubDate>Tue, 27 Dec 2022 00:00:00 GMT</pubDate>
-      <description>
-同期と一緒にトラシュしたので、プロキシ環境下で kubeadm + Containerd + Calico の Kubernetes クラスターを構築する方法について記録を残します。
+      <description> 同期と一緒にトラシュしたので、プロキシ環境下で kubeadm + Containerd + Calico の Kubernetes クラスターを構築する方法について記録を残します。
 
 ## 環境
 
 * Ubuntu 22.04
-  * サーバーはニフクラを利用（e-medium4 2vCPU/4GB）
-* Kubernetes v1.26.0
-* kubeadm v1.26.0
-* Containerd v1.6.14
-* Calico v3.24.5
-
-コントロールプレーン、ノード1台ずつの構成とします。プロキシを経由しなければインターネットに出られないようになっています。
-
-![net</description>
+  * サーバーはニフクラを利用（e-medium4 2vCPU/4</description>
     </item>
     <item>
       <title>Ubuntu 22.04でのKubernetesクラスター構築（ContainerdとSystemdCgroup）</title>
       <link>https://sogo.dev/posts/2022/12/kubernetes-ubuntu22.04-cgroup-systemd</link>
       <guid>https://sogo.dev/posts/2022/12/kubernetes-ubuntu22.04-cgroup-systemd</guid>
       <pubDate>Mon, 26 Dec 2022 00:00:00 GMT</pubDate>
-      <description>
-公式ドキュメントのコマンドを手順通り流し込めば割と簡単に構築できる Kubernetes クラスターですが、Ubuntu 22.04 になってから少し手を入れる必要が出てきたので差分を紹介しておきます。
+      <description> 公式ドキュメントのコマンドを手順通り流し込めば割と簡単に構築できる Kubernetes クラスターですが、Ubuntu 22.04 になってから少し手を入れる必要が出てきたので差分を紹介しておきます。
 
 ## 環境
 
 * Ubuntu 22.04
 * Kubernetes v1.26.0
-* kubeadm v1.26.0
-* Containerd v1.6.14
-
-## 何が変わった？
-
-Ubuntu 21.10 以降、Cgroup v2 がデフォルトになりました[^1]。  
-Cgroup について詳しく知りたい方は [第37回 Linuxカーネルのコンテナ機能 ― cgroupの改良</description>
+* k</description>
     </item>
     <item>
       <title>KubernetesでCoreDNSがループしてしまう問題への対処</title>
       <link>https://sogo.dev/posts/2022/12/kubernetes-coredns-loop</link>
       <guid>https://sogo.dev/posts/2022/12/kubernetes-coredns-loop</guid>
       <pubDate>Sat, 24 Dec 2022 00:00:00 GMT</pubDate>
-      <description>
-1年前にも Kubernetes クラスターを自力で組んでトラブルシューティングしてみる【The Hard Way】の記事の中で軽く解説したネタです。
+      <description> 1年前にも Kubernetes クラスターを自力で組んでトラブルシューティングしてみる【The Hard Way】の記事の中で軽く解説したネタです。
 
 ## 環境
 
-* Ubuntu 22.04
-* Kubernetes v1.26.0
-* kubeadm v1.26.0
-
-## 問題
-
-Kubernetes クラスター内で名前解決に使われる CoreDNS の Pod が `CrashLoopBackOff` になってしまい再起動を繰り返す問題が発生することがあります。
-
-```
-</description>
+* Ubuntu 22</description>
     </item>
     <item>
       <title>VS Code Serverでリモートホストのコンテナ上開発環境に直接アクセスする</title>
       <link>https://sogo.dev/posts/2022/12/vscode-server-devcontainer</link>
       <guid>https://sogo.dev/posts/2022/12/vscode-server-devcontainer</guid>
       <pubDate>Sat, 17 Dec 2022 00:00:00 GMT</pubDate>
-      <description>
-今回は「ぼくのかんがえたさいきょうのかいはつかんきょう」を紹介したいと思います。
+      <description> 今回は「ぼくのかんがえたさいきょうのかいはつかんきょう」を紹介したいと思います。
 
-VS Code Server を使い、リモートサーバー上でコンテナとして動かしている開発環境に直接乗り込んでみよう、というアイデアです。
-
-SSH もポート開放も不要なのでとてもお手軽です。
-
-## 環境
-
-サーバー
-* Raspberry Pi 400 (Ubuntu 22.04.1, arm64)
-  * Docker &amp; Docker Compose がインストールされていること
-
-クラ</description>
+VS Code Server を使い、リモートサーバー上でコンテナとして動かしている開発環境に直</description>
     </item>
     <item>
       <title>よくあるSPA+API構成でのOpenID Connectクライアント実装</title>
       <link>https://sogo.dev/posts/2022/12/openid-connect-fastapi</link>
       <guid>https://sogo.dev/posts/2022/12/openid-connect-fastapi</guid>
       <pubDate>Fri, 02 Dec 2022 00:00:00 GMT</pubDate>
-      <description>
-この記事はニフクラ等を提供している、富士通クラウドテクノロジーズ Advent Calendar 2022の2日目の記事です。
+      <description> この記事はニフクラ等を提供している、富士通クラウドテクノロジーズ Advent Calendar 2022の2日目の記事です。
 
-昨日は @ntoofu さんの パケットキャプチャからKubernetes APIのTLS通信を解析する でした。  
-私は </description>
+昨日は [@nt</description>
     </item>
     <item>
       <title>GitLab CIのrulesとworkflowを理解する</title>
       <link>https://sogo.dev/posts/2022/11/gitlab-rules-workflow</link>
       <guid>https://sogo.dev/posts/2022/11/gitlab-rules-workflow</guid>
       <pubDate>Thu, 17 Nov 2022 00:00:00 GMT</pubDate>
-      <description>
-GitLab CI の rules を使って Dockerfile などの特定のファイルの変更時のみ Docker イメージを作成するパイプラインを回して、それ以外の時には既存の Docker イメージを使用して CI を実行する、という組み方をしたかったのですが、書き方に結構手間取ったのでメモ。
-
-環境: GitLab.com 15.6.0-pre
-
-## rules とは
-
-https://docs.gitlab.com/ee/ci/yaml/#rules
-
-それぞれのジョブについて、パイプラインに追加するかしないかの条件を記述するものです。
-
-rules では下記の条件が指定できます。</description>
+      <description> GitLab CI の rules を使って Dockerfile などの特定のファイルの変更時のみ Docker イメージを作成するパイプラインを回して、それ以外の時には既存の Docker イメージを使用して CI を実行する、という組み方をしたかったのですが、書き方に結構手間取ったのでメモ。</description>
     </item>
     <item>
       <title>Next.jsとTailwind CSSでブログを作るときに考えたこと</title>
       <link>https://sogo.dev/posts/2022/11/blog-with-nextjs-and-tailwindcss</link>
       <guid>https://sogo.dev/posts/2022/11/blog-with-nextjs-and-tailwindcss</guid>
       <pubDate>Sun, 13 Nov 2022 00:00:00 GMT</pubDate>
-      <description>
-このブログは Next.js の SSG（Static Site Generation; 静的サイト生成）機能を使いながら、デザインの大半は Tailwind CSS を使用して整えています。そして生成された HTML, CSS, JS は GitHub Pages でホストさせてもらっています。
-
-そこそこの出来栄えになったので、今回はこのブログができるまでのお話をしたいなと思ったのですが、正直なところ、以下のリンク先のページを~~まるパク~~参考にさせてもらいながら作成したので、具体的な構築方法についてはそちらをご覧いただけると良いかと思います。1ステップずつ丁寧に解説されておりとても有</description>
+      <description> このブログは Next.js の SSG（Static Site Generation; 静的サイト生成）機能を使いながら、デザインの大半は Tailwind CSS を使用して整えています。そして生成された HTML, CSS, JS は GitHub Pages でホストさせてもらっています。</description>
     </item>
     <item>
       <title>Hello World!</title>
       <link>https://sogo.dev/posts/2022/10/hello-world</link>
       <guid>https://sogo.dev/posts/2022/10/hello-world</guid>
       <pubDate>Tue, 11 Oct 2022 00:00:00 GMT</pubDate>
-      <description>
-はじめまして。  
+      <description> はじめまして。  
 これは初めての投稿です。
 
 今までブログが長く続いたことがないのですが、n度目の正直ということで今回こそは長く続くように頑張りたいと思います（とても固い決意）。
 
-@SogoKato といいます。どんな人か気になってくれた方は 自己紹介ページ をご覧いただければと思います。
-
-このブログの制作にあたっては、初めて React + Next.js + Tailwind CSS を触って作ってみましたが、結構いい開発者体験だったのでこれについてもまた記事に起こしていきたいな〜と思っています。。（少しゆるい決意）
-
-今まで書いてきた記事については、[私の</description>
+@SogoKato といいます。どんな人か気になってくれた方は 自己紹介ページ をご覧いた</description>
     </item>
   </channel>
 </rss>

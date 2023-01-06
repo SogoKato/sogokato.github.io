@@ -16,7 +16,7 @@ export const listPosts = (): SerializablePostData[] => {
       title: data.title,
       date: data.date,
       ref: ref,
-      desc: data.description ? data.description : content.slice(0, 300).replace(/\[(.+?)\]\(.+?\)/g, "$1"),
+      desc: data.description ? data.description : content.slice(0, 150).replace("\n", " ").replace(/\[(.+?)\]\(.+?\)/g, "$1"),
       draft: data.draft ? data.draft : false,
       content: content,
       tags: (data.tags as string[]).map(tag => ({

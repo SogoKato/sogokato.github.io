@@ -13,6 +13,7 @@ const Seo: React.FC<SeoProps> = ({ title, description, path, type }) => {
     <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta httpEquiv="content-language" content="ja" />
       <meta property="og:url" content={baseUrl + path} />
       <meta property="og:type" content={type} />
       <meta property="og:title" content={title} />
