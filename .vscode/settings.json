@@ -1,5 +1,10 @@
 {
-    "editor.tabSize": 2,
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[markdown]": {
+    "editor.defaultFormatter": null
+  },
+  "markdown.extension.orderedList.marker": "one",
+  "markdown.extension.toc.unorderedList.marker": "*"
 }

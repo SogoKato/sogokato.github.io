@@ -11,3 +11,4 @@ services:
       - type: bind
         source: ${HOME}/.gitconfig
         target: /home/node/.gitconfig
+    restart: always
