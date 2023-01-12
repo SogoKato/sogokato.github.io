@@ -5,12 +5,25 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Sun, 08 Jan 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 12 Jan 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>SQLAlchemyで'MySQL server has gone away'が発生した時の対処法2つ</title>
+      <link>https://sogo.dev/posts/2023/01/sqlalchemy-dealing-with-disconnects</link>
+      <guid>https://sogo.dev/posts/2023/01/sqlalchemy-dealing-with-disconnects</guid>
+      <pubDate>Thu, 12 Jan 2023 00:00:00 GMT</pubDate>
+      <description> FastAPI で SQLAlchemy を使っている時に、コンテナを立てた直後は問題ないけど一定時間経過後に DB 接続が切れてしまう問題に遭遇したのでその時に調べたことのメモ。
+
+## 環境
+
+* mysql 5.7.15
+* SQLAlchemy 1.4.45
+* mysqlclient 2</description>
+    </item>
+    <item>
       <title>2023年版 キーボードマッピングの個人的メモ</title>
-      <link>https://sogo.dev/posts/2023/01/keyboard_remap</link>
-      <guid>https://sogo.dev/posts/2023/01/keyboard_remap</guid>
+      <link>https://sogo.dev/posts/2023/01/keyboard-remap</link>
+      <guid>https://sogo.dev/posts/2023/01/keyboard-remap</guid>
       <pubDate>Sun, 08 Jan 2023 00:00:00 GMT</pubDate>
       <description> 不定期的に「あーでもない、こーでもない」と言ってキーボードのマッピングをいじりだしてしまうことってありますよね。私はあります。限りあるキーの中から自分にとっての最適解を見つける作業はなんだかんだ楽しいです。
 
