@@ -19,6 +19,7 @@ export default function ThemeSelector() {
 
     .theme-selector--system > .theme-selector__system {
       opacity: 1;
+      word-break: keep-all;
     }
 
     @media screen and (min-width: 640px) {
