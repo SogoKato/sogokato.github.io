@@ -46,7 +46,7 @@ const PostCard: React.FC<PostCardProps> = ({ className, post, isPostPage, isStat
     </div>
   )
   return (
-    <div className="bg-white dark:bg-neutral-700 mx-auto mb-11 p-8 rounded-3xl shadow-lg w-11/12">
+    <div className="bg-white dark:bg-neutral-800 mx-auto mb-11 p-8 rounded-3xl shadow-lg w-11/12">
       {elements}
     </div>
   );

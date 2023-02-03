@@ -11,7 +11,7 @@ const Like: React.FC<LikeProps> = ({ path }) => {
   const [reactions, setReactions] = useState<IAPIReaction[]>([]);
   const [buttonStates, setButtonStates] = useState<ButtonStates>({});
   const baseUrl =
-    window.location.hostname !== "localhost"
+    window.location.hostname === "sogo.dev"
       ? "https://tcfqlqcnw3.execute-api.ap-northeast-1.amazonaws.com/production"
       : "https://tc8py36661.execute-api.ap-northeast-1.amazonaws.com/staging";
   const clientId = "58fcbf0d-e6c1-4e2d-a56f-f95aa56d5be4";
