@@ -5,8 +5,17 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Tue, 17 Jan 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 04 Feb 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>リファクタリングしやすいテストを書こう：単体テストの考え方／使い方 第2部前半</title>
+      <link>https://sogo.dev/posts/2023/02/unit-testing-principles-practices-and-patterns-part2-1</link>
+      <guid>https://sogo.dev/posts/2023/02/unit-testing-principles-practices-and-patterns-part2-1</guid>
+      <pubDate>Sat, 04 Feb 2023 00:00:00 GMT</pubDate>
+      <description> 『単体テストの考え方／使い方』（Vladimir Khorikov 著、須田智之訳）を読んでいるので、そのまとめを部ごとに書いていこうと思います。
+
+今回は第2部「単体テストとその価値」の</description>
+    </item>
     <item>
       <title>単体テストの目的・定義・学派・命名について：単体テストの考え方／使い方 第1部</title>
       <link>https://sogo.dev/posts/2023/01/unit-testing-principles-practices-and-patterns-part1</link>
