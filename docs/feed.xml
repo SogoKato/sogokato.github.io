@@ -5,8 +5,17 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Sat, 04 Feb 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 06 Feb 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TypedDictはdictのsubtypeではないので関数の引数にはMappingを使う</title>
+      <link>https://sogo.dev/posts/2023/02/typeddict-is-not-subtype-of-dict</link>
+      <guid>https://sogo.dev/posts/2023/02/typeddict-is-not-subtype-of-dict</guid>
+      <pubDate>Mon, 06 Feb 2023 00:00:00 GMT</pubDate>
+      <description> Python の dict（辞書）を TypeScript の interface のように扱えて便利な TypedDict ですが、**dict のサブクラスではない**というのが少し落とし穴だなと思ったのでメモ。
+
+##</description>
+    </item>
     <item>
       <title>リファクタリングしやすいテストを書こう：単体テストの考え方／使い方 第2部前半</title>
       <link>https://sogo.dev/posts/2023/02/unit-testing-principles-practices-and-patterns-part2-1</link>
