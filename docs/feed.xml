@@ -5,8 +5,15 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Mon, 06 Feb 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 08 Feb 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FastAPIとSQLAlchemy2.0ならもう型ヒントを諦めなくていい</title>
+      <link>https://sogo.dev/posts/2023/02/fastapi-orm-sqlalchemy</link>
+      <guid>https://sogo.dev/posts/2023/02/fastapi-orm-sqlalchemy</guid>
+      <pubDate>Wed, 08 Feb 2023 00:00:00 GMT</pubDate>
+      <description> サチコ（Google Search Console）を眺めていたら `FastAPI MySQL` がそれなりに需要ありそうと思ったので、FastAPI と SQLAlchemy を組み合わせて ORM を使う方法を紹介したいと思います。最近の SQLAlchemy（1.4以降）ではマッピングされ</description>
+    </item>
     <item>
       <title>TypedDictはdictのsubtypeではないので関数の引数にはMappingを使う</title>
       <link>https://sogo.dev/posts/2023/02/typeddict-is-not-subtype-of-dict</link>
