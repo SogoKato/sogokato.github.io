@@ -6,12 +6,14 @@ tags: ["Kubernetes"]
 
 公式ドキュメントのコマンドを手順通り流し込めば割と簡単に構築できる Kubernetes クラスターですが、Ubuntu 22.04 になってから少し手を入れる必要が出てきたので差分を紹介しておきます。
 
+**2022-02-16 更新：Kubernetes ドキュメントの日本語版が更新されていたのでリライトしました。**
+
 ## 環境
 
 * Ubuntu 22.04
 * Kubernetes v1.26.0
 * kubeadm v1.26.0
-* Containerd v1.6.14
+* Containerd v1.6.16
 
 ## 何が変わった？
 
@@ -32,29 +34,37 @@ Cgroup v1 に戻す、というやり方もあるとは思うのですが、syst
 
 kubelet に関しては kubeadm v1.22 以降デフォルトで `systemd` を選択するようになったので[^2]、特に気にする必要はないです。
 
-[^2]: 備考: v1.22では、ユーザーがKubeletConfigurationのcgroupDriverフィールドを設定していない場合、kubeadmはデフォルトでsystemdを設定するようになりました。  
+[^2]: 備考: v1.22 では、ユーザーが KubeletConfiguration の cgroupDriver フィールドを設定していない場合、kubeadm はデフォルトで systemd を設定するようになりました。  
 https://kubernetes.io/ja/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/#kubelet-cgroup%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%83%BC%E3%81%AE%E8%A8%AD%E5%AE%9A
 
 **Containerd を CRI として使用する場合、Containerd 側でも Cgroup ドライバーを選択する必要があります（今回の記事のミソ）。**
 
-[Containerd のインストール手順](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/#containerd%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB)に下記のコマンドがありますが、その下にさらに大事なことが書かれています[^3]。
+Linux の場合、Containerd の設定ファイルは `/etc/containerd/config.toml` にあります。存在しない場合は、下記のコマンドで作成します。
 
 ```sh
-# containerdの設定
 mkdir -p /etc/containerd
 containerd config default | sudo tee /etc/containerd/config.toml
-# containerdの再起動
-systemctl restart containerd
 ```
 
-> `systemd`のcgroupドライバーを使うには、`/etc/containerd/config.toml`内で`plugins.cri.systemd_cgroup = true`を設定してください。
+[Kubernetesドキュメント](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/#systemd-cgroup%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%83%BC%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B)に記載のように `runc` が `systemd` Cgroup ドライバーを使うように設定します。
 
-[^3]: 引用で省略した _kubeadmを使う場合は[kubeletのためのcgroupドライバー](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%AB%E3%83%97%E3%83%AC%E3%83%BC%E3%83%B3%E3%83%8E%E3%83%BC%E3%83%89%E3%81%AEkubelet%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6%E4%BD%BF%E7%94%A8%E3%81%95%E3%82%8C%E3%82%8Bcgroup%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%83%BC%E3%81%AE%E8%A8%AD%E5%AE%9A)を手動で設定してください。_ の部分に関してはリンク先で Docker を CRI に使う場合のことにしか実質触れていないので気にしなくていいです。
+```toml
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+  ...
+  [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+    SystemdCgroup = true
+```
 
-なので、言われた通り `plugins.cri.systemd_cgroup = true` を設定してから restart をかけるようにしましょう。
+以下のコマンドで修正することができます。
 
 ```sh
 sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
+```
+
+Containerd を再起動します。
+
+```sh
+systemctl restart containerd
 ```
 
 他の手順は参考文献の上3つのリンク先に記載の手順を実施すれば OK です。
@@ -65,6 +75,6 @@ sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config
 
 * [kubeadmを使用したクラスターの作成](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
 * [kubeadmのインストール](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
-* [CRIのインストール](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/)
+* [コンテナランタイム](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/)
 * [cgroupドライバーの設定](https://kubernetes.io/ja/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/)
 * [Ubuntu 22.04でkubeadmでKubernetesクラスターが動かない？](https://tech.virtualtech.jp/entry/2022/06/08/115030)

@@ -84,11 +84,7 @@
       <pubDate>Mon, 26 Dec 2022 00:00:00 GMT</pubDate>
       <description> 公式ドキュメントのコマンドを手順通り流し込めば割と簡単に構築できる Kubernetes クラスターですが、Ubuntu 22.04 になってから少し手を入れる必要が出てきたので差分を紹介しておきます。
 
-## 環境
-
-* Ubuntu 22.04
-* Kubernetes v1.26.0
-* k</description>
+**2022-02-16 更新：Kubernetes ドキュメントの日本語版が更新されていた</description>
     </item>
     <item>
       <title>KubernetesでCoreDNSがループしてしまう問題への対処</title>
