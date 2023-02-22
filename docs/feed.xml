@@ -5,8 +5,17 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Sun, 19 Feb 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 22 Feb 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>プロセス外依存は統合テストで確認しよう：単体テストの考え方／使い方 第3部</title>
+      <link>https://sogo.dev/posts/2023/02/unit-testing-principles-practices-and-patterns-part3</link>
+      <guid>https://sogo.dev/posts/2023/02/unit-testing-principles-practices-and-patterns-part3</guid>
+      <pubDate>Wed, 22 Feb 2023 00:00:00 GMT</pubDate>
+      <description> 『単体テストの考え方／使い方』（Vladimir Khorikov 著、須田智之訳）を読んだので、そのまとめを部ごとに書いていこうと思います。
+
+1. [単体テストの目的・定義・学派・命名</description>
+    </item>
     <item>
       <title>ビジネス・ロジックと連携の指揮を分離すれば良いテストが書ける：単体テストの考え方／使い方 第2部後半</title>
       <link>https://sogo.dev/posts/2023/02/unit-testing-principles-practices-and-patterns-part2-2</link>
