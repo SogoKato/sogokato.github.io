@@ -62,7 +62,13 @@ const requestIndexing = () => {
       keyLocation: `${baseUrl}/${bingIndexNowKey}.txt`,
       urlList: posts.map((post) => `${baseUrl}${post.ref}`),
     }),
-  }).then((res) => console.log(res.ok));
+  }).then((res) => {
+    console.log(
+      `The request to Bing IndexNow API ${
+        res.ok ? "succeeded" : "failed"
+      } with status code ${res.status}.`
+    );
+  });
 };
 
 requestIndexing();
