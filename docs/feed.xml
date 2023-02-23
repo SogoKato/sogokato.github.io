@@ -5,8 +5,19 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Wed, 22 Feb 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 23 Feb 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TerraformでAPI Gatewayのスロットリングを設定する</title>
+      <link>https://sogo.dev/posts/2023/02/aws-api-gateway-terraform-throttling-settings</link>
+      <guid>https://sogo.dev/posts/2023/02/aws-api-gateway-terraform-throttling-settings</guid>
+      <pubDate>Thu, 23 Feb 2023 00:00:00 GMT</pubDate>
+      <description> AWS API Gateway のスロットリングを Terraform を使って設定する方法を見つけるまでに少し手間取ったのでメモ。
+
+## AWS マネジメントコンソールでの場所
+
+今回 Terraform で設定するのは、マネジメントコンソールの各ステージの設定画面内の「デフォルトのメソッドス</description>
+    </item>
     <item>
       <title>プロセス外依存は統合テストで確認しよう：単体テストの考え方／使い方 第3部</title>
       <link>https://sogo.dev/posts/2023/02/unit-testing-principles-practices-and-patterns-part3</link>
