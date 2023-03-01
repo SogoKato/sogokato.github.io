@@ -5,8 +5,15 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Thu, 23 Feb 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 01 Mar 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ansibleでgpg公開鍵とaptのサードパーティリポジトリを追加する ～Terraformをインストールしたい～</title>
+      <link>https://sogo.dev/posts/2023/03/ansible-apt-repo-signed-by-gpg-key</link>
+      <guid>https://sogo.dev/posts/2023/03/ansible-apt-repo-signed-by-gpg-key</guid>
+      <pubDate>Wed, 01 Mar 2023 00:00:00 GMT</pubDate>
+      <description> apt を使って docker や terraform をインストールする時など、提供元のサードパーティ apt リポジトリを追加する場合が結構ありますよね。その際に、今までは `apt-key` を使って OpenPGP 公開鍵をインポートしていたのですが、`apt-key` は [Debian</description>
+    </item>
     <item>
       <title>TerraformでAPI Gatewayのスロットリングを設定する</title>
       <link>https://sogo.dev/posts/2023/02/aws-api-gateway-terraform-throttling-settings</link>
