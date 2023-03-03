@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import Script from "next/script";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import CodeBlock from "./CodeBlock";
@@ -34,6 +35,10 @@ const PostCard: React.FC<PostCardProps> = ({ className, post, isPostPage, isStat
       {!isStaticPostPage ? <LikeButtons path={post.ref} /> : null}
       {shareButtons}
       {tagsEnd}
+      <Script
+        src="https://pyscript.net/latest/pyscript.js"
+        strategy="lazyOnload"
+      />
     </div>
   ) : (
     <div>
