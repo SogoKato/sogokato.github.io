@@ -21,9 +21,8 @@ const Social: React.FC<SocialProps> = ({ className, path }) => {
           Tweet
         </a>
         <Script
-          async
           src={`https://platform.twitter.com/widgets.js?${query}`}
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
       </div>
     );
@@ -46,9 +45,8 @@ const Social: React.FC<SocialProps> = ({ className, path }) => {
         />
       </a>
       <Script
-        async
-        type="text/javascript"
         src="https://b.st-hatena.com/js/bookmark_button.js"
+        strategy="lazyOnload"
       />
     </div>
   );
