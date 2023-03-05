@@ -2,6 +2,7 @@
 title: "Pythonのunittest.mock.patchではどこにパッチするかが重要"
 date: "2023-03-04"
 tags: ["Python", "単体テスト"]
+showTerminalAside: true
 ---
 
 [Python 公式ドキュメントの unittest.mock のページ](https://docs.python.org/ja/3/library/unittest.mock.html#where-to-patch)にドンピシャの内容が書いてありますが、なかなか気づけずにハマってしまっていたのでメモです。
@@ -152,6 +153,9 @@ loader = TestLoader()
 test = loader.discover(".")
 runner = TextTestRunner()
 runner.run(test)
+```
+
+```pyterminal
 ```
 
 期待通りの結果が得られていますね。Python の import まわりはやっぱりなんか面倒くさい・・・。
