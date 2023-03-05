@@ -1,4 +1,4 @@
-import { orderBy, range, union } from "lodash";
+import { orderBy, range } from "lodash";
 import type { GetStaticProps, NextPage } from "next";
 import Pagination from "../../components/Pagination";
 import PostCard from "../../components/PostCard";

@@ -4,9 +4,9 @@ import PostCard from "../../components/PostCard";
 import PostPagination from "../../components/PostPagination";
 import Seo from "../../components/Seo";
 import type { SerializablePostData } from "../../types/post";
-import { basePostDir, siteTitle } from "../../utils/const";
+import { siteTitle } from "../../utils/const";
 import { convertSerializablePostDataToPostData } from "../../utils/posts";
-import { getPostsRecursively, listPosts } from "../../utils/readPosts";
+import { listPosts } from "../../utils/readPosts";
 
 type PostProps = {
   posts: SerializablePostData[];
