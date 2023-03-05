@@ -8,6 +8,7 @@ type PostData = {
   tags: TagData[];
   content: string;
   draft: boolean;
+  showTerminalAside: boolean;
 };
 
 type SerializablePostData = {
@@ -18,6 +19,7 @@ type SerializablePostData = {
   tags: TagData[];
   content: string;
   draft: boolean;
+  showTerminalAside: boolean;
 }
 
 export type { PostData, SerializablePostData };

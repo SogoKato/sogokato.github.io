@@ -12,31 +12,45 @@ const CodeBlock: CodeComponent = ({ inline, className, children }) => {
   const match = /language-(\w+)/.exec(className || "");
   const lang = match && match[1] ? match[1] : "";
   const codeBlockParams = className ? className.split(":") : [];
-  const filename = codeBlockParams?.length >= 2 ? codeBlockParams[1] : "";
+  let filename = codeBlockParams?.length >= 2 ? codeBlockParams[1] : "";
   const code = String(children).replace(/\n$/, "");
   let extra = null;
   if (
     lang === "python" &&
-    codeBlockParams.length > 2 &&
-    codeBlockParams[2] === "pyscript"
+    codeBlockParams.length >= 2 &&
+    codeBlockParams.includes("pyscript")
   ) {
+    filename = codeBlockParams.length > 2 ? filename : "";
     const PyScript = dynamic(() => import("./PyScript"), { ssr: false });
-    extra = <PyScript filename={filename} code={String(children)}></PyScript>;
+    extra = <PyScript code={String(children)}></PyScript>;
+  } else if (lang === "pyrepl") {
+    const PyRepl = dynamic(() => import("./PyRepl"), { ssr: false });
+    return <PyRepl code={code} />;
+  } else if (lang === "pyterminal") {
+    const PyTerminal = dynamic(() => import("./PyTerminal"), { ssr: false });
+    return (
+      <PyTerminal
+        id="inlinePyTerminal"
+        showTitle={true}
+        descStyle={{ whiteSpace: "pre-wrap" }}
+        linkStyle={{ color: "inherit", cursor: "pointer" }}
+      />
+    );
   } else if (lang === "pyconfig") {
-    const config = toml.parse(code)
+    const config = toml.parse(code);
     type Fetch = {
       from: string;
       to_file: string;
-    }
-    const files = config.fetch.map((f: Fetch) => {
-      const tmp = f.to_file.split("/");
-      return `├─ ${tmp[tmp.length - 1]}`
-    }).join("\n")
+    };
+    const files = config.fetch
+      .map((f: Fetch) => {
+        const tmp = f.to_file.split("/");
+        return `├─ ${tmp[tmp.length - 1]}`;
+      })
+      .join("\n");
     return (
       <>
-        <div>
-          {files}
-        </div>
+        <div>{files}</div>
         <PyConfig config={code}></PyConfig>
       </>
     );

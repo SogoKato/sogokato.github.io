@@ -16,9 +16,13 @@ export default function Layout({ children, posts, post }: LayoutProps) {
       <div className="grid grid-cols-10 justify-center max-w-7xl mx-auto">
         <Header className="col-span-10" />
         <main className="col-span-10 md:col-span-7">{children}</main>
-        <Aside className="col-span-10 md:col-span-3 mx-auto w-11/12" posts={posts ? posts : []} post={post} />
+        <Aside
+          className="col-span-10 md:col-span-3"
+          posts={posts ? posts : []}
+          post={post}
+        />
         <Footer className="col-span-10" />
       </div>
     </div>
   );
-};
+}

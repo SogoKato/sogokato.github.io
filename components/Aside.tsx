@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import Tags from "./Tags";
@@ -12,6 +13,7 @@ type AsideProps = {
 };
 
 const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
+  const commonClassName = "mx-auto w-11/12 ";
   const posts_ = posts.map((serializedPost) =>
     convertSerializablePostDataToPostData(serializedPost)
   );
@@ -30,6 +32,56 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
       </Link>
     );
   });
+  let terminal = null;
+  if (post?.showTerminalAside) {
+    const PyTerminal = dynamic(() => import("./PyTerminal"), { ssr: false });
+    terminal = (
+      <div className="sidebar-terminal-container md:sticky md:top-0 py-8 z-10">
+        <div className={commonClassName + "sidebar-terminal-inner-container"}>
+          <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
+            TERMINAL
+          </h2>
+          <pre className="text-xs">
+            <PyTerminal
+              id="sidebarPyTerminal"
+              className="my-3.5"
+              descStyle={{
+                display: "block",
+                marginTop: "0.625rem",
+                whiteSpace: "pre-wrap",
+              }}
+              linkStyle={{ textDecoration: "underline", cursor: "pointer" }}
+            />
+          </pre>
+        </div>
+        <style>{`
+        .sidebar-terminal-container::after {
+          display: block;
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          z-index: -1;
+          mask: linear-gradient(to top, transparent, black 20px);
+          backdrop-filter: blur(8px);
+        }
+        .sidebar-terminal-inner-container {
+          max-height: calc(100vh - 4rem);
+          overflow: scroll;
+        }
+        .sidebar-terminal-container .py-terminal {
+          border-radius: 0.375rem;
+          padding: 0.75rem;
+        }
+        `}</style>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: '.sidebar-terminal-container::after {content: ""}',
+          }}
+        ></style>
+      </div>
+    );
+  }
   const arrowTopRight = (
     <svg
       className="fill-neutral-900 dark:fill-neutral-100 h-3 ml-2"
@@ -43,7 +95,8 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
   const tags = aggregateTags(posts_);
   return (
     <aside className={className}>
-      <div className="mb-8">
+      {terminal}
+      <div className={commonClassName + "mb-8"}>
         <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
           AUTHOR
         </h2>
@@ -99,19 +152,19 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
           </a>
         </Link>
       </div>
-      <div className="mb-8">
+      <div className={commonClassName + "mb-8"}>
         <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
           RECOMMENDED
         </h2>
         <ul className="mt-3.5">{recommended}</ul>
       </div>
-      <div className="mb-8">
+      <div className={commonClassName + "mb-8"}>
         <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
           TAGS
         </h2>
         <Tags className="mt-3.5" tags={tags} />
       </div>
-      <div>
+      <div className={commonClassName}>
         <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
           LINKS
         </h2>

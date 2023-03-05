@@ -11,29 +11,48 @@ type PostCardProps = {
   post: PostData;
   isPostPage: boolean;
   isStaticPostPage?: boolean;
-}
+};
 
-const PostCard: React.FC<PostCardProps> = ({ className, post, isPostPage, isStaticPostPage }) => {
-  const date = !isStaticPostPage ? <p>{post.date.getFullYear()}年{post.date.getMonth() + 1}月{post.date.getDate()}日</p> : null;
-  const tagsStart = <Tags className="mb-1" tags={post.tags}></Tags>;
-  const tagsEnd = <Tags className="mt-3" tags={post.tags}></Tags>;
-  const titleClassName = "font-bold mt-3 text-4xl";
-  const title = isPostPage ? <h1 className={"mb-3 " + titleClassName}>{post.title}</h1> : <h2 className={titleClassName}>{post.title}</h2>;
-  const content = isPostPage ? <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ code: CodeBlock }}>{post.content}</ReactMarkdown> : <p className="line-clamp-3 my-5 text-neutral-600 dark:text-neutral-300">{post.desc}</p>;
+const PostCard: React.FC<PostCardProps> = ({
+  className,
+  post,
+  isPostPage,
+  isStaticPostPage,
+}) => {
+  const date = !isStaticPostPage ? (
+    <p>
+      {post.date.getFullYear()}年{post.date.getMonth() + 1}月
+      {post.date.getDate()}日
+    </p>
+  ) : null;
+  const tagsEnd = <Tags className="mt-5" tags={post.tags}></Tags>;
+  const titleClassName = "font-bold leading-tight mb-5 text-4xl";
+  const title = isPostPage ? (
+    <h1 className={"mt-8 " + titleClassName}>{post.title}</h1>
+  ) : (
+    <h2 className={"mt-5 " + titleClassName}>{post.title}</h2>
+  );
+  const content = isPostPage ? (
+    <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ code: CodeBlock }}>
+      {post.content}
+    </ReactMarkdown>
+  ) : (
+    <p className="line-clamp-3 my-5 text-neutral-600 dark:text-neutral-300">
+      {post.desc}
+    </p>
+  );
   const LikeButtons = dynamic(() => import("./Like"), { ssr: false });
   const SocialButtons = dynamic(() => import("./Social"), { ssr: false });
-  const shareButtons = !isStaticPostPage ? <SocialButtons className="flex" path={post.ref} /> : null;
+  const shareButtons = !isStaticPostPage ? (
+    <SocialButtons className="flex justify-end" path={post.ref} />
+  ) : null;
   const elements = isPostPage ? (
     <div>
       {date}
       {title}
-      {tagsStart}
       {shareButtons}
-      <div className={"my-5 " + className}>
-        {content}
-      </div>
+      <div className={"my-16 " + className}>{content}</div>
       {!isStaticPostPage ? <LikeButtons path={post.ref} /> : null}
-      {shareButtons}
       {tagsEnd}
       <Script
         src="https://pyscript.net/latest/pyscript.js"
@@ -49,7 +68,7 @@ const PostCard: React.FC<PostCardProps> = ({ className, post, isPostPage, isStat
       </a>
       {tagsEnd}
     </div>
-  )
+  );
   return (
     <div className="bg-white dark:bg-neutral-800 mx-auto mb-11 p-8 rounded-3xl shadow-lg w-11/12">
       {elements}

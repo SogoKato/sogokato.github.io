@@ -29,6 +29,7 @@ export const getStaticProps: GetStaticProps<PostProps> = ({ params }) => {
         draft: false,
         content: content,
         tags: [],
+        showTerminalAside: false,
       },
     },
   };
