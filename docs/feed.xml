@@ -5,8 +5,15 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Sat, 04 Mar 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 06 Mar 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PyScriptを使ってブログのサンプルコードを実行させる</title>
+      <link>https://sogo.dev/posts/2023/03/pyscript-codeblock</link>
+      <guid>https://sogo.dev/posts/2023/03/pyscript-codeblock</guid>
+      <pubDate>Mon, 06 Mar 2023 00:00:00 GMT</pubDate>
+      <description> 前回の記事を書くときに WebAssembly でブログのコードブロックのコードを実行させられたら面白いかも、ということで PyScript を使って実装してみました。React &amp; Next.js で使う際の注意点について</description>
+    </item>
     <item>
       <title>Pythonのunittest.mock.patchではどこにパッチするかが重要</title>
       <link>https://sogo.dev/posts/2023/03/python-unittest-mock-where-to-patch</link>
