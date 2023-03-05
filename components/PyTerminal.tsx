@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 type PyTerminalProps = {
   id?: string;
@@ -38,9 +39,9 @@ const PyTerminal: React.FC<PyTerminalProps> = ({
       {pyTerminal}
       <small style={descStyle}>
         WebAssembly で実行された Python スクリプトの出力です。
-        <a style={linkStyle} href="/posts/2023/03/pyscript-codeblock">
+        <Link style={linkStyle} href="/posts/2023/03/pyscript-codeblock">
           PyScriptを使ってブログのサンプルコードを実行させる
-        </a>
+        </Link>
         で解説しています。
       </small>
     </div>
