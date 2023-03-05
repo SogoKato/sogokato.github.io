@@ -10,7 +10,7 @@ class TestC(unittest.TestCase):
         some_class_mock_instance = some_class_mock.return_value
         some_class_mock_instance.some_method.return_value = "mock"
         sut = SystemUnderTest()
-        actual = sut.do_something()
+        actual = sut.some_function()
         assert actual == "mock"
 
     @patch("c.SomeClass")  # will raise AttributeError
@@ -18,5 +18,5 @@ class TestC(unittest.TestCase):
         some_class_mock_instance = some_class_mock.return_value
         some_class_mock_instance.some_method.return_value = "mock"
         sut = SystemUnderTest()
-        actual = sut.do_something()
+        actual = sut.some_function()
         assert actual == "mock"
