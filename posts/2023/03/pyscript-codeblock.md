@@ -116,7 +116,7 @@ wanchan.bark()
 コードブロック開始の \`\`\` の横に書いた文字列が [`CodeBlock`](https://github.com/SogoKato/sogokato.github.io/blob/8769da4e6bb4bdecf4a0c59d274d4a439b66535b/components/CodeBlock.tsx) コンポーネントの `className` 引数に渡されるので、それを `split` して条件分岐を作ります。
 
 関連するソースコード（執筆時点）
-* [components/CodeBlock.tsx](https://github.com/SogoKato/sogokato.github.io/blob/cb55f79c362d9aa6578ea5c68a703b69f3c2c238/components/CodeBlock.tsx)
+* [components/CodeBlock.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/CodeBlock.tsx)
 
 ## PyScript のカスタム要素に対応する React コンポーネントを作成
 
@@ -124,13 +124,13 @@ wanchan.bark()
 
 関連するソースコード（執筆時点）
 * `<py-script>`
-  * [components/PyScript.tsx](https://github.com/SogoKato/sogokato.github.io/blob/cb55f79c362d9aa6578ea5c68a703b69f3c2c238/components/PyScript.tsx)
+  * [components/PyScript.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyScript.tsx)
 * `<py-repl>`
-  * [components/PyRepl.tsx](https://github.com/SogoKato/sogokato.github.io/blob/cb55f79c362d9aa6578ea5c68a703b69f3c2c238/components/PyRepl.tsx)
+  * [components/PyRepl.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyRepl.tsx)
 * `<py-terminal>`
-  * [components/PyTerminal.tsx](https://github.com/SogoKato/sogokato.github.io/blob/cb55f79c362d9aa6578ea5c68a703b69f3c2c238/components/PyTerminal.tsx)
+  * [components/PyTerminal.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyTerminal.tsx)
 * `<py-config>`
-  * [components/PyConfig.tsx](https://github.com/SogoKato/sogokato.github.io/blob/cb55f79c362d9aa6578ea5c68a703b69f3c2c238/components/PyConfig.tsx)
+  * [components/PyConfig.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyConfig.tsx)
 
 ## React のハイドレーションのエラーを回避するために Next.js の Dynamic Import を使用
 
@@ -141,7 +141,7 @@ PyScript が DOM の書き換えを行うので、サーバー側で SSR した�
 上で作成した PyScript のカスタム要素に対応するコンポーネント（`PyConfig` 以外）を使う際は Dynamic Import を使用するようにしています。`PyConfig` については DOM が変更されることがないので Dynamic Import にする必要がないです（また、これを Dynamic Import にしたらうまく動作しませんでした）。
 
 関連するソースコード（執筆時点）
-* [components/CodeBlock.tsx](https://github.com/SogoKato/sogokato.github.io/blob/cb55f79c362d9aa6578ea5c68a703b69f3c2c238/components/CodeBlock.tsx)
+* [components/CodeBlock.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/CodeBlock.tsx)
 
 ## PyScript の初期化の仕様に合わせた最適化
 
@@ -152,8 +152,8 @@ PyScript では script タグで読み込みが完了したタイミングで、
 また、SPA のようなクライアント側でのルーティングを行なっているので、別の記事に移動しても前のページの実行結果がターミナルに残ってしまいます。現状では PyScript 側に destroy 系のメソッドが用意されていないので、こちらもとりあえずの対応として閲覧者にページをリロードするように促す仕組みを入れています・・・。🙇
 
 関連するソースコード（執筆時点）
-* [components/PostCard.tsx](https://github.com/SogoKato/sogokato.github.io/blob/cb55f79c362d9aa6578ea5c68a703b69f3c2c238/components/PostCard.tsx)
-* [components/PyTerminal.tsx](https://github.com/SogoKato/sogokato.github.io/blob/cb55f79c362d9aa6578ea5c68a703b69f3c2c238/components/PyTerminal.tsx)
+* [components/PostCard.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PostCard.tsx)
+* [components/PyTerminal.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyTerminal.tsx)
 
 ## おわりに
 
