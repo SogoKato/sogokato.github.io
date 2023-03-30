@@ -5,8 +5,15 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Mon, 06 Mar 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 30 Mar 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CKAD受検記録【2023年版】</title>
+      <link>https://sogo.dev/posts/2023/03/certified-kubernetes-application-developer</link>
+      <guid>https://sogo.dev/posts/2023/03/certified-kubernetes-application-developer</guid>
+      <pubDate>Thu, 30 Mar 2023 00:00:00 GMT</pubDate>
+      <description> 2023年3月30日に Certified Kubernetes Application Developer (CKAD) を受験し、合格しましたのでその受検記録記事です。ちょうど1年前に Certified Kuberenetes Administrator (CKA) を取っていたので、その続</description>
+    </item>
     <item>
       <title>PyScriptを使ってブログのサンプルコードを実行させる</title>
       <link>https://sogo.dev/posts/2023/03/pyscript-codeblock</link>

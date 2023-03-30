@@ -27,6 +27,7 @@ title: "自己紹介"
 
 ## 資格
 
+* Certified Kubernetes Application Developer (2023年3月, 91/100)
 * Google Professional Cloud Architect (2022年9月)
 * Google Cloud Associate Cloud Engineer (2022年9月)
 * Microsoft Certified: Azure Fundamentals (2022年6月, 900/1000)
