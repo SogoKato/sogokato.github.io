@@ -8,6 +8,9 @@ export default function Document() {
       <Head>
         <link rel="stylesheet" href="https://use.typekit.net/suf5fdm.css" />
         <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <style>{`
+        .py-overlay, .py-pop-up {display: none;}
+        `}</style>
         <link
           rel="alternate"
           href="/feed.xml"
