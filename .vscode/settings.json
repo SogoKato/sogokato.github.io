@@ -5,10 +5,11 @@
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
-    "**/node_modules/*/**": true
+    "**/node_modules/*/**": true,
+    "**/docs/**": true
   },
   "[markdown]": {
-    "editor.defaultFormatter": null
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
   "markdown.extension.orderedList.marker": "one",
   "markdown.extension.toc.unorderedList.marker": "*"
