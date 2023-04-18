@@ -1,7 +1,7 @@
 ---
 title: "GitLab CIのrulesとworkflowを理解する"
 date: "2022-11-17"
-tags: ["Gitlab", "CI/CD"]
+tags: ["GitLab", "CI/CD"]
 ---
 
 GitLab CI の rules を使って Dockerfile などの特定のファイルの変更時のみ Docker イメージを作成するパイプラインを回して、それ以外の時には既存の Docker イメージを使用して CI を実行する、という組み方をしたかったのですが、書き方に結構手間取ったのでメモ。
