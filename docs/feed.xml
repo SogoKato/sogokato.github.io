@@ -5,8 +5,15 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Tue, 18 Apr 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 22 Apr 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reactで検索・ソート可能なDataTableを自作する</title>
+      <link>https://sogo.dev/posts/2023/04/datatable-react</link>
+      <guid>https://sogo.dev/posts/2023/04/datatable-react</guid>
+      <pubDate>Sat, 22 Apr 2023 00:00:00 GMT</pubDate>
+      <description> 最近、MUI の妹分の UI ライブラリである Joy-UI を使ってます。現在進行形で活発に開発が進んでいて、設計（デザイン）も今時な感じで好感触です。ところどころまだ開発されていないコンポー</description>
+    </item>
     <item>
       <title>Kanikoでコンテナイメージつくるならcache=trueは有効にしておこう</title>
       <link>https://sogo.dev/posts/2023/04/kaniko-cache</link>
