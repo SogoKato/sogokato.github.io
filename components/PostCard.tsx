@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import Script from "next/script";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import CodeBlock from "./CodeBlock";
 import Tags from "./Tags";
@@ -33,7 +34,11 @@ const PostCard: React.FC<PostCardProps> = ({
     <h2 className={"mt-5 " + titleClassName}>{post.title}</h2>
   );
   const content = isPostPage ? (
-    <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ code: CodeBlock }}>
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeRaw]}
+      components={{ code: CodeBlock }}
+    >
       {post.content}
     </ReactMarkdown>
   ) : (
