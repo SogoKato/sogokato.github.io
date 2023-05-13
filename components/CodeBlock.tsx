@@ -43,11 +43,13 @@ const CodeBlock: CodeComponent = ({ inline, className, children }) => {
       to_file: string;
     };
     const files = config.fetch
-      .map((f: Fetch) => {
-        const tmp = f.to_file.split("/");
-        return `├─ ${tmp[tmp.length - 1]}`;
-      })
-      .join("\n");
+      ? config.fetch
+          .map((f: Fetch) => {
+            const tmp = f.to_file.split("/");
+            return `├─ ${tmp[tmp.length - 1]}`;
+          })
+          .join("\n")
+      : [];
     return (
       <>
         <div>{files}</div>

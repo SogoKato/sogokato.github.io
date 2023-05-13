@@ -5,6 +5,7 @@ import Tags from "./Tags";
 import type { PostData, SerializablePostData } from "../types/post";
 import { convertSerializablePostDataToPostData } from "../utils/posts";
 import { aggregateTags } from "../utils/tag";
+import { useEffect } from "react";
 
 type AsideProps = {
   className?: string;
@@ -17,6 +18,11 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
   const posts_ = posts.map((serializedPost) =>
     convertSerializablePostDataToPostData(serializedPost)
   );
+  useEffect(() => {
+    const el = document.getElementById("sidebarPyTerminalWrapper");
+    if (!el) return;
+    el.style.setProperty("--terminal-height", "9999px");
+  }, []);
   // TODO: おすすめの記事や人気の記事を出すようにする
   const recommendedPosts = recommendPostsFromPost(posts, post);
   const recommended = recommendedPosts.map((post, index) => {
@@ -38,10 +44,33 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
     terminal = (
       <div className="sidebar-terminal-container md:sticky md:top-0 py-8 z-10">
         <div className={commonClassName + "sidebar-terminal-inner-container"}>
-          <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
-            TERMINAL
-          </h2>
-          <pre className="text-xs">
+          <div className="flex justify-between">
+            <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
+              TERMINAL
+            </h2>
+            <button
+              className="bg-duchs-200 hover:bg-duchs-800 font-display px-2 rounded-full text-duchs-900 hover:text-duchs-100 text-xs transition-all"
+              onClick={() => {
+                const el = document.getElementById("sidebarPyTerminalWrapper");
+                if (!el) {
+                  console.error("#sidebarPyTerminalWrapper not found.");
+                  return;
+                }
+                const current = el.style.getPropertyValue("--terminal-height");
+                const changed = current === "0px" ? "9999px" : "0px";
+                el.style.setProperty("--terminal-height", changed);
+              }}
+            >
+              OPEN/CLOSE
+            </button>
+          </div>
+          <pre
+            id="sidebarPyTerminalWrapper"
+            className={"duration-300 text-xs transition-all"}
+            style={{
+              maxHeight: "var(--terminal-height)",
+            }}
+          >
             <PyTerminal
               id="sidebarPyTerminal"
               className="my-3.5"
