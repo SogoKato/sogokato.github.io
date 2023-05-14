@@ -1,7 +1,7 @@
 ---
 title: "SQLAlchemyで'MySQL server has gone away'が発生した時の対処法2つ"
 date: "2023-01-12"
-tags: ["Python", "SQLAlchemy"]
+tags: ["Python", "SQLAlchemy", "MySQL", "データベース"]
 ---
 
 FastAPI で SQLAlchemy を使っている時に、コンテナを立てた直後は問題ないけど一定時間経過後に DB 接続が切れてしまう問題に遭遇したのでその時に調べたことのメモ。
@@ -68,6 +68,10 @@ from sqlalchemy import create_engine
 
 engine = create_engine("mysql+mysqldb://scott:tiger@localhost/test", pool_pre_ping=True)
 ```
+
+コネクションのチェックアウトと返却は SQL コマンド発行のたびに行われます。トランザクションが失敗したときはロールバックされるまで返却されません。詳しくは下記の関連記事をご覧ください。
+
+関連記事：[SQLAlchemyのセッション・トランザクションを理解する](/posts/2023/05/sqlalchemy-sessions-and-transactions)
 
 ### 楽観的アプローチ
 

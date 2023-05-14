@@ -5,14 +5,29 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Sat, 22 Apr 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 14 May 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SQLAlchemyのセッション・トランザクションを理解する</title>
+      <link>https://sogo.dev/posts/2023/05/sqlalchemy-sessions-and-transactions</link>
+      <guid>https://sogo.dev/posts/2023/05/sqlalchemy-sessions-and-transactions</guid>
+      <pubDate>Sun, 14 May 2023 00:00:00 GMT</pubDate>
+      <description> SQLAlchemy の Session や scoped_session、トランザクションに関して理解していきます。
+
+## 用語おさらい
+
+### セッション（Session）
+
+SQLAlchemy の Session オブジェクトは、ORM マッピングされたオブジェクトの永続化に関する操作</description>
+    </item>
     <item>
       <title>Reactで検索・ソート可能なDataTableを自作する</title>
       <link>https://sogo.dev/posts/2023/04/datatable-react</link>
       <guid>https://sogo.dev/posts/2023/04/datatable-react</guid>
       <pubDate>Sat, 22 Apr 2023 00:00:00 GMT</pubDate>
-      <description> 最近、MUI の妹分の UI ライブラリである Joy-UI を使ってます。現在進行形で活発に開発が進んでいて、設計（デザイン）も今時な感じで好感触です。ところどころまだ開発されていないコンポー</description>
+      <description> 最近、MUI の妹分の UI ライブラリである Joy-UI を使ってます。現在進行形で活発に開発が進んでいて、設計（デザイン）も今時な感じで好感触です。ところどころまだ開発されていないコンポーネントもちらほらあるものの、ドキュメントには代替策がコード付きで載っていてとても親切です。
+
+MUI X</description>
     </item>
     <item>
       <title>Kanikoでコンテナイメージつくるならcache=trueは有効にしておこう</title>
@@ -21,7 +36,7 @@
       <pubDate>Tue, 18 Apr 2023 00:00:00 GMT</pubDate>
       <description> !ぜんぜんわからない　俺たちは雰囲気でカニコをやっている
 
-恥ずかしながら、わたしは雰囲気で kaniko にコンテナイメージのビルドをしてもらっていることに気づきました。1年以上 GitLab CI で kaniko を使っ</description>
+恥ずかしながら、わたしは雰囲気で kaniko にコンテナイメージのビルドをしてもらっていることに気づきました。1年以上 GitLab CI で kaniko を使っておきながら、ただ「特権コンテナを使わずにイメージつくれるやつ」くらいの</description>
     </item>
     <item>
       <title>IPoE回線の自宅のWebサービスをVPN経由で固定IPのクラウドから公開する</title>
@@ -42,21 +57,27 @@
       <link>https://sogo.dev/posts/2023/03/pyscript-codeblock</link>
       <guid>https://sogo.dev/posts/2023/03/pyscript-codeblock</guid>
       <pubDate>Mon, 06 Mar 2023 00:00:00 GMT</pubDate>
-      <description> 前回の記事を書くときに WebAssembly でブログのコードブロックのコードを実行させられたら面白いかも、ということで PyScript を使って実装してみました。React &amp; Next.js で使う際の注意点について</description>
+      <description> 前回の記事を書くときに WebAssembly でブログのコードブロックのコードを実行させられたら面白いかも、ということで PyScript を使って実装してみました。React &amp; Next.js で使う際の注意点についても書こうと思います。
+
+以下については前提知識としてこの記事では解説しませ</description>
     </item>
     <item>
       <title>Pythonのunittest.mock.patchではどこにパッチするかが重要</title>
       <link>https://sogo.dev/posts/2023/03/python-unittest-mock-where-to-patch</link>
       <guid>https://sogo.dev/posts/2023/03/python-unittest-mock-where-to-patch</guid>
       <pubDate>Sat, 04 Mar 2023 00:00:00 GMT</pubDate>
-      <description> Python 公式ドキュメントの unittest.mock のページにドンピシャの内容が書いてありますが、なかなか気づけずにハマってしまっていたので</description>
+      <description> Python 公式ドキュメントの unittest.mock のページにドンピシャの内容が書いてありますが、なかなか気づけずにハマってしまっていたのでメモです。
+
+`unittest.mock.patch` でパッチしたけど当たってない気がする人は参考にしてみてください。
+
+下記の引用に要点が凝縮</description>
     </item>
     <item>
       <title>Ansibleでgpg公開鍵とaptのサードパーティリポジトリを追加する ～Terraformをインストールしたい～</title>
       <link>https://sogo.dev/posts/2023/03/ansible-apt-repo-signed-by-gpg-key</link>
       <guid>https://sogo.dev/posts/2023/03/ansible-apt-repo-signed-by-gpg-key</guid>
       <pubDate>Wed, 01 Mar 2023 00:00:00 GMT</pubDate>
-      <description> apt を使って docker や terraform をインストールする時など、提供元のサードパーティ apt リポジトリを追加する場合が結構ありますよね。その際に、今までは `apt-key` を使って OpenPGP 公開鍵をインポートしていたのですが、`apt-key` は [Debian</description>
+      <description> apt を使って docker や terraform をインストールする時など、提供元のサードパーティ apt リポジトリを追加する場合が結構ありますよね。その際に、今までは `apt-key` を使って OpenPGP 公開鍵をインポートしていたのですが、`apt-key` は Debian </description>
     </item>
     <item>
       <title>TerraformでAPI Gatewayのスロットリングを設定する</title>
@@ -76,7 +97,8 @@
       <pubDate>Wed, 22 Feb 2023 00:00:00 GMT</pubDate>
       <description> 『単体テストの考え方／使い方』（Vladimir Khorikov 著、須田智之訳）を読んだので、そのまとめを部ごとに書いていこうと思います。
 
-1. [単体テストの目的・定義・学派・命名</description>
+1. 単体テストの目的・定義・学派・命名について：単体テストの考え方／使い方 第1部
+1. リファクタリングしやすいテストを書こう：単体テストの考え方／</description>
     </item>
     <item>
       <title>ビジネス・ロジックと連携の指揮を分離すれば良いテストが書ける：単体テストの考え方／使い方 第2部後半</title>
@@ -85,7 +107,8 @@
       <pubDate>Sun, 19 Feb 2023 00:00:00 GMT</pubDate>
       <description> 『単体テストの考え方／使い方』（Vladimir Khorikov 著、須田智之訳）を読んでいるので、そのまとめを部ごとに書いていこうと思います。
 
-1. [単体テストの目的・定義・学派・</description>
+1. 単体テストの目的・定義・学派・命名について：単体テストの考え方／使い方 第1部
+1. リファクタリングしやすいテストを書こう：単体テストの考え</description>
     </item>
     <item>
       <title>FastAPIとSQLAlchemy2.0ならもう型ヒントを諦めなくていい</title>
@@ -101,7 +124,9 @@
       <pubDate>Mon, 06 Feb 2023 00:00:00 GMT</pubDate>
       <description> Python の dict（辞書）を TypeScript の interface のように扱えて便利な TypedDict ですが、**dict のサブクラスではない**というのが少し落とし穴だなと思ったのでメモ。
 
-##</description>
+## まずは PEP を見よう
+
+大抵のことは公式ドキュメントを見れば書いてあ</description>
     </item>
     <item>
       <title>リファクタリングしやすいテストを書こう：単体テストの考え方／使い方 第2部前半</title>
@@ -110,7 +135,8 @@
       <pubDate>Sat, 04 Feb 2023 00:00:00 GMT</pubDate>
       <description> 『単体テストの考え方／使い方』（Vladimir Khorikov 著、須田智之訳）を読んでいるので、そのまとめを部ごとに書いていこうと思います。
 
-1. [単体テストの目的・定義・学派・</description>
+1. 単体テストの目的・定義・学派・命名について：単体テストの考え方／使い方 第1部
+1. リファクタリングしやすいテストを書こう：単体テストの考え</description>
     </item>
     <item>
       <title>単体テストの目的・定義・学派・命名について：単体テストの考え方／使い方 第1部</title>
@@ -119,7 +145,8 @@
       <pubDate>Tue, 17 Jan 2023 00:00:00 GMT</pubDate>
       <description> 『単体テストの考え方／使い方』（Vladimir Khorikov 著、須田智之訳）を読んでいるので、そのまとめを部ごとに書いていこうと思います。
 
-1. 単体テストの目的・定義・学派・命</description>
+1. 単体テストの目的・定義・学派・命名について：単体テストの考え方／使い方 第1部（この記事）
+1. リファクタリングしやすいテストを書こう：単体</description>
     </item>
     <item>
       <title>SQLAlchemyで'MySQL server has gone away'が発生した時の対処法2つ</title>
@@ -175,7 +202,13 @@
 
 ## 環境
 
-* Ubuntu 22</description>
+* Ubuntu 22.04
+* Kubernetes v1.26.0
+* kubeadm v1.26.0
+
+## 問題
+
+Kub</description>
     </item>
     <item>
       <title>VS Code Serverでリモートホストのコンテナ上開発環境に直接アクセスする</title>
@@ -184,7 +217,13 @@
       <pubDate>Sat, 17 Dec 2022 00:00:00 GMT</pubDate>
       <description> 今回は「ぼくのかんがえたさいきょうのかいはつかんきょう」を紹介したいと思います。
 
-VS Code Server を使い、リモートサーバー上でコンテナとして動かしている開発環境に直</description>
+VS Code Server を使い、リモートサーバー上でコンテナとして動かしている開発環境に直接乗り込んでみよう、というアイデアです。
+
+SSH もポート開放も不要なのでとてもお手軽です。
+
+## 環境
+
+サーバ</description>
     </item>
     <item>
       <title>よくあるSPA+API構成でのOpenID Connectクライアント実装</title>
@@ -193,7 +232,8 @@ VS Code Server を使い、リモートサーバー上でコンテナとして�
       <pubDate>Fri, 02 Dec 2022 00:00:00 GMT</pubDate>
       <description> この記事はニフクラ等を提供している、富士通クラウドテクノロジーズ Advent Calendar 2022の2日目の記事です。
 
-昨日は [@nt</description>
+昨日は @ntoofu さんの パケットキャプチャからKubernetes APIのTLS通信を解析する でした。  
+私は TLS な時点でパケットキャプチャを諦めて</description>
     </item>
     <item>
       <title>GitLab CIのrulesとworkflowを理解する</title>
@@ -219,7 +259,9 @@ VS Code Server を使い、リモートサーバー上でコンテナとして�
 
 今までブログが長く続いたことがないのですが、n度目の正直ということで今回こそは長く続くように頑張りたいと思います（とても固い決意）。
 
-@SogoKato といいます。どんな人か気になってくれた方は 自己紹介ページ をご覧いた</description>
+@SogoKato といいます。どんな人か気になってくれた方は 自己紹介ページ をご覧いただければと思います。
+
+</description>
     </item>
   </channel>
 </rss>
