@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import CodeBlock from "./CodeBlock";
 import Tags from "./Tags";
 import type { PostData } from "../types/post";
+import Social from "./Social";
 
 type PostCardProps = {
   className?: string;
@@ -47,9 +48,12 @@ const PostCard: React.FC<PostCardProps> = ({
     </p>
   );
   const LikeButtons = dynamic(() => import("./Like"), { ssr: false });
-  const SocialButtons = dynamic(() => import("./Social"), { ssr: false });
   const shareButtons = !isStaticPostPage ? (
-    <SocialButtons className="flex justify-end" path={post.ref} />
+    <Social
+      className="flex justify-end"
+      path={post.ref}
+      text={`${post.title}\n`}
+    />
   ) : null;
   const elements = isPostPage ? (
     <div>
