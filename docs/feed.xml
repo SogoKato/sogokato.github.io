@@ -5,8 +5,19 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Sun, 14 May 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 15 May 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CeleryにおけるSQLAlchemyのセッション管理</title>
+      <link>https://sogo.dev/posts/2023/05/celery-sqlalchemy</link>
+      <guid>https://sogo.dev/posts/2023/05/celery-sqlalchemy</guid>
+      <pubDate>Mon, 15 May 2023 00:00:00 GMT</pubDate>
+      <description> 前回の記事では SQLAlchemy の Session について解説しました。今回はその応用として、Celery においてどのように Session を管理するかを考えたいと思います。
+
+関連記事：
+* SQLAlchemyのセッション・トランザクションを理解する
+* SQLAlchemyで'M</description>
+    </item>
     <item>
       <title>SQLAlchemyのセッション・トランザクションを理解する</title>
       <link>https://sogo.dev/posts/2023/05/sqlalchemy-sessions-and-transactions</link>
