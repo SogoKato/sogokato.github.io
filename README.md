@@ -12,18 +12,32 @@ title: "自己紹介"
   * Perfume
   * 宇多田ヒカル
   * 椎名林檎・東京事変
-  * Mayday をはじめとする C-POP
-  * IVE
+  * K-POP (IVE, LE SSERAFIM, etc.)
+  * C-POP (五月天 Mayday, 告五人 Accusefive, etc.)
 * 観葉植物
 * 中国家庭料理づくり
 * プログラミング
 * ガジェット
+* 乗りもの
+* コーヒー
 * かわいいキャラクター
 
 ## 経歴
 
 * 2021〜現在 アプリケーション開発 (Python, Docker, GitLab)
 * 2017〜2021 上智大学文学部新聞学科
+
+## 言語
+
+* よく使う
+  * 日本語
+  * Python
+  * JavaScript/TypeScript
+  * HTML/CSS
+* たまに使う
+  * 英語
+  * 中国語
+  * Go
 
 ## 資格
 
