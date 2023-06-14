@@ -11,11 +11,16 @@ RUN apt-get update \
 
 RUN apt install -y curl git vim
 
-RUN wget -O- https://aka.ms/install-vscode-server/setup.sh | sh
+# RUN wget -O- https://aka.ms/install-vscode-server/setup.sh | sh
+RUN cd /tmp \
+    && curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output vscode_cli.tar.gz \
+    && tar -xf vscode_cli.tar.gz \
+    && mv code /usr/local/bin/
 
 USER $USERNAME
 ENV SHELL=/bin/bash
 
 RUN curl -fsSL https://get.pnpm.io/install.sh | sh -
 
-CMD ["code-server", "serve", "--accept-server-license-terms", "--random-name", "--server-data-dir", "/workspace/.vscode-server"]
+# CMD ["code-server", "serve", "--accept-server-license-terms", "--random-name", "--server-data-dir", "/workspace/.vscode-server"]
+CMD ["code", "tunnel", "--accept-server-license-terms", "--random-name", "--cli-data-dir", "/workspace/.vscode-server"]

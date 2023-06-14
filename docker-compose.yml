@@ -11,4 +11,6 @@ services:
       - type: bind
         source: ${HOME}/.gitconfig
         target: /home/node/.gitconfig
+    ports:
+      - "3000:3000"
     restart: always
