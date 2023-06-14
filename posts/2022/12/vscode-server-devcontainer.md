@@ -10,6 +10,27 @@ tags: ["VS Code", "開発環境"]
 
 SSH もポート開放も不要なのでとてもお手軽です。
 
+## 2023/06/14 追記
+
+以下で紹介する方法が最近は使えなくなってしまったようです。少し前から
+
+> Your tunnel connection is outdated. Upgrade to the latest version for performance and security improvements!
+
+という警告が出るようになり、最近は接続後にワークスペースを開けなくなってしまいました。
+
+なので（code-server ではなく）code の方のバイナリをインストールするようにしていったんしのいでいます。ただ、機能差としてポート転送が使えなくなってしまったのでファイアウォールを開けないと中で立ち上げたサーバーにアクセスできません。
+
+```diff
+-RUN wget -O- https://aka.ms/install-vscode-server/setup.sh | sh
++RUN cd /tmp \
++    && curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output vscode_cli.tar.gz \
++    && tar -xf vscode_cli.tar.gz \
++    && mv code /usr/local/bin/
+
+-CMD ["code-server", "serve", "--accept-server-license-terms", "--random-name", "--server-data-dir", "/workspace/.vscode-server"]
++CMD ["code", "tunnel", "--accept-server-license-terms", "--random-name", "--cli-data-dir", "/workspace/.vscode-server"]
+```
+
 ## 環境
 
 サーバー
