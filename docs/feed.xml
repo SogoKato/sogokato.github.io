@@ -5,8 +5,28 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Mon, 15 May 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jun 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu 22.04ではusercfg.txtがデフォルトでincludeされていないので注意</title>
+      <link>https://sogo.dev/posts/2023/06/ubuntu-22.04-raspi-config.txt</link>
+      <guid>https://sogo.dev/posts/2023/06/ubuntu-22.04-raspi-config.txt</guid>
+      <pubDate>Wed, 14 Jun 2023 00:00:00 GMT</pubDate>
+      <description> タイトルの通りです。これにしばらくハマってしまったので戒めのために書いておきます。
+
+## tl;dr
+
+Ubuntu 20.04 の時と同じ設定ファイルをラズパイの /boot/firmware に入れていたけど反映されていなかった。調べてみたらそのファイルを include する文が Ubun</description>
+    </item>
+    <item>
+      <title>ラズパイでK3sクラスター構築</title>
+      <link>https://sogo.dev/posts/2023/06/k3s-setup</link>
+      <guid>https://sogo.dev/posts/2023/06/k3s-setup</guid>
+      <pubDate>Tue, 13 Jun 2023 00:00:00 GMT</pubDate>
+      <description> 今まで kubeadm でクラスター運用をしていたのですが、ラズパイくんたちのお引越しの関係で再構築することにしました。Raspberry Pi 4B 2GB や 3A+（RAM 512MB）も join させたかったこともあり、エッジ環境での動作も想定されている K3s を選びました。
+
+## </description>
+    </item>
     <item>
       <title>CeleryにおけるSQLAlchemyのセッション管理</title>
       <link>https://sogo.dev/posts/2023/05/celery-sqlalchemy</link>
@@ -232,9 +252,7 @@ VS Code Server を使い、リモートサーバー上でコンテナとして�
 
 SSH もポート開放も不要なのでとてもお手軽です。
 
-## 環境
-
-サーバ</description>
+## 2023/06</description>
     </item>
     <item>
       <title>よくあるSPA+API構成でのOpenID Connectクライアント実装</title>
