@@ -1,7 +1,7 @@
 ---
 title: "ラズパイでK3sクラスター構築"
 date: "2023-06-13"
-tags: ["Kubernetes", "K3s"]
+tags: ["Kubernetes", "K3s", "Raspberry Pi"]
 ---
 
 今まで kubeadm でクラスター運用をしていたのですが、ラズパイくんたちのお引越しの関係で再構築することにしました。Raspberry Pi 4B 2GB や 3A+（RAM 512MB）も join させたかったこともあり、エッジ環境での動作も想定されている [K3s](https://k3s.io/) を選びました。
