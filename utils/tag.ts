@@ -1,5 +1,5 @@
 import { orderBy, union } from "lodash";
-import { PostData } from "../types/post";
+import { PostData, PostSummary } from "../types/post";
 
 import { TagData } from "../types/tag";
 
@@ -7,7 +7,7 @@ export const getTagRef = (tagName: string): string => {
   return `/tags/${tagName.toLowerCase().replace("/", "-").replace(" ", "-")}`
 };
 
-export const aggregateTags = (posts: PostData[]): TagData[] => {
+export const aggregateTags = (posts: PostSummary[] | PostData[]): TagData[] => {
   const tagNames = union(posts.map(post => post.tags.map(tag => tag.name)).flat());
   type Count = {
     tagName: string;

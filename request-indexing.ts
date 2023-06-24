@@ -1,9 +1,9 @@
 import { orderBy } from "lodash";
 import { google } from "googleapis";
-import type { PostData } from "./types/post";
+import type { PostSummary } from "./types/post";
 import { baseUrl } from "./utils/const";
-import { convertSerializablePostDataToPostData } from "./utils/posts";
-import { listPosts } from "./utils/readPosts";
+import { convertSerializablePostSummaryToPostSummary } from "./utils/posts";
+import { listPostSummaries } from "./utils/readPosts";
 
 const googleSAKey = require("./service_account.json");
 const bingIndexNowKey = "8558162bf0de4b4fa018126dfc4e0cdb";
@@ -16,7 +16,7 @@ const jwtClient = new google.auth.JWT(
   undefined
 );
 
-const requestGoogle = (accessToken: string, post: PostData) => {
+const requestGoogle = (accessToken: string, post: PostSummary) => {
   fetch("https://indexing.googleapis.com/v3/urlNotifications:publish", {
     method: "POST",
     headers: {
@@ -34,7 +34,9 @@ const requestGoogle = (accessToken: string, post: PostData) => {
 
 const requestIndexing = () => {
   const posts = orderBy(
-    listPosts().map((post) => convertSerializablePostDataToPostData(post)),
+    listPostSummaries().map((post) =>
+      convertSerializablePostSummaryToPostSummary(post)
+    ),
     (o) => o.date,
     "desc"
   );

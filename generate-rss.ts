@@ -1,22 +1,23 @@
 import fs from "fs";
 import { orderBy } from "lodash";
 import { join } from "path";
-import type { PostData } from "./types/post";
+import type { PostSummary } from "./types/post";
 import { baseUrl, siteDescription, siteTitle } from "./utils/const";
-import { convertSerializablePostDataToPostData } from "./utils/posts";
-import { listPosts } from "./utils/readPosts";
+import { convertSerializablePostSummaryToPostSummary } from "./utils/posts";
+import { listPostSummaries } from "./utils/readPosts";
 
 const RSS_URL = `${baseUrl}/feed.xml`;
 
-const createFeed = (post: PostData) => {
-  const desc = post.desc.replace("&", "&amp;")
+const createFeed = (post: PostSummary) => {
+  const desc = post.desc.replace("&", "&amp;");
   return `    <item>
       <title>${post.title}</title>
       <link>${baseUrl}${post.ref}</link>
       <guid>${baseUrl}${post.ref}</guid>
       <pubDate>${post.date.toUTCString()}</pubDate>
       <description>${desc}</description>
-    </item>`;}
+    </item>`;
+};
 
 const writeRss = async (filePath: string, content: string) => {
   try {
@@ -28,7 +29,9 @@ const writeRss = async (filePath: string, content: string) => {
 
 const generateRss = async () => {
   const posts = orderBy(
-    listPosts().map((post) => convertSerializablePostDataToPostData(post)),
+    listPostSummaries().map((post) =>
+      convertSerializablePostSummaryToPostSummary(post)
+    ),
     (o) => o.date,
     "desc"
   );

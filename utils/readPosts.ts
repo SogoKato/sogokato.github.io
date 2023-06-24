@@ -1,10 +1,32 @@
 import fs from "fs";
 import matter from "gray-matter";
 import { basePostDir } from "./const";
-import type { SerializablePostData } from "../types/post";
+import type {
+  SerializablePostData,
+  SerializablePostSummary,
+} from "../types/post";
 import { getTagRef } from "./tag";
 
-export const listPosts = (): SerializablePostData[] => {
+export const listPostSummaries = (): SerializablePostSummary[] => {
+  const posts = listPostsRaw();
+  return posts.map((post) => post.summary);
+};
+
+export const getPostData = (ref: string): SerializablePostData => {
+  const posts = listPostsRaw();
+  const post = posts.filter((post) => post.summary.ref === ref)[0];
+  return {
+    ...post.summary,
+    content: post.content,
+  };
+};
+
+interface PostRaw {
+  summary: SerializablePostSummary;
+  content: string;
+}
+
+const listPostsRaw = (): PostRaw[] => {
   const posts: string[][] = [];
   getPostsRecursively(basePostDir, posts);
   const allPosts = posts.map((post) => {
@@ -13,30 +35,33 @@ export const listPosts = (): SerializablePostData[] => {
     const fileContent = fs.readFileSync(post.join("/"), "utf-8");
     const { data, content } = matter(fileContent);
     return {
-      title: data.title,
-      date: data.date,
-      ref: ref,
-      desc: data.description
-        ? data.description
-        : content
-            .slice(0, 1000)
-            .replace("\n", " ")
-            .replace(/\[(.+?)\]\(.+?\)/g, "$1")
-            .slice(0, 150),
-      draft: data.draft ? data.draft : false,
-      content: content,
-      tags: (data.tags as string[]).map((tag) => ({
-        name: tag,
-        ref: getTagRef(tag),
-      })),
-      showTerminalAside: data.showTerminalAside
-        ? data.showTerminalAside
-        : false,
+      summary: {
+        title: data.title,
+        date: data.date,
+        ref: ref,
+        desc: data.description
+          ? data.description
+          : content
+              .slice(0, 1000)
+              .replace("\n", " ")
+              .replace(/\[(.+?)\]\(.+?\)/g, "$1")
+              .slice(0, 256),
+        draft: data.draft ? data.draft : false,
+        tags: (data.tags as string[]).map((tag) => ({
+          name: tag,
+          ref: getTagRef(tag),
+        })),
+        showTerminalAside: data.showTerminalAside
+          ? data.showTerminalAside
+          : false,
+      },
+      content,
     };
   });
   return allPosts.filter(
     (post) =>
-      !post.draft || (process.env.NODE_ENV === "development" && post.draft)
+      !post.summary.draft ||
+      (process.env.NODE_ENV === "development" && post.summary.draft)
   );
 };
 

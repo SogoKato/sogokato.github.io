@@ -3,25 +3,31 @@ import type { GetStaticProps, NextPage } from "next";
 import Pagination from "../../components/Pagination";
 import PostCard from "../../components/PostCard";
 import Seo from "../../components/Seo";
-import type { SerializablePostData } from "../../types/post";
-import { basePostDir, postsPerPage, siteDescription, siteTitle } from "../../utils/const";
-import { convertSerializablePostDataToPostData } from "../../utils/posts";
-import { getPostsRecursively, listPosts } from "../../utils/readPosts"
+import type { SerializablePostSummary } from "../../types/post";
+import {
+  basePostDir,
+  postsPerPage,
+  siteDescription,
+  siteTitle,
+} from "../../utils/const";
+import { convertSerializablePostSummaryToPostSummary } from "../../utils/posts";
+import { getPostsRecursively, listPostSummaries } from "../../utils/readPosts";
 
 type PageProps = {
-  posts: SerializablePostData[];
-  slicedPosts: SerializablePostData[];
+  posts: SerializablePostSummary[];
+  slicedPosts: SerializablePostSummary[];
   pages: number[];
   currentPage: number;
 };
 
 export const getStaticProps: GetStaticProps<PageProps> = ({ params }) => {
-  if (typeof params?.page !== "string") throw new Error("`page` parameter is not a string");
+  if (typeof params?.page !== "string")
+    throw new Error("`page` parameter is not a string");
   const currentPage = Number(params.page);
-  const posts = orderBy(listPosts(), o => new Date(o.date), "desc");
+  const posts = orderBy(listPostSummaries(), (o) => new Date(o.date), "desc");
   const slicedPosts = posts.slice(
     postsPerPage * (currentPage - 1),
-    postsPerPage * currentPage,
+    postsPerPage * currentPage
   );
   const pages = range(1, Math.ceil(posts.length / postsPerPage) + 1);
   return {
@@ -38,10 +44,10 @@ export const getStaticPaths = () => {
   const posts: string[][] = [];
   getPostsRecursively(basePostDir, posts);
   const count = posts.length;
-  const paths = range(1, Math.ceil(count / postsPerPage) + 1).map(i => ({
+  const paths = range(1, Math.ceil(count / postsPerPage) + 1).map((i) => ({
     params: {
       page: i.toString(),
-    }
+    },
   }));
   return {
     paths,
@@ -51,10 +57,8 @@ export const getStaticPaths = () => {
 
 const Page: NextPage<PageProps> = ({ slicedPosts, pages, currentPage }) => {
   const postCards = slicedPosts.map((serializedPost, index) => {
-    const post = convertSerializablePostDataToPostData(serializedPost);
-    return (
-      <PostCard key={index} post={post} isPostPage={false} />
-    );
+    const post = convertSerializablePostSummaryToPostSummary(serializedPost);
+    return <PostCard key={index} post={post} />;
   });
   return (
     <div>
@@ -64,7 +68,6 @@ const Page: NextPage<PageProps> = ({ slicedPosts, pages, currentPage }) => {
         path={`/page/${currentPage}`}
         type="website"
       />
-
       {postCards}
       <Pagination
         pages={pages}

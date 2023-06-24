@@ -1,9 +1,9 @@
 import Link from "next/link";
-import type { PostData } from "../types/post";
+import type { PostData, PostSummary } from "../types/post";
 
 type PostPaginationProps = {
   className?: string;
-  post: PostData;
+  post: PostData | PostSummary;
   isNext: boolean;
 };
 

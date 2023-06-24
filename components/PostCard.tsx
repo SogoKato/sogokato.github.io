@@ -5,20 +5,18 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import CodeBlock from "./CodeBlock";
 import Tags from "./Tags";
-import type { PostData } from "../types/post";
+import { isPostData, type PostData, type PostSummary } from "../types/post";
 import Social from "./Social";
 
 type PostCardProps = {
   className?: string;
-  post: PostData;
-  isPostPage: boolean;
+  post: PostData | PostSummary;
   isStaticPostPage?: boolean;
 };
 
 const PostCard: React.FC<PostCardProps> = ({
   className,
   post,
-  isPostPage,
   isStaticPostPage,
 }) => {
   const date = !isStaticPostPage ? (
@@ -29,6 +27,7 @@ const PostCard: React.FC<PostCardProps> = ({
   ) : null;
   const tagsEnd = <Tags className="mt-5" tags={post.tags}></Tags>;
   const titleClassName = "font-bold leading-tight mb-5 text-4xl";
+  const isPostPage = isPostData(post);
   const title = isPostPage ? (
     <h1 className={"mt-8 " + titleClassName}>{post.title}</h1>
   ) : (

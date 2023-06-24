@@ -2,8 +2,8 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import Tags from "./Tags";
-import type { PostData, SerializablePostData } from "../types/post";
-import { convertSerializablePostDataToPostData } from "../utils/posts";
+import type { PostSummary, SerializablePostData, SerializablePostSummary } from "../types/post";
+import { convertSerializablePostSummaryToPostSummary } from "../utils/posts";
 import { aggregateTags } from "../utils/tag";
 import { useEffect } from "react";
 
@@ -16,7 +16,7 @@ type AsideProps = {
 const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
   const commonClassName = "mx-auto w-11/12 ";
   const posts_ = posts.map((serializedPost) =>
-    convertSerializablePostDataToPostData(serializedPost)
+    convertSerializablePostSummaryToPostSummary(serializedPost)
   );
   useEffect(() => {
     const el = document.getElementById("sidebarPyTerminalWrapper");
@@ -217,10 +217,10 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
 
 const recommendPostsFromPost = (
   posts_: SerializablePostData[],
-  post: SerializablePostData | undefined
-): PostData[] => {
+  post: SerializablePostSummary | undefined
+): PostSummary[] => {
   const posts = posts_.map((serializedPost) =>
-    convertSerializablePostDataToPostData(serializedPost)
+    convertSerializablePostSummaryToPostSummary(serializedPost)
   );
   // Recommend the latest five posts if `post` is undefined.
   if (!post) {

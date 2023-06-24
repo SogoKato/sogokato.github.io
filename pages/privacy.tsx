@@ -4,18 +4,18 @@ import { orderBy } from "lodash";
 import type { GetStaticProps, NextPage } from "next";
 import PostCard from "../components/PostCard";
 import Seo from "../components/Seo";
-import type { SerializablePostData } from "../types/post";
+import type { SerializablePostData, SerializablePostSummary } from "../types/post";
 import { siteDescription, siteTitle } from "../utils/const";
-import { convertSerializablePostDataToPostData } from "../utils/posts";
-import { listPosts } from "../utils/readPosts";
+import { convertSerializablePostSummaryToPostSummary } from "../utils/posts";
+import { listPostSummaries } from "../utils/readPosts";
 
 type PostProps = {
-  posts: SerializablePostData[];
+  posts: SerializablePostSummary[];
   post: SerializablePostData;
 };
 
 export const getStaticProps: GetStaticProps<PostProps> = ({ params }) => {
-  const posts = orderBy(listPosts(), o => new Date(o.date), "desc");
+  const posts = orderBy(listPostSummaries(), (o) => new Date(o.date), "desc");
   const fileContent = fs.readFileSync("privacy.md", "utf-8");
   const { data, content } = matter(fileContent);
   return {
@@ -36,7 +36,7 @@ export const getStaticProps: GetStaticProps<PostProps> = ({ params }) => {
 };
 
 const Post: NextPage<PostProps> = ({ post }) => {
-  const post_ = convertSerializablePostDataToPostData(post);
+  const post_ = convertSerializablePostSummaryToPostSummary(post);
   return (
     <article>
       <Seo
@@ -45,11 +45,9 @@ const Post: NextPage<PostProps> = ({ post }) => {
         path="/privacy"
         type="article"
       />
-
       <PostCard
         className="max-w-none prose dark:prose-invert prose-neutral"
         post={post_}
-        isPostPage={true}
         isStaticPostPage={true}
       />
     </article>

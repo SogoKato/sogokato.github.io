@@ -1,25 +1,36 @@
 import { TagData } from "./tag";
 
-type PostData = {
+interface PostSummary {
   title: string;
   date: Date;
   ref: string;
   desc: string;
   tags: TagData[];
-  content: string;
   draft: boolean;
   showTerminalAside: boolean;
+}
+
+interface PostData extends PostSummary {
+  content: string;
 };
 
-type SerializablePostData = {
+interface SerializablePostSummary {
   title: string;
   date: string;
   ref: string;
   desc: string;
   tags: TagData[];
-  content: string;
   draft: boolean;
   showTerminalAside: boolean;
 }
 
-export type { PostData, SerializablePostData };
+interface SerializablePostData extends SerializablePostSummary {
+  content: string;
+}
+
+const isPostData = (arg: unknown): arg is PostData => {
+  return typeof arg === "object" && arg !== null && typeof (arg as PostData).content === "string"
+}
+
+export {isPostData}
+export type { PostData, PostSummary, SerializablePostData, SerializablePostSummary };
