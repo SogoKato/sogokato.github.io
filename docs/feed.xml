@@ -5,8 +5,23 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Sun, 25 Jun 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 05 Jul 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fluentdでニフクラのオブジェクトストレージサービスにログを送る</title>
+      <link>https://sogo.dev/posts/2023/07/fluentd-nifcloud-object-storage-service</link>
+      <guid>https://sogo.dev/posts/2023/07/fluentd-nifcloud-object-storage-service</guid>
+      <pubDate>Wed, 05 Jul 2023 00:00:00 GMT</pubDate>
+      <description> Fluentd の fluent-plugin-s3 を使ってニフクラのオブジェクトストレージサービスにログをアップロードする時のメモです。
+
+## ポイント
+
+* `s3_endpoint` を指定する
+  * https://jp-east-1.storage.api.nifcloud.com または https://jp-west-2.storage.api.nifcloud.com
+  * 参照: エンドポイント
+* `force_path_style` を true にする
+  * オブジェクト</description>
+    </item>
     <item>
       <title>シンプル思考を徹底しよう：この半年の振り返り</title>
       <link>https://sogo.dev/posts/2023/06/reflection</link>
