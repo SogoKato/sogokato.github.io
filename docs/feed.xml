@@ -5,8 +5,23 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Wed, 05 Jul 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 22 Jul 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SynologyのHyper Backupを使って自分のサーバーへバックアップ（rsync over SSH）</title>
+      <link>https://sogo.dev/posts/2023/07/synology-hyper-backup-rsync-over-ssh</link>
+      <guid>https://sogo.dev/posts/2023/07/synology-hyper-backup-rsync-over-ssh</guid>
+      <pubDate>Sat, 22 Jul 2023 00:00:00 GMT</pubDate>
+      <description> 先日 Synology の NAS を導入したのですが、耐障害性を考慮すると別の拠点とのバックアップが欲しくなってきます。Synology の NAS は QuickConnect を利用することで Synology 社のサーバーを経由することで、自宅のポートを開放せずに構築することができるのがメリットです。バックアップ用途のためだけでにポートを開放するのはアレなので、自宅からのアウトバウンドの通信で定期的にバックアップを行う方法を検討しました。
+
+## 構成
+
+超シンプル構成です。
+
+!構成図
+
+NAS</description>
+    </item>
     <item>
       <title>Fluentdでニフクラのオブジェクトストレージサービスにログを送る</title>
       <link>https://sogo.dev/posts/2023/07/fluentd-nifcloud-object-storage-service</link>
