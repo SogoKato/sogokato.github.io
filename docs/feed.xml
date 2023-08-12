@@ -5,8 +5,25 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Sat, 22 Jul 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 13 Aug 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS Certified Solutions Architect - Associateを取得した</title>
+      <link>https://sogo.dev/posts/2023/08/aws-solutions-architect-associate</link>
+      <guid>https://sogo.dev/posts/2023/08/aws-solutions-architect-associate</guid>
+      <pubDate>Sun, 13 Aug 2023 00:00:00 GMT</pubDate>
+      <description> AWS 認定ソリューションアーキテクト - Associate (SAA-C03) の資格を取得したので学習メモです。
+
+過去の資格に関する記事はこちら
+* CKAD受検記録【2023年版】
+* GCP未経験の新卒2年目がAssociate Cloud EngineerとProfessional Cloud Architectを連続で受検したときの記録
+* 新卒エンジニアがCKA取得を目指してKubernetesを勉強したときの記録
+
+## 対象読者
+
+* AWS の SAA を1ヶ月で攻略したい人
+* </description>
+    </item>
     <item>
       <title>SynologyのHyper Backupを使って自分のサーバーへバックアップ（rsync over SSH）</title>
       <link>https://sogo.dev/posts/2023/07/synology-hyper-backup-rsync-over-ssh</link>
