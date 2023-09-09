@@ -5,8 +5,24 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Sun, 13 Aug 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 09 Sep 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Raspberry Pi Zero WHにVolumio 3を入れる場合は2系からアップグレードする</title>
+      <link>https://sogo.dev/posts/2023/09/volumio-raspberrypi-zero</link>
+      <guid>https://sogo.dev/posts/2023/09/volumio-raspberrypi-zero</guid>
+      <pubDate>Sat, 09 Sep 2023 00:00:00 GMT</pubDate>
+      <description> 掲題の通りです。今更ながら、その辺に転がっているラズパイゼロ（初代、Wi-Fi 付）とその辺に転がっている中華 USB-DAC を使って Spotify Connect 用の環境を整えようと Volumio を入れてみました。
+
+## 使ったもの
+
+* Raspberry Pi Zero WH
+* Micro SD
+* 電源（Apple の 5W 1A のやつで十分）
+* Micro USB ケーブル
+* USB OTG ケーブル（Micro USB オスから USB A メスに変換するやつ）
+* Min</description>
+    </item>
     <item>
       <title>AWS Certified Solutions Architect - Associateを取得した</title>
       <link>https://sogo.dev/posts/2023/08/aws-solutions-architect-associate</link>
