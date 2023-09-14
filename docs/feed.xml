@@ -5,8 +5,21 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Sat, 09 Sep 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 15 Sep 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FluentdをDocker SwarmにDaemonSet的に配置してログを収集する</title>
+      <link>https://sogo.dev/posts/2023/09/fluentd-docker-swarm</link>
+      <guid>https://sogo.dev/posts/2023/09/fluentd-docker-swarm</guid>
+      <pubDate>Fri, 15 Sep 2023 00:00:00 GMT</pubDate>
+      <description> Docker Swarm 上のサービスのログを fluentd を使って送信するためのメモです。
+
+Kubernetes で同様のことを実現する場合、Forwarder として使う fluentd を DaemonSet として起動してノード上のログを集めさせることが一般的です。今回は Swarm クラスター内の各ノードに1つずつ fluentd を起動して、あるノード上で動くコンテナのログはそのノード上の fluentd に集まるように設定していきます。
+
+## ポイント
+
+* 各ノードに配置するには </description>
+    </item>
     <item>
       <title>Raspberry Pi Zero WHにVolumio 3を入れる場合は2系からアップグレードする</title>
       <link>https://sogo.dev/posts/2023/09/volumio-raspberrypi-zero</link>
