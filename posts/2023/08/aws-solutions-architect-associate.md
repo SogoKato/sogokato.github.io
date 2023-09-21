@@ -11,6 +11,8 @@ tags: ["AWS", "資格"]
 * [GCP未経験の新卒2年目がAssociate Cloud EngineerとProfessional Cloud Architectを連続で受検したときの記録](https://qiita.com/SogoK/items/bb5187524c2c7cde3620)
 * [新卒エンジニアがCKA取得を目指してKubernetesを勉強したときの記録](https://qiita.com/SogoK/items/4ed2e118d0412c868169)
 
+続きの記事 → [AWS Certified Solutions Architect - Professionalを取得した](/posts/2023/09/aws-solutions-architect-professional)
+
 ## 対象読者
 
 * AWS の SAA を1ヶ月で攻略したい人
@@ -74,7 +76,7 @@ tags: ["AWS", "資格"]
 
 ## 感想
 
-昨年の GCP の資格に引き続き、今年は AWS の資格を取得しました。知らないサービスも多かったですが、資格では比較的メジャーなサービスに関する説もんだ大半であることや、GCP とサービスのラインナップは共通している部分が多いことがあって、サービスの多さは特別負担には感じませんでした。
+昨年の GCP の資格に引き続き、今年は AWS の資格を取得しました。知らないサービスも多かったですが、資格では比較的メジャーなサービスに関する設問が大半であることや、GCP とサービスのラインナップは共通している部分が多いことがあって、サービスの多さは特別負担には感じませんでした。
 
 サービスの選び方のパターンを理解することで問題が格段に解きやすくなります。例えば、ストリームデータを扱うサービスは複数ありますが、遅延なくリアルタイムに処理するなら Kinesis Data Streams を選び、多少の遅延があってもいいなら Kinesis Data Firehose を選ぶなど、過去問を解くといくつかの思考パターンを得られます。繰り返し解くことでパターンを習得しましょう。
 

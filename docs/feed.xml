@@ -5,8 +5,21 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Fri, 15 Sep 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 21 Sep 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS Certified Solutions Architect - Professionalを取得した</title>
+      <link>https://sogo.dev/posts/2023/09/aws-solutions-architect-professional</link>
+      <guid>https://sogo.dev/posts/2023/09/aws-solutions-architect-professional</guid>
+      <pubDate>Thu, 21 Sep 2023 00:00:00 GMT</pubDate>
+      <description> AWS 認定ソリューションアーキテクト - Professional (SAP-C02) の資格を取得したので学習メモです。
+
+過去の資格に関する記事はこちら
+* AWS Certified Solutions Architect - Associateを取得した
+* CKAD受検記録【2023年版】
+* GCP未経験の新卒2年目がAssociate Cloud EngineerとProfessional Cloud Architectを連続で受検したときの記録
+* 新卒エンジニアがCKA取得を目指してK</description>
+    </item>
     <item>
       <title>FluentdをDocker SwarmにDaemonSet的に配置してログを収集する</title>
       <link>https://sogo.dev/posts/2023/09/fluentd-docker-swarm</link>
@@ -48,10 +61,7 @@ Kubernetes で同様のことを実現する場合、Forwarder として使う f
 * GCP未経験の新卒2年目がAssociate Cloud EngineerとProfessional Cloud Architectを連続で受検したときの記録
 * 新卒エンジニアがCKA取得を目指してKubernetesを勉強したときの記録
 
-## 対象読者
-
-* AWS の SAA を1ヶ月で攻略したい人
-* </description>
+続きの記事 → AWS Certified Solutions Arc</description>
     </item>
     <item>
       <title>SynologyのHyper Backupを使って自分のサーバーへバックアップ（rsync over SSH）</title>
