@@ -5,8 +5,28 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Thu, 21 Sep 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 25 Sep 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ニフクラのリソースを比較できるツールnifdiffを作った</title>
+      <link>https://sogo.dev/posts/2023/09/nifdiff</link>
+      <guid>https://sogo.dev/posts/2023/09/nifdiff</guid>
+      <pubDate>Mon, 25 Sep 2023 00:00:00 GMT</pubDate>
+      <description> 2つのファイアウォールグループのルールの差分を見たいことがあって、ちょっとしたツールを作ってみました。
+
+## nifdiff とは
+
+* 2つのニフクラリソースの差分を見ることができるツール
+* 同一アカウント内であれば、リージョンまたぎで比較できる
+* 現状対応しているのはファイアウォールグループのみ
+
+https://github.com/SogoKato/nifdiff
+
+こんな感じのコマンドを投げると
+
+```
+nifdiff nrn:nifcloud:computing:jp-east-1::</description>
+    </item>
     <item>
       <title>AWS Certified Solutions Architect - Professionalを取得した</title>
       <link>https://sogo.dev/posts/2023/09/aws-solutions-architect-professional</link>
