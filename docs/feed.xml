@@ -5,8 +5,24 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Mon, 25 Sep 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 26 Sep 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitHub ActionsでGo製ツールをビルド&リリース【GoReleaser】</title>
+      <link>https://sogo.dev/posts/2023/09/github-actions-goreleaser</link>
+      <guid>https://sogo.dev/posts/2023/09/github-actions-goreleaser</guid>
+      <pubDate>Tue, 26 Sep 2023 00:00:00 GMT</pubDate>
+      <description> 前回の記事で紹介した nifdiff をリリースする際に、簡単に GitHub actions を使って Go 製ツールをビルドしてリリースする方法を見つけたのでメモです。
+
+## ポイント
+
+* GoReleaser を使うと Go で作ったソフトウェアを素早く出荷できる
+* kyoh86/git-vertag-action を使うと最新のバージョンから +1 メジャー・マイナー・パッチバージョンアップしたバージョンのタグを作成できる
+
+## 今回やったこと
+
+* Go 製ツールをクロスコンパイルして、</description>
+    </item>
     <item>
       <title>ニフクラのリソースを比較できるツールnifdiffを作った</title>
       <link>https://sogo.dev/posts/2023/09/nifdiff</link>
