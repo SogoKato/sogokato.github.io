@@ -5,8 +5,16 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Tue, 26 Sep 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 24 Oct 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitLabのRemote developmentを試してみる</title>
+      <link>https://sogo.dev/posts/2023/10/gitlab-remote-development</link>
+      <guid>https://sogo.dev/posts/2023/10/gitlab-remote-development</guid>
+      <pubDate>Tue, 24 Oct 2023 00:00:00 GMT</pubDate>
+      <description> VS Code Serverでリモートホストのコンテナ上開発環境に直接アクセスするの記事にて GitHub でやっている「ぼくのかんがえたさいきょうのかいはつかんきょう」第2弾です。今回は GitLab を使ってリモート開発環境を構築してみたいと思います。  
+なお、GitLab には Premium 以上のライセンスで使える Workspaces という機能が 16.0 で登場しましたが、今回はそれではなく、自分でコンテナを立ててそこにアクセスする形になります。こちらは無料ライセンスで使えます。ただし執</description>
+    </item>
     <item>
       <title>GitHub ActionsでGo製ツールをビルド&リリース【GoReleaser】</title>
       <link>https://sogo.dev/posts/2023/09/github-actions-goreleaser</link>
@@ -514,11 +522,15 @@ VS Code Server を使い、リモートサーバー上でコンテナとして�
 
 SSH もポート開放も不要なのでとてもお手軽です。
 
+## 2023/10/24 追記
+
+GitLab のリモート開発環境も試してみました。
+
+GitLabのRemote developmentを試してみる
+
 ## 2023/06/14 追記
 
-以下で紹介する方法が最近は使えなくなってしまったようです。少し前から
-
-> Your tunnel connection is outdated. Upgrade to the latest ve</description>
+以下で紹介する方法が最近は使えなくなって</description>
     </item>
     <item>
       <title>よくあるSPA+API構成でのOpenID Connectクライアント実装</title>

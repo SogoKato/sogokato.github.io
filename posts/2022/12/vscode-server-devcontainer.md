@@ -10,6 +10,12 @@ tags: ["VS Code", "開発環境"]
 
 SSH もポート開放も不要なのでとてもお手軽です。
 
+## 2023/10/24 追記
+
+GitLab のリモート開発環境も試してみました。
+
+[GitLabのRemote developmentを試してみる](/posts/2023/10/gitlab-remote-development)
+
 ## 2023/06/14 追記
 
 以下で紹介する方法が最近は使えなくなってしまったようです。少し前から
