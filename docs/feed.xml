@@ -5,8 +5,17 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Wed, 08 Nov 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 09 Nov 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS SigV4リクエストの「検証する側」を実装する</title>
+      <link>https://sogo.dev/posts/2023/11/implementing-aws-sigv4-server</link>
+      <guid>https://sogo.dev/posts/2023/11/implementing-aws-sigv4-server</guid>
+      <pubDate>Thu, 09 Nov 2023 00:00:00 GMT</pubDate>
+      <description> 世の中には AWS Signature V4 署名の実装方法についての記事はたくさんありますが、その署名を付与して検証する側（サーバー）の実装方法について見つけるのは難しいです。AWS API Gateway を使えば簡単に自分で書かなくても良いのでそれはそうなのですが、AWS SigV4 は curl のオプションとしても使える くらいの地位を獲得しているので、AWS SigV4 を利用した認証機能の実装方法についての記事があってもいいでしょう。
+
+ということで、今回は Python と FastAPI</description>
+    </item>
     <item>
       <title>Bitwardenブラウザ拡張がPasskeyに対応したので試してみた</title>
       <link>https://sogo.dev/posts/2023/11/bitwarden-passkey</link>
