@@ -5,8 +5,26 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Tue, 24 Oct 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 08 Nov 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bitwardenブラウザ拡張がPasskeyに対応したので試してみた</title>
+      <link>https://sogo.dev/posts/2023/11/bitwarden-passkey</link>
+      <guid>https://sogo.dev/posts/2023/11/bitwarden-passkey</guid>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 GMT</pubDate>
+      <description> パスワードマネージャによる Passkey のサポートが進んでいます。
+
+私は Bitwarden を使ってパスワードなどの機密情報を保存しているのですが、ついに Bitwarden による Passkey 対応が始まりました。公式ブログでも11月7日に投稿されています。
+
+## 環境
+
+* Bitwarden Firefox アドオン 2023.10.1
+* Firefox 118.0.2
+
+## 試してみる
+
+既にいくつものサービスが Passkey 対応していますが、今回は Google アカウント</description>
+    </item>
     <item>
       <title>GitLabのRemote developmentを試してみる</title>
       <link>https://sogo.dev/posts/2023/10/gitlab-remote-development</link>
