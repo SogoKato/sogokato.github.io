@@ -5,8 +5,20 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Sat, 18 Nov 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 07 Dec 2023 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cedarで（超最小限な）RBAC認可を実装してみる</title>
+      <link>https://sogo.dev/posts/2023/12/cedar-rbac</link>
+      <guid>https://sogo.dev/posts/2023/12/cedar-rbac</guid>
+      <pubDate>Thu, 07 Dec 2023 00:00:00 GMT</pubDate>
+      <description> この記事はニフクラ等を提供している、富士通クラウドテクノロジーズ Advent Calendar 2023の7日目の記事です。
+
+昨日は @George22e さんの ヴァイオリンの音色のよさはスペクトラムアナライザーで分かるか試してみた でした。  
+自らの演奏とプロの演奏を可視化して分析する姿勢にエンジニアリングの精神と通じるものを感じました。私も仕事でも趣味でも本気でエンジニアリングしていきたいです。
+
+今日は AWS が公開しているアクセス制御用のオープンソース言語 Cedar とその認可エンジン</description>
+    </item>
     <item>
       <title>RyeをDockerで使う時のポイント</title>
       <link>https://sogo.dev/posts/2023/11/rye-with-docker</link>
