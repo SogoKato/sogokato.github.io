@@ -5,8 +5,17 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Thu, 07 Dec 2023 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jan 2024 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>git-credential-cacheをコンテナから使いたかった</title>
+      <link>https://sogo.dev/posts/2024/01/git-credential-cache-in-container</link>
+      <guid>https://sogo.dev/posts/2024/01/git-credential-cache-in-container</guid>
+      <pubDate>Thu, 11 Jan 2024 00:00:00 GMT</pubDate>
+      <description> git でリモートサーバーに HTTPS で接続する時、ユーザー名やパスワードを入力する必要がありますが、push や pull のたびに入力するのは面倒ですよね。git には標準で認証情報を管理してくれる仕組みがあり、毎回の入力を省略することができます。
+
+Windows や Mac の場合は OS の認証情報管理の仕組みと連携することができますが、Linux では `store` モードか `cache` モードしかありません。`store` モードでは平文でパスワードが書き込まれてしまい安全ではない</description>
+    </item>
     <item>
       <title>Cedarで（超最小限な）RBAC認可を実装してみる</title>
       <link>https://sogo.dev/posts/2023/12/cedar-rbac</link>
