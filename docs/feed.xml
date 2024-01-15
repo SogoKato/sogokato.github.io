@@ -5,8 +5,21 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Thu, 11 Jan 2024 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jan 2024 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dockerが16KiB以上のログを分割する問題にFluentd側で対処する</title>
+      <link>https://sogo.dev/posts/2024/01/fluentd-docker-split-logs</link>
+      <guid>https://sogo.dev/posts/2024/01/fluentd-docker-split-logs</guid>
+      <pubDate>Mon, 15 Jan 2024 00:00:00 GMT</pubDate>
+      <description> Docker のログドライバーは 16KiB (16384 バイト) 以上のメッセージの場合、ログを分割してしまいます。
+
+fluent-plugins-nursery/fluent-plugin-concat を使うことで分割されてしまったログを連結して1つにまとめられるようなので検証してみました。
+
+## 試してみる
+
+用意したファイルは以下です。16383バイトのログと16384バイトのログを20秒間隔で出力するアプリを用意して docker の fluentd ログドライバーで fluentd コ</description>
+    </item>
     <item>
       <title>git-credential-cacheをコンテナから使いたかった</title>
       <link>https://sogo.dev/posts/2024/01/git-credential-cache-in-container</link>
