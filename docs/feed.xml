@@ -5,8 +5,30 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Mon, 15 Jan 2024 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jan 2024 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LangChain agentで関数呼び出し</title>
+      <link>https://sogo.dev/posts/2024/01/langchain-agent-tools-function-calling</link>
+      <guid>https://sogo.dev/posts/2024/01/langchain-agent-tools-function-calling</guid>
+      <pubDate>Wed, 24 Jan 2024 00:00:00 GMT</pubDate>
+      <description> 個人で使っている LINE bot を賢くしたくて、ChatGPT を組み込んでみました。ChatGPT を自分のアプリに組み込むのは初めてなのですが、LangChain の機能の豊富さに驚かされました。
+
+## 対象読者
+
+* 人間のあいまいな指示を機械が実行できるアクションに落とし込ませたい人
+
+## 検証環境
+
+* Python 3.11.6
+* LangChain 0.1.1
+* langchain-openai 0.0.2.post1
+
+## できたもの
+
+```python
+from data</description>
+    </item>
     <item>
       <title>Dockerが16KiB以上のログを分割する問題にFluentd側で対処する</title>
       <link>https://sogo.dev/posts/2024/01/fluentd-docker-split-logs</link>
