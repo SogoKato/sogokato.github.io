@@ -5,8 +5,22 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Wed, 24 Jan 2024 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 06 Feb 2024 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SquidをDockerで動かす</title>
+      <link>https://sogo.dev/posts/2024/02/squid-in-docker</link>
+      <guid>https://sogo.dev/posts/2024/02/squid-in-docker</guid>
+      <pubDate>Tue, 06 Feb 2024 00:00:00 GMT</pubDate>
+      <description> Squid を Docker コンテナで実行したかったのですが、2024年2月現在で最新の v6 で起動するものがなさそうだったので作りました。apt リポジトリにはビルド済みの squid がないのですが、alpine にはあったので alpine を使うと楽です。また、シャットダウン時の挙動に要注意。
+
+## できたもの
+
+* SogoKato/docker-squid
+* noroch/squid - Docker Image | Docker Hub
+
+sameersbn/docker-squid</description>
+    </item>
     <item>
       <title>LangChain agentで関数呼び出し</title>
       <link>https://sogo.dev/posts/2024/01/langchain-agent-tools-function-calling</link>
