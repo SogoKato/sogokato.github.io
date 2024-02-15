@@ -4,7 +4,10 @@ import { orderBy } from "lodash";
 import type { GetStaticProps, NextPage } from "next";
 import PostCard from "../components/PostCard";
 import Seo from "../components/Seo";
-import type { SerializablePostData, SerializablePostSummary } from "../types/post";
+import type {
+  SerializablePostData,
+  SerializablePostSummary,
+} from "../types/post";
 import { siteDescription, siteTitle } from "../utils/const";
 import { convertSerializablePostSummaryToPostSummary } from "../utils/posts";
 import { listPostSummaries } from "../utils/readPosts";
@@ -47,7 +50,7 @@ const Post: NextPage<PostProps> = ({ post }) => {
       />
 
       <PostCard
-        className="max-w-none prose dark:prose-invert prose-neutral"
+        className="max-w-none prose dark:prose-invert prose-pre:m-0 prose-neutral prose-pre:px-2 prose-pre:py-1"
         post={post_}
         isStaticPostPage={true}
       />

@@ -68,13 +68,13 @@ const Post: NextPage<PostProps> = ({ posts, post }) => {
         type="article"
       />
       <PostCard
-        className="max-w-none prose dark:prose-invert prose-neutral"
+        className="max-w-none prose dark:prose-invert prose-pre:m-0 prose-neutral prose-pre:px-2 prose-pre:py-1"
         post={post_}
       />
       <div className="flex flex-col sm:flex-row justify-between mx-auto w-11/12">
         {nextPost ? (
           <PostPagination
-            className="w-full sm:w-1/2"
+            className="mb-4 sm:mb-0 w-full sm:w-1/2"
             post={nextPost}
             isNext={true}
           />

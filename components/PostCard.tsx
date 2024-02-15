@@ -20,13 +20,13 @@ const PostCard: React.FC<PostCardProps> = ({
   isStaticPostPage,
 }) => {
   const date = !isStaticPostPage ? (
-    <p>
+    <p className="text-neutral-600 dark:text-neutral-300">
       {post.date.getFullYear()}年{post.date.getMonth() + 1}月
       {post.date.getDate()}日
     </p>
   ) : null;
   const tagsEnd = <Tags className="mt-5" tags={post.tags}></Tags>;
-  const titleClassName = "font-bold leading-tight mb-5 text-4xl";
+  const titleClassName = "font-bold leading-tight mb-5 text-2xl sm:text-3xl";
   const isPostPage = isPostData(post);
   const title = isPostPage ? (
     <h1 className={"mt-8 " + titleClassName}>{post.title}</h1>
@@ -59,7 +59,7 @@ const PostCard: React.FC<PostCardProps> = ({
       {date}
       {title}
       {shareButtons}
-      <div className={"my-16 " + className}>{content}</div>
+      <div className={"mb-16 mt-8 " + className}>{content}</div>
       {!isStaticPostPage ? <LikeButtons path={post.ref} /> : null}
       {tagsEnd}
       <Script
@@ -77,11 +77,12 @@ const PostCard: React.FC<PostCardProps> = ({
       {tagsEnd}
     </div>
   );
-  return (
-    <div className="bg-white dark:bg-neutral-800 mx-auto mb-11 p-8 rounded-3xl shadow-lg w-11/12">
-      {elements}
-    </div>
-  );
+  const rootClassNameBase =
+    "bg-white dark:bg-neutral-800 mx-auto mb-6 p-6 sm:p-8 shadow-lg sm:w-11/12";
+  const rootClassName = isPostPage
+    ? "rounded-3xl " + rootClassNameBase
+    : "rounded-t-3xl sm:rounded-3xl " + rootClassNameBase;
+  return <div className={rootClassName}>{elements}</div>;
 };
 
 export default PostCard;
