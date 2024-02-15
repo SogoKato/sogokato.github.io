@@ -5,8 +5,24 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Tue, 06 Feb 2024 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 15 Feb 2024 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kanikoでcache=trueにするなら1コンテナ1ビルドで</title>
+      <link>https://sogo.dev/posts/2024/02/kaniko-cache-cleanup</link>
+      <guid>https://sogo.dev/posts/2024/02/kaniko-cache-cleanup</guid>
+      <pubDate>Thu, 15 Feb 2024 00:00:00 GMT</pubDate>
+      <description> 前に Kanikoでコンテナイメージつくるならcache=trueは有効にしておこう という記事を書きましたが、とりあえず有効にしといたら罠があったので書いておきます。
+
+## Kaniko のコンテナ1つで複数のコンテナをビルドしないほうがいい
+
+おそらく、Kaniko が CI 前提のツールなので、複数回のビルドのために使われることを想定していないのではないでしょうか。
+
+気を付けるべき条件は以下です。
+
+* `--cache-true` を指定している
+* コンテナ1つで複数のコンテナをビルドしてい</description>
+    </item>
     <item>
       <title>SquidをDockerで動かす</title>
       <link>https://sogo.dev/posts/2024/02/squid-in-docker</link>
@@ -359,9 +375,11 @@ MUI X というより発展的なコンポーネントをもつ UI ライブラ�
 
 恥ずかしながら、わたしは雰囲気で kaniko にコンテナイメージのビルドをしてもらっていることに気づきました。1年以上 GitLab CI で kaniko を使っておきながら、ただ「特権コンテナを使わずにイメージつくれるやつ」くらいの認識しかしていなかったです。
 
+続きの記事: Kanikoでcache=trueにするなら1コンテナ1ビルドで
+
 ## kaniko の cache=true オプション
 
-kaniko には `--cache` というフラグがあり、これを true にすることでコンテナのビルド時にキャッシュ</description>
+kaniko には `--cache`</description>
     </item>
     <item>
       <title>IPoE回線の自宅のWebサービスをVPN経由で固定IPのクラウドから公開する</title>
