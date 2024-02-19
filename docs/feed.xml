@@ -5,8 +5,17 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Thu, 15 Feb 2024 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 20 Feb 2024 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FastAPIとPydantic V2で任意のcontextを渡してみる</title>
+      <link>https://sogo.dev/posts/2024/02/fastapi-pydantic-v2</link>
+      <guid>https://sogo.dev/posts/2024/02/fastapi-pydantic-v2</guid>
+      <pubDate>Tue, 20 Feb 2024 00:00:00 GMT</pubDate>
+      <description> Pydantic V2 が2023年6月にリリースされました。結構いろいろ変わっていて移行作業はそこそこ大変な気がしますが対応される方は Migration Guide を読んで頑張ってください。
+
+私はというと V1 のころに Pydantic の `@validator` デコレータをカスタムしまくったので、V2 でそれがほぼ使えなくなってしまいました。そもそもなんでカスタムしたのかというと、バリデータのメソッドに DB にアクセスするためのセッションオブジェクトとかを渡したかったからでした。V2 で</description>
+    </item>
     <item>
       <title>Kanikoでcache=trueにするなら1コンテナ1ビルドで</title>
       <link>https://sogo.dev/posts/2024/02/kaniko-cache-cleanup</link>
