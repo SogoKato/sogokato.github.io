@@ -1,17 +1,18 @@
 import Head from "next/head";
 import type { AppProps } from "next/app";
+import { GoogleTagManager } from '@next/third-parties/google'
 import Layout from "../components/Layout";
 import "../styles/globals.css";
-import usePageView from "../hooks/usePageView";
+import { googleTagManagerId } from "../utils/const";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  usePageView();
   return (
     <Layout {...pageProps}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Component {...pageProps} />
+      <GoogleTagManager gtmId={googleTagManagerId} />
     </Layout>
   );
 }

@@ -5,4 +5,4 @@ export const baseUrl = "https://sogo.dev";
 export const basePostDir = "posts";
 export const postsPerPage = 10;
 
-export const gaId = "G-RE7Q7WBFDJ";
+export const googleTagManagerId = "GTM-M965SWP";

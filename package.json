@@ -12,6 +12,7 @@
     "clean": "tsc --build --clean"
   },
   "dependencies": {
+    "@next/third-parties": "^14.1.0",
     "@noroch/like-widget": "^1.0.2",
     "googleapis": "^110.0.0",
     "gray-matter": "^4.0.3",

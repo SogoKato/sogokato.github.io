@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LikeEvent } from "../types/ga";
-import { trackEvent } from "../utils/gtag";
+import { sendGTMEvent } from '@next/third-parties/google'
 
 type LikeProps = {
   path: string;
@@ -187,12 +186,7 @@ const getRecords = (): Records => {
 };
 
 const trackLikeEvent = (label: string) => {
-  const event: LikeEvent = {
-    action: "like",
-    category: "button",
-    label: label,
-  };
-  trackEvent(event);
+  sendGTMEvent({ event: 'like', value: label })
 };
 
 interface IAPIReaction {
