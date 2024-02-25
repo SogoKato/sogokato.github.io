@@ -7,7 +7,7 @@ services:
     volumes:
       - type: bind
         source: ./
-        target: /workspace
+        target: /home/node/workspace
       - type: bind
         source: ${HOME}/.gitconfig
         target: /home/node/.gitconfig

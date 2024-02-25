@@ -22,5 +22,4 @@ ENV SHELL=/bin/bash
 
 RUN curl -fsSL https://get.pnpm.io/install.sh | sh -
 
-# CMD ["code-server", "serve", "--accept-server-license-terms", "--random-name", "--server-data-dir", "/workspace/.vscode-server"]
-CMD ["code", "tunnel", "--accept-server-license-terms", "--random-name", "--cli-data-dir", "/workspace/.vscode-server"]
+CMD ["code", "tunnel", "--accept-server-license-terms", "--random-name", "--cli-data-dir", "/home/node/workspace/.vscode-server"]
