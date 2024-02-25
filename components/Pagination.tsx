@@ -30,10 +30,8 @@ const Pagination: React.FC<PaginationProps> = ({
     } else {
       const href = page === 1 ? topPath : `${parentPath}/${page}`;
       return (
-        <Link href={href} key={page}>
-          <a className={styleColor + styleWidth + className}>
-            <div>{page}</div>
-          </a>
+        <Link href={href} key={page} className={styleColor + styleWidth + className}>
+          <div>{page}</div>
         </Link>
       );
     }
@@ -42,10 +40,8 @@ const Pagination: React.FC<PaginationProps> = ({
     elements.splice(
       0,
       0,
-      <Link href={topPath} key={0}>
-        <a className={styleColor + styleWidthLong + className}>
-          <div>{"<<"}</div>
-        </a>
+      <Link href={topPath} key={0}className={styleColor + styleWidthLong + className}>
+        <div>{"<<"}</div>
       </Link>
     );
   }
@@ -53,10 +49,8 @@ const Pagination: React.FC<PaginationProps> = ({
     elements.splice(
       pages.length,
       0,
-      <Link href={`${parentPath}/${pages.length}`} key={pages.length + 1}>
-        <a className={styleColor + styleWidthLong + className}>
-          <div>{">>"}</div>
-        </a>
+      <Link href={`${parentPath}/${pages.length}`} key={pages.length + 1} className={styleColor + styleWidthLong + className}>
+        <div>{">>"}</div>
       </Link>
     );
   }

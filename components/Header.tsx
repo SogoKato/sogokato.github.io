@@ -20,9 +20,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
     <header className={className}>
       <div className="max-w-4xl mt-4 sm:mt-0 mx-auto flex justify-center sm:justify-between h-36 sm:h-48 items-center relative w-11/12">
         <div className="hidden sm:block"></div>
-        <Link href="/">
-          <a className="w-72 sm:w-auto">{logo}</a>
-        </Link>
+        <Link href="/" className="w-72 sm:w-auto">{logo}</Link>
         <ThemeSelector />
       </div>
     </header>

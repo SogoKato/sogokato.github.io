@@ -27,14 +27,16 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
   const recommendedPosts = recommendPostsFromPost(posts, post);
   const recommended = recommendedPosts.map((post, index) => {
     return (
-      <Link href={post.ref} key={index}>
-        <a className="block mb-3 hover:opacity-75 transition-all">
-          <p className="mb-1 text-xs">{post.title}</p>
-          <p className="text-neutral-500 text-xs">
-            {post.date.getFullYear()}年{post.date.getMonth() + 1}月
-            {post.date.getDate()}日
-          </p>
-        </a>
+      <Link
+        href={post.ref}
+        key={index}
+        className="block mb-3 hover:opacity-75 transition-all"
+      >
+        <p className="mb-1 text-xs">{post.title}</p>
+        <p className="text-neutral-500 text-xs">
+          {post.date.getFullYear()}年{post.date.getMonth() + 1}月
+          {post.date.getDate()}日
+        </p>
       </Link>
     );
   });
@@ -144,28 +146,27 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
               Sogo Kato
             </p>
             <div className="flex">
-              <Link href="https://github.com/SogoKato">
-                <a
-                  className="mr-2 hover:opacity-75 transition-all"
-                  target="_blank"
-                >
-                  <div className="dark:hidden">
-                    <Image
-                      width="20"
-                      height="20"
-                      alt="GitHubアイコン"
-                      src="/images/github-light.svg"
-                    />
-                  </div>
-                  <div className="hidden dark:block">
-                    <Image
-                      width="20"
-                      height="20"
-                      alt="GitHubアイコン"
-                      src="/images/github-dark.svg"
-                    />
-                  </div>
-                </a>
+              <Link
+                href="https://github.com/SogoKato"
+                className="mr-2 hover:opacity-75 transition-all"
+                target="_blank"
+              >
+                <div className="dark:hidden">
+                  <Image
+                    width="20"
+                    height="20"
+                    alt="GitHubアイコン"
+                    src="/images/github-light.svg"
+                  />
+                </div>
+                <div className="hidden dark:block">
+                  <Image
+                    width="20"
+                    height="20"
+                    alt="GitHubアイコン"
+                    src="/images/github-dark.svg"
+                  />
+                </div>
               </Link>
             </div>
           </div>
@@ -174,11 +175,9 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
           クラウド業界に生息する駆け出しへっぽこエンジニア。ラズパイとダックスがすき。資格たくさんほしいので余ってる人はお裾分けください。
         </p>
         <Link href="/profile">
-          <a>
-            <button className="bg-duchs-200 hover:bg-duchs-800 font-black font-display px-3.5 py-0.5 rounded-full text-duchs-900 hover:text-duchs-100 transition-all">
-              MORE
-            </button>
-          </a>
+          <button className="bg-duchs-200 hover:bg-duchs-800 font-black font-display px-3.5 py-0.5 rounded-full text-duchs-900 hover:text-duchs-100 transition-all">
+            MORE
+          </button>
         </Link>
       </div>
       <div className={commonClassName + "mb-8"}>
@@ -197,18 +196,15 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
         <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
           LINKS
         </h2>
-        <Link href="/feed.xml">
-          <a className="block mb-1 mt-3.5 hover:opacity-75 transition-all">
-            <p>RSS</p>
-          </a>
+        <Link href="/feed.xml" className="block mb-1 mt-3.5 hover:opacity-75 transition-all">
+          <p>RSS</p>
         </Link>
-        <Link href="https://github.com/SogoKato/sogokato.github.io">
-          <a
-            className="block mb-1 hover:opacity-75 transition-all"
-            target="_blank"
-          >
-            <p className="flex items-center">GitHub {arrowTopRight}</p>
-          </a>
+        <Link
+          href="https://github.com/SogoKato/sogokato.github.io"
+          className="block mb-1 hover:opacity-75 transition-all"
+          target="_blank"
+        >
+          <p className="flex items-center">GitHub {arrowTopRight}</p>
         </Link>
       </div>
     </aside>

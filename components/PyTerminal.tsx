@@ -39,10 +39,8 @@ const PyTerminal: React.FC<PyTerminalProps> = ({
       {pyTerminal}
       <small style={descStyle}>
         WebAssembly で実行された Python スクリプトの出力です。
-        <Link href="/posts/2023/03/pyscript-codeblock" legacyBehavior>
-          <a style={linkStyle}>
-            PyScriptを使ってブログのサンプルコードを実行させる
-          </a>
+        <Link href="/posts/2023/03/pyscript-codeblock" style={linkStyle}>
+          PyScriptを使ってブログのサンプルコードを実行させる
         </Link>
         で解説しています。
       </small>

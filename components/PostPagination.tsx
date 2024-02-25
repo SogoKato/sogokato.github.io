@@ -33,25 +33,24 @@ const PostPagination: React.FC<PostPaginationProps> = ({
   const titleClassName = "shrink";
   return (
     <div className={className}>
-      <Link href={post.ref}>
-        <a
-          className={
-            "dark:hover:bg-neutral-600 hover:bg-neutral-300 flex group items-center rounded-full transition-all" +
-            (isNext ? "" : " justify-end")
-          }
-        >
-          {isNext ? <div className={arrowBoxClassName}>{arrowLeft}</div> : null}
-          <div className={titleClassName + (!isNext ? " text-end" : "")}>
-            <p className="line-clamp-1 mb-1">{post.title}</p>
-            <p className="text-neutral-500">
-              {post.date.getFullYear()}年{post.date.getMonth() + 1}月
-              {post.date.getDate()}日
-            </p>
-          </div>
-          {!isNext ? (
-            <div className={arrowBoxClassName}>{arrowRight}</div>
-          ) : null}
-        </a>
+      <Link
+        href={post.ref}
+        className={
+          "dark:hover:bg-neutral-600 hover:bg-neutral-300 flex group items-center rounded-full transition-all" +
+          (isNext ? "" : " justify-end")
+        }
+      >
+        {isNext ? <div className={arrowBoxClassName}>{arrowLeft}</div> : null}
+        <div className={titleClassName + (!isNext ? " text-end" : "")}>
+          <p className="line-clamp-1 mb-1">{post.title}</p>
+          <p className="text-neutral-500">
+            {post.date.getFullYear()}年{post.date.getMonth() + 1}月
+            {post.date.getDate()}日
+          </p>
+        </div>
+        {!isNext ? (
+          <div className={arrowBoxClassName}>{arrowRight}</div>
+        ) : null}
       </Link>
     </div>
   );
