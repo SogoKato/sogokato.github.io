@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next-sitemap",
-    "postbuild": "next export -o docs/ && tsc generate-rss.ts --esModuleInterop && node generate-rss.js && touch docs/.nojekyll && echo 'sogo.dev' > docs/CNAME",
+    "postbuild": "tsc generate-rss.ts --esModuleInterop && node generate-rss.js && touch docs/.nojekyll && echo 'sogo.dev' > docs/CNAME",
     "start": "next start",
     "lint": "next lint",
     "requestIndexing": "tsc request-indexing.ts --esModuleInterop && node --inspect request-indexing.js",

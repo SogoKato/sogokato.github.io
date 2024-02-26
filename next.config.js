@@ -5,6 +5,8 @@ const nextConfig = {
   },
   reactStrictMode: true,
   swcMinify: true,
+  output: "export",
+  distDir: "docs",
 };
 
 module.exports = nextConfig;

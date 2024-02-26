@@ -5,8 +5,22 @@
     <link>https://sogo.dev</link>
     <description>@SogoKatoのブログ。技術系の記事を書きます。</description>
     <language>ja</language>
-    <lastBuildDate>Tue, 20 Feb 2024 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 26 Feb 2024 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://sogo.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Raspberry Pi 5でStable Diffusionを動かす（4Bと比較）</title>
+      <link>https://sogo.dev/posts/2024/02/stable-diffusion-raspberrypi-5</link>
+      <guid>https://sogo.dev/posts/2024/02/stable-diffusion-raspberrypi-5</guid>
+      <pubDate>Mon, 26 Feb 2024 00:00:00 GMT</pubDate>
+      <description> Raspberry Pi 4B より2倍速い CPU を積んでいるという Raspberry Pi 5 で、Stable Diffusion で画像生成をさせるとどれくらい差があるのか試してみたら噂通りの実力が発揮されました。画像生成ですが、GPU ではなく CPU でゴリ押しするだけなので純粋な CPU 対決です。
+
+!a black tree with golden leaves painted by Monet, autumn
+
+## 使ったもの
+
+* Raspberry Pi 5 8GB
+* Ra</description>
+    </item>
     <item>
       <title>FastAPIとPydantic V2で任意のcontextを渡してみる</title>
       <link>https://sogo.dev/posts/2024/02/fastapi-pydantic-v2</link>
