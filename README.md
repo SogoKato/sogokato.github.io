@@ -41,6 +41,7 @@ title: "自己紹介"
 
 ## 資格
 
+* 応用情報技術者 (2023年12月, 77.5/100 + 76.0/100)
 * AWS Certified Solutions Architect - Professional (2023年9月, 799/1000)
 * AWS Certified Solutions Architect - Associate (2023年8月, 825/1000)
 * Certified Kubernetes Application Developer (2023年3月, 91/100)
