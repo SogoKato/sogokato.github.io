@@ -5,13 +5,12 @@ import { baseUrl } from "./utils/const";
 import { convertSerializablePostSummaryToPostSummary } from "./utils/posts";
 import { listPostSummaries } from "./utils/readPosts";
 
-const googleSAKey = require("./service_account.json");
 const bingIndexNowKey = "8558162bf0de4b4fa018126dfc4e0cdb";
 
 const jwtClient = new google.auth.JWT(
-  googleSAKey.client_email,
+  process.env.GOOGLE_SA_CLIENT_EMAIL,
   undefined,
-  googleSAKey.private_key,
+  process.env.GOOGLE_SA_PRIVATE_KEY,
   ["https://www.googleapis.com/auth/indexing"],
   undefined
 );

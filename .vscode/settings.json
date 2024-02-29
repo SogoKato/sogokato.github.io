@@ -6,7 +6,7 @@
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true,
-    "**/docs/**": true
+    "**/out/**": true
   },
   "[markdown]": {
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"

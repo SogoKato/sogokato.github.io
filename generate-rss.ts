@@ -51,7 +51,7 @@ ${feeds.join("\n")}
   </channel>
 </rss>`;
 
-  const filePath = join(process.cwd(), "docs/feed.xml");
+  const filePath = join(process.cwd(), "out/feed.xml");
 
   await writeRss(filePath, rss);
 };
