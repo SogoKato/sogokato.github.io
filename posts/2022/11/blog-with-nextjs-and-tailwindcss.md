@@ -1,7 +1,7 @@
 ---
 title: "Next.jsとTailwind CSSでブログを作るときに考えたこと"
 date: "2022-11-13"
-tags: ["JavaScript", "React", "Next.js", "Tailwind CSS"]
+tags: ["JavaScript", "React", "Next.js", "Tailwind CSS", "ブログ"]
 ---
 
 このブログは Next.js の SSG（Static Site Generation; 静的サイト生成）機能を使いながら、デザインの大半は Tailwind CSS を使用して整えています。そして生成された HTML, CSS, JS は GitHub Pages でホストさせてもらっています。
