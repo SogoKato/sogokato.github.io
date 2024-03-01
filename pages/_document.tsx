@@ -25,7 +25,7 @@ export default function Document() {
           strategy="afterInteractive"
         />
       </Head>
-      <body>
+      <body className="bg-neutral-200 dark:bg-neutral-900">
         <Main />
         <NextScript />
       </body>
