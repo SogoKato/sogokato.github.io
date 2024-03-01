@@ -10,7 +10,7 @@ RUN apt-get update \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
 RUN apt update && \
-    apt install curl git
+    apt install curl git tig vim
 
 USER $USERNAME
 ENV SHELL=/bin/bash
