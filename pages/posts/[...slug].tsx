@@ -1,5 +1,6 @@
 import { orderBy } from "lodash";
 import type { GetStaticProps, NextPage } from "next";
+import dynamic from "next/dynamic";
 import PostCard from "../../components/PostCard";
 import PostPagination from "../../components/PostPagination";
 import Seo from "../../components/Seo";
@@ -59,6 +60,9 @@ const Post: NextPage<PostProps> = ({ posts, post }) => {
     currentPostIndex < posts.length - 1
       ? convertSerializablePostSummaryToPostSummary(posts[currentPostIndex + 1])
       : null;
+  const AdSense = dynamic(() => import("../../components/AdSense"), {
+    ssr: false,
+  });
   return (
     <article>
       <Seo
@@ -71,7 +75,7 @@ const Post: NextPage<PostProps> = ({ posts, post }) => {
         className="max-w-none prose dark:prose-invert prose-pre:m-0 prose-neutral prose-pre:px-2 prose-pre:py-1"
         post={post_}
       />
-      <div className="flex flex-col sm:flex-row justify-between mx-auto w-11/12">
+      <div className="flex flex-col sm:flex-row justify-between mb-4 mx-auto w-11/12">
         {nextPost ? (
           <PostPagination
             className="mb-4 sm:mb-0 w-full sm:w-1/2"
@@ -91,6 +95,7 @@ const Post: NextPage<PostProps> = ({ posts, post }) => {
           <div></div>
         )}
       </div>
+      <AdSense type="multiplex" className="mb-4 mx-auto w-11/12" />
     </article>
   );
 };

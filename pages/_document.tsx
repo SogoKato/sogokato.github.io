@@ -1,5 +1,6 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import { siteTitle } from "../utils/const";
+import { googleAdsenseId, siteTitle } from "../utils/const";
+import Script from "next/script";
 
 export default function Document() {
   return (
@@ -15,6 +16,13 @@ export default function Document() {
           href="/feed.xml"
           type="application/rss+xml"
           title={siteTitle}
+        />
+        <meta name="google-adsense-account" content={googleAdsenseId} />
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${googleAdsenseId}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
         />
       </Head>
       <body>

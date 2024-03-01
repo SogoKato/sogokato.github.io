@@ -2,7 +2,11 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import Tags from "./Tags";
-import type { PostSummary, SerializablePostData, SerializablePostSummary } from "../types/post";
+import type {
+  PostSummary,
+  SerializablePostData,
+  SerializablePostSummary,
+} from "../types/post";
 import { convertSerializablePostSummaryToPostSummary } from "../utils/posts";
 import { aggregateTags } from "../utils/tag";
 import { useEffect } from "react";
@@ -124,6 +128,8 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
     </svg>
   );
   const tags = aggregateTags(posts_);
+  const AdSense = dynamic(() => import("./AdSense"), { ssr: false });
+  const adSenseClassName = terminal === null ? " mb-8 sticky top-8" : " mb-8";
   return (
     <aside className={className}>
       {terminal}
@@ -186,17 +192,21 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
         </h2>
         <ul className="mt-3.5">{recommended}</ul>
       </div>
+      <AdSense type="display" className={commonClassName + "mb-8"} />
       <div className={commonClassName + "mb-8"}>
         <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
           TAGS
         </h2>
         <Tags className="mt-3.5" tags={tags} />
       </div>
-      <div className={commonClassName}>
+      <div className={commonClassName + "mb-8"}>
         <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
           LINKS
         </h2>
-        <Link href="/feed.xml" className="block mb-1 mt-3.5 hover:opacity-75 transition-all">
+        <Link
+          href="/feed.xml"
+          className="block mb-1 mt-3.5 hover:opacity-75 transition-all"
+        >
           <p>RSS</p>
         </Link>
         <Link
@@ -207,6 +217,10 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
           <p className="flex items-center">GitHub {arrowTopRight}</p>
         </Link>
       </div>
+      <AdSense
+        type="display"
+        className={commonClassName + adSenseClassName}
+      />
     </aside>
   );
 };

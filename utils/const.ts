@@ -6,3 +6,4 @@ export const basePostDir = "posts";
 export const postsPerPage = 10;
 
 export const googleTagManagerId = "GTM-M965SWP";
+export const googleAdsenseId = "ca-pub-3406608141177836";
