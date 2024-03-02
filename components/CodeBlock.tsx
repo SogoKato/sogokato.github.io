@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { YouTubeEmbed } from "@next/third-parties/google";
 import { CodeComponent } from "react-markdown/lib/ast-to-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow } from "react-syntax-highlighter/dist/cjs/styles/prism";
@@ -56,6 +57,8 @@ const CodeBlock: CodeComponent = ({ inline, className, children }) => {
         <PyConfig config={code}></PyConfig>
       </>
     );
+  } else if (lang == "youtube") {
+    return <YouTubeEmbed videoid={code} />
   }
   return (
     <>
