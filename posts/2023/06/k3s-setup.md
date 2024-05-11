@@ -1,5 +1,5 @@
 ---
-title: "ラズパイでK3sクラスター構築"
+title: "ラズパイでK3sクラスター構築【24.04対応】"
 date: "2023-06-13"
 tags: ["Kubernetes", "K3s", "Raspberry Pi"]
 ---
@@ -20,6 +20,10 @@ tags: ["Kubernetes", "K3s", "Raspberry Pi"]
   * 無線 LAN
   * ARM 64
   * Ubuntu 22.04 LTS
+
+### 2024/05/11 追記
+
+Ubuntu 24.04 と Raspberry Pi 4B の組み合わせでも同様の手順で agent の追加ができることを検証しました。
 
 ## Kubernetes 構成
 
