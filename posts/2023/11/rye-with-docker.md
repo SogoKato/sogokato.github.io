@@ -11,6 +11,10 @@ Rye は Rust 製の Python パッケージマネージャです。まだ「実�
 
 [^1]: https://github.com/mitsuhiko/rye/issues/241
 
+**2024-05-24 更新：URL が `rye-up.com` から `rye.astral.sh` に変わったみたいなので更新しました。**
+
+https://github.com/astral-sh/rye/issues/1111
+
 ## できたもの
 
 https://github.com/SogoKato/rye-with-docker
@@ -49,7 +53,7 @@ WORKDIR /home/${USERNAME}/app
 ENV RYE_HOME /home/${USERNAME}/.rye
 ENV PATH ${RYE_HOME}/shims:${PATH}
 
-RUN curl -sSf https://rye-up.com/get | RYE_NO_AUTO_INSTALL=1 RYE_INSTALL_OPTION="--yes" bash
+RUN curl -sSf https://rye.astral.sh/get | RYE_NO_AUTO_INSTALL=1 RYE_INSTALL_OPTION="--yes" bash
 
 # kaniko 用
 # kaniko は RUN --mount をサポートしていない
@@ -157,6 +161,6 @@ lrwxrwxrwx 1 ryeuser ryeuser    6 Nov 14 09:12 python3.12 -> python
 
 ## 参考文献
 
-* [Rye: An Experimental Package Management Solution for Python](https://rye-up.com/)
+* [Rye](https://rye.astral.sh/)
 * [Rye + Docker #239](https://github.com/mitsuhiko/rye/discussions/239)
 * [Rye を Docker で使う](https://zenn.dev/codehex/scraps/7cc3970a8c8048)
