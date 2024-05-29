@@ -21,7 +21,7 @@ tags: ["Kubernetes", "K3s", "Raspberry Pi"]
   * ARM 64
   * Ubuntu 22.04 LTS
 
-### 2024/05/11 追記
+### 2024/05/11, 2024/05/29 追記
 
 Ubuntu 24.04 と Raspberry Pi 4B の組み合わせでも同様の手順で agent の追加ができることを検証しました。
 
@@ -34,7 +34,7 @@ Ubuntu 24.04 と Raspberry Pi 4B の組み合わせでも同様の手順で agen
   * 2GB マシンにワークロードをスケジューリング可能にすると重くなるので taint をつけます
 * `--flannel-backend=vxlan`
   * デフォルト値です
-  * ラズパイではカーネルモジュールのインストールが必要です（後述）
+  * **Ubuntu 24.04 未満の場合**、ラズパイではカーネルモジュールのインストールが必要です（後述）
 
 ## server/agent 共通手順
 
@@ -56,7 +56,10 @@ console=serial0,115200 dwc_otg.lpm_enable=0 console=tty1 root=LABEL=writable roo
 sudo hostnamectl set-hostname xxx
 ```
 
-ラズパイで vxlan を使用するにはカーネルモジュールのインストールが必要なので、起動後以下のコマンドを実行します。
+**Ubuntu 24.04 未満の場合**[^1]、ラズパイで vxlan を使用するにはカーネルモジュールのインストールが必要なので、起動後以下のコマンドを実行します。
+
+[^1]: linux-modules-extra-raspi が提供されているのは mantic (23.10) までで、noble (24.04) ではインストールできません。インストールしなくても vxlan が動作するので Ubuntu にまた組み込まれるようになったんだと思います（K3s ドキュメントによると、21.10 以降カーネルモジュールのインストールが必要になっていた）。  
+https://packages.ubuntu.com/search?suite=all&section=all&arch=any&keywords=linux-modules-extra-raspi&searchon=all
 
 ```
 sudo apt update
