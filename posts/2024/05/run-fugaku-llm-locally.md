@@ -10,7 +10,8 @@ https://github.com/SogoKato/run-fugaku-llm
 
 ## 環境
 
-* WSL 2
+* Windows 11
+* WSL 2 + Docker Desktop
 * GeForce RTX 2070 (8GB RAM)
 * AMD Ryzen 7 3700X
 * 32GB RAM
@@ -140,6 +141,48 @@ $ docker exec -it ollama \
 ```
 
 </details>
+
+### 2024-05-18 追記
+
+どうやら GPU の設定がうまく行っていないっぽく、`--gpus all` なしで起動したら、ちゃんとした回答が来た。48秒。30分かけた上の回答よりは洗練されていない感じするけど、圧倒的に速い。llama すごい。
+
+```
+>>> スーパーコンピュータ「富岳」の名前の由来を教えてください。
+「富岳」は日本のスーパーコンピュータの名前で、「富士山」を意味する。この名前は、富士山が日本で最も高く、最も有名な山であることから選ばれた。スーパーコンピュータの名前として富士山が選ばれたのは、その「富岳」は日本のスーパーコンピュータの名前で、「富士山」を意味する。この名前は、富士山が日本で最も高く、最も有名な山であることから選ばれた。スーパーコンピュータの名前として富士山が選ばれたのは、その美しさと威厳のある姿が、スーパーコンピュータに求められる高い性能と信頼性を象徴しているからである。富岳」という名称は、日本のハイテク産業と日本の科学技術の優秀さを世界に示す役割も果たしている。
+```
+
+Docker Desktop なので [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) は必要ないはず。実際、ちゃんと認識されてる。Docker Desctop の再始動や更新も関係なし。GPU のメモリ不足説が濃厚か。
+
+```
+$ docker run -it --gpus=all --rm nvidia/cuda:12.4.1-base-ubuntu20.04 nvidia-smi
+Fri May 17 17:22:11 2024
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.54.10              Driver Version: 551.61         CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 2070        On  |   00000000:07:00.0 Off |                  N/A |
+|  0%   42C    P8              9W /  175W |     588MiB /   8192MiB |      3%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A        38      G   /Xwayland                                   N/A      |
+|    0   N/A  N/A        40      G   /Xwayland                                   N/A      |
++-----------------------------------------------------------------------------------------+
+```
+
+### 2024-07-01 追記
+
+よく見たら [ollama の README](https://github.com/ollama/ollama) に以下の記載があったので、GPU のメモリ不足ということで結論にします。
+
+> Note: You should have at least 8 GB of RAM available to run the 7B models, 16 GB to run the 13B models, and 32 GB to run the 33B models.
 
 ## 参考文献
 
