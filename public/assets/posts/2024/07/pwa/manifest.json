@@ -1,0 +1,33 @@
+{
+  "short_name": "PWA デモ",
+  "name": "PWA デモ",
+  "icons": [
+    {
+      "purpose": "any",
+      "src": "./img/icons/192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "src": "./img/icons/512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "src": "./img/icons/maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "src": "./img/icons/maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/assets/posts/2024/07/pwa/index.html",
+  "display": "standalone",
+  "scope": "/assets/posts/2024/07/pwa/"
+}

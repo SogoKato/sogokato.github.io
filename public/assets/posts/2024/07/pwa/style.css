@@ -1,0 +1,72 @@
+html {
+  font-family: Helvetica Neue, Arial, Hiragino Sans, Hiragino Kaku Gothic ProN,
+    BIZ UDPGothic, Meiryo, sans-serif;
+}
+
+body,
+.navbar {
+  background: #e5e5e5;
+  color: #171717;
+}
+
+a {
+  color: #171717;
+}
+
+body {
+  margin: 0;
+  padding-top: calc(env(safe-area-inset-top) + 1rem);
+  padding-right: calc(env(safe-area-inset-right) + 1rem);
+  padding-bottom: 1rem;
+  padding-left: calc(env(safe-area-inset-left) + 1rem);
+}
+
+.navbar {
+  background: #fff;
+  bottom: 0;
+  display: flex;
+  font-size: 1.5rem;
+  justify-content: space-around;
+  left: 0;
+  line-height: 1.5rem;
+  padding: 1rem 0;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+  position: fixed;
+  width: 100vw;
+}
+
+main {
+  background: #fff;
+  margin-bottom: calc(env(safe-area-inset-bottom) + 4.5rem);
+  padding: 2rem;
+}
+
+li {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+pre {
+  overflow-x: scroll;
+  width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  body,
+  .navbar {
+    background: #171717;
+    color: #e5e5e5;
+  }
+
+  main {
+    background: #2e2e2e;
+  }
+
+  .navbar {
+    background: #2e2e2e;
+  }
+
+  a {
+    color: #e5e5e5;
+  }
+}
