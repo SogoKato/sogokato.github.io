@@ -215,6 +215,22 @@ sudo apt install libc6 --reinstall
 [^1]: containerd デーモンの再始動の影響としては、containerd がダウンしている間コンテナの作成や削除といった操作ができないだけ（既存のコンテナは動作し続ける）なので、その程度の影響は容認できるという場合は containerd.service を除外する必要はなさそうです。  
 [What impact has a containerd restart on my running service tasks? · moby/moby · Discussion #46449](https://github.com/moby/moby/discussions/46449)
 
+#### 2024-08-26 追記
+
+上記だけだと docker デーモンが `/var/lib/dpkg/info/docker-ce.postinst` のスクリプト内で `deb-systemd-invoke restart 'docker.service' 'docker.socket'` が実行されてしまうことが分かったので、`policy-rc.d` を作成してインストール時の再起動を抑止します。
+
+```sh
+echo -e '#!/bin/bash\nexit 101' > /usr/sbin/policy-rc.d
+chmod +x /usr/sbin/policy-rc.d
+```
+
+この状態で `apt install docker-ce=<バージョン>` を試してみると、下記のログが出て、その後 needrestart が docker.service を再起動するか尋ねてきたので、期待通りに設定できていそうです。
+
+```
+invoke-rc.d: policy-rc.d denied execution of restart.
+/usr/sbin/policy-rc.d returned 101, not running 'restart docker.service docker.socket'
+```
+
 ### 古い conffile を維持するようにする
 
 パッケージの更新時にユーザーに尋ねられるものとしては、設定ファイルを古いものを残すか新しいものに上書きするかという質問（例: What do you want to do about modified configuration file sshd_config?）がありますね。
@@ -255,3 +271,5 @@ Unattended upgrades のログローテーションの設定は `/etc/logrotate.d
 * [第718回　needrestartで学ぶパッケージのフック処理 | gihyo.jp](https://gihyo.jp/admin/serial/01/ubuntu-recipe/0718)
 * [Install Docker Engine on Ubuntu | Docker Docs](https://docs.docker.com/engine/install/ubuntu/)
 * [apt_preferences(5) — apt — Debian testing — Debian Manpages](https://manpages.debian.org/testing/apt/apt_preferences.5.ja.html)
+* [Ubuntu Manpage: deb-systemd-invoke - wrapper around systemctl, respecting policy-rc.d](https://manpages.ubuntu.com/manpages/bionic/man1/deb-systemd-invoke.1p.html)
+* [Preventing Ubuntu 16.04 from starting daemons when a package is installed · Major Hayden](https://major.io/p/preventing-ubuntu-16-04-starting-daemons-package-installed/)
