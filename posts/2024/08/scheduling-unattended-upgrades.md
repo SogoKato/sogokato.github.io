@@ -30,7 +30,7 @@ Systemd timer がデフォルトで設定されているのでこれを変えれ
 Description=Daily apt download activities
 
 [Timer]
-OnCalendar=*-*-* 6,18:00:00
+OnCalendar=*-*-* 6,18:00
 RandomizedDelaySec=12h
 Persistent=true
 
