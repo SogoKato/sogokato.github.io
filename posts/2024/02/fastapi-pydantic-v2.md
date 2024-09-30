@@ -21,9 +21,16 @@ https://github.com/SogoKato/fastapi-pydantic-v2
 
 FastAPI の dependency（`Depends()` で呼び出されるやつ）として実装しました。
 
+**2024-09-11 追記**
+
+Pyright/Pylance がエラーを出すようになったので型チェック用の定義を追記しました。
+
 ```py
 def validate(model: Type[BaseModel]):
     """ユーザーの入力値を検証する関数を返す高階関数"""
+
+    if TYPE_CHECKING:
+        model = NewType("model", BaseModel)
 
     async def func(content: model, db: Session = Depends(get_db)) -> model:
         # ValidationContextはTypedDict
