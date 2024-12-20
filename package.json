@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --experimental-https --experimental-https-key ./certificates/key.pem --experimental-https-cert ./certificates/cert.pem",
     "build": "next build && next-sitemap",
     "postbuild": "tsc generate-rss.ts --esModuleInterop && node generate-rss.js && touch out/.nojekyll && echo 'sogo.dev' > out/CNAME",
     "start": "next start",

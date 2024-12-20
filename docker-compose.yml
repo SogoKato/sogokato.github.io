@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   app:
     build:
@@ -11,6 +11,9 @@ services:
       - type: bind
         source: ${HOME}/.gitconfig
         target: /home/node/.gitconfig
+      - type: bind
+        source: ${HOME}/.local/share/mkcert
+        target: /home/node/.local/share/mkcert
     ports:
       - "3000:3000"
     restart: always
