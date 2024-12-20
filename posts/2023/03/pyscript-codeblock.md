@@ -2,7 +2,7 @@
 title: "PyScriptを使ってブログのサンプルコードを実行させる"
 date: "2023-03-06"
 tags: ["Python", "WebAssembly", "PyScript", "JavaScript", "React", "Next.js"]
-showTerminalAside: true
+showTerminalAside: false
 ---
 
 [前回の記事](/posts/2023/03/pyscript-codeblock)を書くときに WebAssembly でブログのコードブロックのコードを実行させられたら面白いかも、ということで PyScript を使って実装してみました。React & Next.js で使う際の注意点についても書こうと思います。
@@ -14,11 +14,15 @@ showTerminalAside: true
 * [WebAssembly](https://webassembly.org/)
 * [react-markdown](https://github.com/remarkjs/react-markdown) のコードブロック（バッククォート3つ \```）をカスタマイズする方法
 
+## 2024-12-21 更新
+
+いつの間にか動かなくなっていたので最新化しておきました。
+
 ## やったこと
 
 * react-markdown のコードブロックでのオレオレ文法で PyScript を導入
 * PyScript のカスタム要素（以下）に対応する React コンポーネントを作成
-  * `<py-script>`, `<py-repl>`, `<py-terminal>`, `<py-config>`
+  * `<py-script>`, `<script type="py-editor">`, `<py-script terminal>`, `<py-config>`
 * React のハイドレーションのエラーを回避するために Next.js の [Dynamic Import](https://nextjs.org/docs/advanced-features/dynamic-import) を使用
 * PyScript の初期化の仕様に合わせた最適化
 
@@ -28,7 +32,7 @@ showTerminalAside: true
 
 ### py-terminal タグ
 
-ターミナルの出力を表示するためのタグです。後述の `<py-script>` や `<py-repl>` での標準出力や標準エラーはここに出てきます。ページに複数配置することができますが、表示される内容は同じになります。
+ターミナルの出力を表示するためのタグです。後述の `<py-script>` での標準出力や標準エラーはここに出てきます。ページに複数配置することができますが、表示される内容は同じになります。
 
 Markdown では以下のように記述しています。
 
@@ -52,42 +56,32 @@ print("Hello world!")
 print("Hello world!")
 ```
 
-### py-repl タグ
+### script タグ type="py-editor"
 
 Jupyter Notebook のような感じで逐次実行ができます。
 
 ```pyrepl
 print("こんにちは世界!")
 x = 1
-x
-```
-
-```pyrepl
-raise ValueError()
+print(x)
 ```
 
 ### py-config タグ
 
-[各種設定値](https://docs.pyscript.net/latest/reference/elements/py-config.html)を入れるためのタグです。
+[各種設定値](https://docs.pyscript.net/2024.11.1/user-guide/configuration/)を入れるためのタグです。
 
 ページ内に配置できる `<py-config>` は一つだけであることに注意が必要です。
 
 今回の実装時には PyScript の fetch 機能を使ってスクリプトファイルのロードを行うという要件があったので、`pyconfig` の markdown の記述は、記事ではファイル一覧として見せるようにしました。
 
 \`\`\`pyconfig  
-terminal = false  
-
-\[\[fetch\]\]  
-from = "../../../assets/posts/2023/03/dog.py"  
-to_file = "./dog.py"  
+\[files\]  
+"../../../assets/posts/2023/03/dog.py" = "./dog.py"
 \`\`\`
 
 ```pyconfig
-terminal = false
-
-[[fetch]]
-from = "../../../assets/posts/2023/03/dog.py"
-to_file = "./dog.py"
+[files]
+"../../../assets/posts/2023/03/dog.py" = "./dog.py"
 ```
 
 アップロードしたファイルを PyScript に読み込むことで、自作スクリプトを使用できます。
@@ -115,22 +109,27 @@ wanchan.bark()
 
 コードブロック開始の \`\`\` の横に書いた文字列が [`CodeBlock`](https://github.com/SogoKato/sogokato.github.io/blob/8769da4e6bb4bdecf4a0c59d274d4a439b66535b/components/CodeBlock.tsx) コンポーネントの `className` 引数に渡されるので、それを `split` して条件分岐を作ります。
 
-関連するソースコード（執筆時点）
-* [components/CodeBlock.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/CodeBlock.tsx)
+関連するソースコード（2024-12-21 時点）
+* [components/CodeBlock.tsx](https://github.com/SogoKato/sogokato.github.io/blob/03e8408491b21db8a05d3fba6d754bdef6207a7e/components/CodeBlock.tsx)
+* ~~[components/CodeBlock.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/CodeBlock.tsx)~~
 
 ## PyScript のカスタム要素に対応する React コンポーネントを作成
 
 上記の CodeBlock やその他の場所から呼び出される PyScript のカスタム要素を表すコンポーネントです。汎用的なライブラリを目指しているわけではないので、すべての引数を受け取れるようにはしていません。
 
-関連するソースコード（執筆時点）
+関連するソースコード（2024-12-21 時点）
 * `<py-script>`
-  * [components/PyScript.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyScript.tsx)
-* `<py-repl>`
-  * [components/PyRepl.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyRepl.tsx)
-* `<py-terminal>`
-  * [components/PyTerminal.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyTerminal.tsx)
+  * [components/PyScript.tsx](https://github.com/SogoKato/sogokato.github.io/blob/03e8408491b21db8a05d3fba6d754bdef6207a7e/components/PyScript.tsx)
+  * ~~[components/PyScript.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyScript.tsx)~~
+* `<script type="py-editor">`
+  * [components/PyRepl.tsx](https://github.com/SogoKato/sogokato.github.io/blob/03e8408491b21db8a05d3fba6d754bdef6207a7e/components/PyRepl.tsx)
+  * ~~[components/PyRepl.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyRepl.tsx)~~
+* `<py-script terminal>`
+  * [components/PyTerminal.tsx](https://github.com/SogoKato/sogokato.github.io/blob/03e8408491b21db8a05d3fba6d754bdef6207a7e/components/PyTerminal.tsx)
+  * ~~[components/PyTerminal.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyTerminal.tsx)~~
 * `<py-config>`
-  * [components/PyConfig.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyConfig.tsx)
+  * [components/PyConfig.tsx](https://github.com/SogoKato/sogokato.github.io/blob/03e8408491b21db8a05d3fba6d754bdef6207a7e/components/PyConfig.tsx)
+  * ~~[components/PyConfig.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyConfig.tsx)~~
 
 ## React のハイドレーションのエラーを回避するために Next.js の Dynamic Import を使用
 
@@ -140,8 +139,9 @@ PyScript が DOM の書き換えを行うので、サーバー側で SSR した�
 
 上で作成した PyScript のカスタム要素に対応するコンポーネント（`PyConfig` 以外）を使う際は Dynamic Import を使用するようにしています。`PyConfig` については DOM が変更されることがないので Dynamic Import にする必要がないです（また、これを Dynamic Import にしたらうまく動作しませんでした）。
 
-関連するソースコード（執筆時点）
-* [components/CodeBlock.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/CodeBlock.tsx)
+関連するソースコード（2024-12-21 時点）
+* [components/CodeBlock.tsx](https://github.com/SogoKato/sogokato.github.io/blob/03e8408491b21db8a05d3fba6d754bdef6207a7e/components/CodeBlock.tsx)
+* ~~[components/CodeBlock.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/CodeBlock.tsx)~~
 
 ## PyScript の初期化の仕様に合わせた最適化
 
@@ -151,9 +151,11 @@ PyScript では script タグで読み込みが完了したタイミングで、
 
 また、SPA のようなクライアント側でのルーティングを行なっているので、別の記事に移動しても前のページの実行結果がターミナルに残ってしまいます。現状では PyScript 側に destroy 系のメソッドが用意されていないので、こちらもとりあえずの対応として閲覧者にページをリロードするように促す仕組みを入れています・・・。🙇
 
-関連するソースコード（執筆時点）
-* [components/PostCard.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PostCard.tsx)
-* [components/PyTerminal.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyTerminal.tsx)
+関連するソースコード（2024-12-21 時点）
+* [components/PostCard.tsx](https://github.com/SogoKato/sogokato.github.io/blob/03e8408491b21db8a05d3fba6d754bdef6207a7e/components/PostCard.tsx)
+* ~~[components/PostCard.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PostCard.tsx)~~
+* [components/PyTerminal.tsx](https://github.com/SogoKato/sogokato.github.io/blob/03e8408491b21db8a05d3fba6d754bdef6207a7e/components/PyTerminal.tsx)
+* ~~[components/PyTerminal.tsx](https://github.com/SogoKato/sogokato.github.io/blob/3471507cfa722c763bdda0781e2d97ea17934a8d/components/PyTerminal.tsx)~~
 
 ## おわりに
 
