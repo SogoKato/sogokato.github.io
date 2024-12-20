@@ -9,7 +9,7 @@ const PyRepl: React.FC<PyReplProps> = ({ code }) => {
   const random = Math.random().toString(32).substring(2);
   const outputId = `py-output-${random}`;
   // @ts-ignore
-  const pyRepl = <py-repl output={outputId}>{code}</py-repl>;
+  const pyRepl = <script type="py-editor" env="shared" output={outputId}>{code}</script>;
   const outputDescription = pyTerminalExists() ? (
     <>
       出力はターミナルを確認してください。

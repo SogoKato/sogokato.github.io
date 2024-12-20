@@ -38,19 +38,18 @@ const CodeBlock: CodeComponent = ({ inline, className, children }) => {
       />
     );
   } else if (lang === "pyconfig") {
-    const config = toml.parse(code);
-    type Fetch = {
-      from: string;
-      to_file: string;
+    type Files = {
+      [file: string]: string;
     };
-    const files = config.fetch
-      ? config.fetch
-          .map((f: Fetch) => {
-            const tmp = f.to_file.split("/");
-            return `├─ ${tmp[tmp.length - 1]}`;
-          })
-          .join("\n")
-      : [];
+    type Config = {
+      files: Files;
+    };
+    const config: Config = toml.parse(code);
+    const files = config.files
+      ? Object.values(config.files).map((v: string) => {
+        const tmp = v.split("/");
+        return `├─ ${tmp[tmp.length - 1]}\n`;
+      }) : [];
     return (
       <>
         <div>{files}</div>

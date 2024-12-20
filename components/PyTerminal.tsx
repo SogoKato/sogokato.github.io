@@ -30,7 +30,7 @@ const PyTerminal: React.FC<PyTerminalProps> = ({
     );
   }
   // @ts-ignore
-  const pyTerminal = <py-terminal></py-terminal>;
+  const pyTerminal = <py-script terminal></py-script>;
   return (
     <div id={id} className={className}>
       <style>{`

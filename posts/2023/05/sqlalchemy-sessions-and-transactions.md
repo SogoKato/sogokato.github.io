@@ -239,6 +239,7 @@ print(">>> scoped_session_1.add(goro)")
 scoped_session_1.add(goro)
 print(">>> scoped_session_1.commit()")
 scoped_session_1.commit()  # エラーにはならない
+print("--------------------\nLines below are traceback.\n")
 ```
 
 ## おわりに

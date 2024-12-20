@@ -63,7 +63,8 @@ const PostCard: React.FC<PostCardProps> = ({
       {!isStaticPostPage ? <LikeButtons path={post.ref} /> : null}
       {tagsEnd}
       <Script
-        src="https://pyscript.net/latest/pyscript.js"
+        type="module"
+        src="https://pyscript.net/releases/2024.11.1/core.js"
         strategy="lazyOnload"
       />
     </div>

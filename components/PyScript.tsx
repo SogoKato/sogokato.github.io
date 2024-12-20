@@ -7,7 +7,7 @@ type PyScriptProps = {
 
 const PyScript: React.FC<PyScriptProps> = ({ code }) => {
   // @ts-ignore
-  const pyScript = <py-script>{code}</py-script>;
+  const pyScript = <py-script async>{code}</py-script>;
   const outputDescription = pyTerminalExists() ? (
     <>
       出力はターミナルを確認してください。

@@ -7,7 +7,7 @@ export default function Document() {
     <Html>
       <Head>
         <link rel="stylesheet" href="https://use.typekit.net/suf5fdm.css" />
-        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css" />
         <style>{`
         .py-overlay, .py-pop-up {display: none;}
         `}</style>

@@ -24,25 +24,12 @@ showTerminalAside: true
 ```pyconfig
 terminal = false
 
-[[fetch]]
-from = "../../../assets/posts/2023/03/a.py"
-to_file = "./a.py"
-
-[[fetch]]
-from = "../../../assets/posts/2023/03/b.py"
-to_file = "./b.py"
-
-[[fetch]]
-from = "../../../assets/posts/2023/03/c.py"
-to_file = "./c.py"
-
-[[fetch]]
-from = "../../../assets/posts/2023/03/test_b.py"
-to_file = "./test_b.py"
-
-[[fetch]]
-from = "../../../assets/posts/2023/03/test_c.py"
-to_file = "./test_c.py"
+[files]
+"../../../assets/posts/2023/03/a.py" = "./a.py"
+"../../../assets/posts/2023/03/b.py" = "./b.py"
+"../../../assets/posts/2023/03/c.py" = "./c.py"
+"../../../assets/posts/2023/03/test_b.py" = "./test_b.py"
+"../../../assets/posts/2023/03/test_c.py" = "./test_c.py"
 ```
 
 `a.py` の `SomeClass` はテスト対象システムが依存しているクラスです。これがモックの対象となるクラスです。
@@ -155,10 +142,7 @@ runner = TextTestRunner()
 runner.run(test)
 ```
 
-```pyterminal
-```
-
-期待通りの結果が得られていますね。Python の import まわりはやっぱりなんか面倒くさい・・・。
+ターミナルをみると、期待通りの結果が得られていますね。Python の import まわりはやっぱりなんか面倒くさい・・・。
 
 ## 参考文献
 
