@@ -1,7 +1,7 @@
 ---
 title: "Dockerが16KiB以上のログを分割する問題にFluentd側で対処する"
 date: "2024-01-15"
-tags: ["Fluentd", "Docker"]
+tags: ["Fluentd", "Docker", "ログ"]
 ---
 
 Docker のログドライバーは 16KiB (16384 バイト) 以上のメッセージの場合、ログを分割してしまいます。
