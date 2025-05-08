@@ -178,7 +178,7 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
           </div>
         </div>
         <p className="mb-2.5 text-xs">
-          クラウド業界に生息する駆け出しへっぽこエンジニア。ラズパイとダックスがすき。資格たくさんほしいので余ってる人はお裾分けください。
+          元クラウド屋、いま AI 屋。手を動かさなくてよくなるように全力で手を動かしてます。
         </p>
         <Link href="/profile">
           <button className="bg-duchs-200 hover:bg-duchs-800 font-black font-display px-3.5 py-0.5 rounded-full text-duchs-900 hover:text-duchs-100 transition-all">

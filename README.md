@@ -10,10 +10,7 @@ title: "自己紹介"
 * ダックスフンド
 * 音楽
   * Perfume
-  * 宇多田ヒカル
-  * 椎名林檎・東京事変
-  * K-POP (IVE, LE SSERAFIM, etc.)
-  * C-POP (五月天 Mayday, 告五人 Accusefive, etc.)
+  * J-POP/K-POP 全般
 * 観葉植物
 * 中国家庭料理づくり
 * プログラミング
@@ -24,7 +21,8 @@ title: "自己紹介"
 
 ## 経歴
 
-* 2021〜現在 アプリケーション開発 (Python, Docker, GitLab)
+* 2025〜現在 AI 実践、開発 (RAG, AI エージェント, Azure)
+* 2021〜2025 アプリケーション開発 (Python, Docker, GitLab)
 * 2017〜2021 上智大学文学部新聞学科
 
 ## 言語
