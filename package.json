@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --experimental-https --experimental-https-key ./certificates/key.pem --experimental-https-cert ./certificates/cert.pem",
-    "build": "next build && next-sitemap",
-    "postbuild": "tsc generate-rss.ts --esModuleInterop && node generate-rss.js && touch out/.nojekyll && echo 'sogo.dev' > out/CNAME",
+    "build": "next build",
+    "postbuild": "next-sitemap && tsc generate-rss.ts --esModuleInterop && node generate-rss.js && touch out/.nojekyll && echo 'sogo.dev' > out/CNAME",
     "start": "next start",
     "lint": "next lint",
     "requestIndexing": "tsc request-indexing.ts --esModuleInterop && node --inspect request-indexing.js",
