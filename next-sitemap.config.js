@@ -2,4 +2,6 @@
 module.exports = {
   siteUrl: "https://sogo.dev",
   generateRobotsTxt: true,
+  output: "export",
+  outDir: "out",
 }
