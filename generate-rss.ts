@@ -1,5 +1,5 @@
 import fs from "fs";
-import { orderBy } from "lodash";
+import { escape, orderBy } from "lodash";
 import { join } from "path";
 import type { PostSummary } from "./types/post";
 import { baseUrl, siteDescription, siteTitle } from "./utils/const";
@@ -8,10 +8,20 @@ import { listPostSummaries } from "./utils/readPosts";
 
 const RSS_URL = `${baseUrl}/feed.xml`;
 
+const escapeHTML = (s: string): string => {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 const createFeed = (post: PostSummary) => {
-  const desc = post.desc.replace("&", "&amp;");
+  const title = escapeHTML(post.title);
+  const desc = escapeHTML(post.desc);
   return `    <item>
-      <title>${post.title}</title>
+      <title>${title}</title>
       <link>${baseUrl}${post.ref}</link>
       <guid>${baseUrl}${post.ref}</guid>
       <pubDate>${post.date.toUTCString()}</pubDate>
