@@ -111,7 +111,7 @@ const content = `
   <li><p><strong>Ordered List Item 1</strong></p></li>
 </ol>
 <h2>Blocks</h2>
-<pre>code</pre>
+<pre><code>console.log('foo')</code></pre>
 <blockquote><p><strong>quote</strong></p></blockquote>
 `;
 
