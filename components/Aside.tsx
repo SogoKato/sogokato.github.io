@@ -10,6 +10,8 @@ import type {
 import { convertSerializablePostSummaryToPostSummary } from "../utils/posts";
 import { aggregateTags } from "../utils/tag";
 import { useEffect } from "react";
+import { cosineSimilarity } from "../utils/vector";
+import { TagData } from "../types/tag";
 
 type AsideProps = {
   className?: string;
@@ -30,6 +32,9 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
   // TODO: おすすめの記事や人気の記事を出すようにする
   const recommendedPosts = recommendPostsFromPost(posts, post);
   const recommended = recommendedPosts.map((post, index) => {
+    const reason = post.reason ? (
+      <span className="ml-2">[{post.reason}]</span>
+    ) : null;
     return (
       <Link
         href={post.ref}
@@ -39,7 +44,7 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
         <p className="mb-1 text-xs">{post.title}</p>
         <p className="text-neutral-500 text-xs">
           {post.date.getFullYear()}年{post.date.getMonth() + 1}月
-          {post.date.getDate()}日
+          {post.date.getDate()}日{reason}
         </p>
       </Link>
     );
@@ -178,7 +183,8 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
           </div>
         </div>
         <p className="mb-2.5 text-xs">
-          元クラウド屋、いま AI 屋。手を動かさなくてよくなるように全力で手を動かしてます。
+          元クラウド屋、いま AI
+          屋。手を動かさなくてよくなるように全力で手を動かしてます。
         </p>
         <Link href="/profile">
           <button className="bg-duchs-200 hover:bg-duchs-800 font-black font-display px-3.5 py-0.5 rounded-full text-duchs-900 hover:text-duchs-100 transition-all">
@@ -217,57 +223,100 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
           <p className="flex items-center">GitHub {arrowTopRight}</p>
         </Link>
       </div>
-      <AdSense
-        type="display"
-        className={commonClassName + adSenseClassName}
-      />
+      <AdSense type="display" className={commonClassName + adSenseClassName} />
     </aside>
   );
 };
 
+interface RecommendedPost extends PostSummary {
+  reason?: string;
+}
+
 const recommendPostsFromPost = (
   posts_: SerializablePostData[],
   post: SerializablePostSummary | undefined
-): PostSummary[] => {
+): RecommendedPost[] => {
   const posts = posts_.map((serializedPost) =>
     convertSerializablePostSummaryToPostSummary(serializedPost)
   );
+
   // Recommend the latest five posts if `post` is undefined.
   if (!post) {
     posts.splice(5, posts.length - 5);
     return posts;
   }
-  const tagNames = post.tags.map((tag) => tag.name);
-  const postsWithSameTag = posts.filter((otherPost) => {
-    if (otherPost.ref === post.ref) return false;
+
+  const otherPosts = posts.filter((otherPost) => otherPost.ref !== post.ref);
+
+  const ret: RecommendedPost[] = [];
+
+  // Recommend related posts using embeddings.
+  if (post.embedding !== null) {
+    ret.splice(0, 0, ...recommendPostsByEmbedding(otherPosts, post.embedding));
+  }
+  if (ret.length >= 5) {
+    ret.splice(5, Infinity);
+    return posts;
+  }
+
+  // Recommend the posts which have the same tag.
+  ret.splice(ret.length, 0, ...recommendPostsByTags(otherPosts, post.tags));
+  if (ret.length >= 5) {
+    ret.splice(5, Infinity);
+    return ret;
+  }
+
+  // Recommend the latest posts which have not been seen.
+  const seenPostRefs = ret.map((post) => post.ref);
+  const notSeenPosts = otherPosts.filter(
+    (post) => !seenPostRefs.includes(post.ref)
+  );
+  ret.splice(ret.length, 0, ...notSeenPosts);
+
+  if (ret.length >= 5) {
+    ret.splice(5, Infinity);
+  }
+
+  return ret;
+};
+
+const recommendPostsByEmbedding = (
+  otherPosts: PostSummary[],
+  embedding: number[]
+): RecommendedPost[] => {
+  return otherPosts.reduce((accumulator: RecommendedPost[], otherPost) => {
+    if (!Array.isArray(otherPost.embedding)) return accumulator;
+
+    const score = cosineSimilarity(embedding, otherPost.embedding);
+    if (score < 0.88) return accumulator;
+
+    accumulator.push({
+      ...otherPost,
+      reason: `類似度 ${(score * 100).toFixed(1)}%`,
+    });
+    return accumulator;
+  }, []);
+};
+
+const recommendPostsByTags = (
+  otherPosts: PostSummary[],
+  tags: TagData[]
+): RecommendedPost[] => {
+  const tagNames = tags.map((tag) => tag.name);
+  return otherPosts.reduce((accumulator: RecommendedPost[], otherPost) => {
+    const sameTags: string[] = [];
     for (let i = 0; i < otherPost.tags.length; i++) {
       if (tagNames.includes(otherPost.tags[i].name)) {
-        return true;
+        sameTags.push(otherPost.tags[i].name);
       }
     }
-    return false;
-  });
-  // Recommend the latest five posts which have the same tag.
-  if (postsWithSameTag.length >= 5) {
-    postsWithSameTag.splice(5, postsWithSameTag.length - 5);
-    return postsWithSameTag;
-  }
-  // Recommend the posts with the same tag.
-  // Fill with the latest posts which don't have the same tag.
-  const postsWithSameTagAndLatestPosts = posts.reduce(
-    (accumulator, otherPost) => {
-      if (accumulator.length >= 5) return accumulator;
-      for (let i = 0; i < otherPost.tags.length; i++) {
-        if (tagNames.includes(otherPost.tags[i].name)) {
-          return accumulator;
-        }
-      }
-      accumulator.push(otherPost);
-      return accumulator;
-    },
-    postsWithSameTag
-  );
-  return postsWithSameTagAndLatestPosts;
+
+    if (sameTags.length > 0) {
+      accumulator.push({ ...otherPost, reason: `🏷️ ${sameTags.join(", ")}` });
+    }
+
+    return accumulator;
+  }, []);
 };
 
 export default Aside;

@@ -6,6 +6,7 @@ import type {
   SerializablePostSummary,
 } from "../types/post";
 import { getTagRef } from "./tag";
+import { loadSummaryIndex } from "./vectorIndex";
 
 export const listPostSummaries = (): SerializablePostSummary[] => {
   const posts = listPostsRaw();
@@ -15,6 +16,7 @@ export const listPostSummaries = (): SerializablePostSummary[] => {
 export const getPostData = (ref: string): SerializablePostData => {
   const posts = listPostsRaw();
   const post = posts.filter((post) => post.summary.ref === ref)[0];
+
   return {
     ...post.summary,
     content: post.content,
@@ -29,16 +31,24 @@ interface PostRaw {
 const listPostsRaw = (): PostRaw[] => {
   const posts: string[][] = [];
   getPostsRecursively(basePostDir, posts);
+
+  const vecIndex = loadSummaryIndex();
+
   const allPosts = posts.map((post) => {
     const ref = "/" + post.join("/");
     post.splice(post.length - 1, 1, post[post.length - 1] + ".md");
-    const fileContent = fs.readFileSync(post.join("/"), "utf-8");
+    const filepath = post.join("/");
+    const fileContent = fs.readFileSync(filepath, "utf-8");
     const { data, content } = matter(fileContent);
+
+    const embedding = vecIndex[ref]?.embedding ? vecIndex[ref].embedding : null;
+
     return {
       summary: {
         title: data.title,
         date: data.date,
         ref: ref,
+        filepath,
         desc: data.description
           ? data.description
           : content
@@ -46,6 +56,7 @@ const listPostsRaw = (): PostRaw[] => {
               .replace("\n", " ")
               .replace(/\[(.+?)\]\(.+?\)/g, "$1")
               .slice(0, 256),
+        embedding,
         draft: data.draft ? data.draft : false,
         tags: (data.tags as string[]).map((tag) => ({
           name: tag,

@@ -4,6 +4,7 @@
 /generate-rss.js
 /request-indexing.js
 /service_account.json
+/vectorize.js
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
