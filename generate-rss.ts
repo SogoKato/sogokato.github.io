@@ -1,5 +1,5 @@
 import fs from "fs";
-import { escape, orderBy } from "lodash";
+import { orderBy } from "lodash";
 import { join } from "path";
 import type { PostSummary } from "./types/post";
 import { baseUrl, siteDescription, siteTitle } from "./utils/const";
@@ -15,7 +15,7 @@ const escapeHTML = (s: string): string => {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
-}
+};
 
 const createFeed = (post: PostSummary) => {
   const title = escapeHTML(post.title);
