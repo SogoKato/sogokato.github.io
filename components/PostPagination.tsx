@@ -1,9 +1,9 @@
 import Link from "next/link";
-import type { PostData, PostSummary } from "../types/post";
+import type { Post, PostMeta } from "../types/post";
 
 type PostPaginationProps = {
   className?: string;
-  post: PostData | PostSummary;
+  post: Post | PostMeta;
   isNext: boolean;
 };
 
@@ -48,9 +48,7 @@ const PostPagination: React.FC<PostPaginationProps> = ({
             {post.date.getDate()}日
           </p>
         </div>
-        {!isNext ? (
-          <div className={arrowBoxClassName}>{arrowRight}</div>
-        ) : null}
+        {!isNext ? <div className={arrowBoxClassName}>{arrowRight}</div> : null}
       </Link>
     </div>
   );

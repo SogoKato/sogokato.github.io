@@ -2,29 +2,17 @@ import crypto from "crypto";
 import fs from "fs";
 import { ChatOpenAI } from "@langchain/openai";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
-import { convertSerializablePostSummaryToPostSummary } from "./utils/posts";
-import { getPostData, listPostSummaries } from "./utils/readPosts";
-import { PostSummary } from "./types/post";
 import { loadSummaryIndex, saveSummaryIndex } from "./utils/vectorIndex";
+import { RawPost } from "./types/post";
+import { getRawPosts } from "./utils/readPosts";
 
-interface PostSummaryForEmbedding extends PostSummary {
-  summary: string;
-}
-
-interface PostSummaryWithEmbedding extends PostSummary {
-  summary: string;
-  embedding: number[];
-}
-
-const embedPosts = async (
-  posts: PostSummaryForEmbedding[]
-): Promise<PostSummaryWithEmbedding[]> => {
+const embedPosts = async (posts: RawPost[]): Promise<RawPost[]> => {
   // needs HUGGINGFACEHUB_API_KEY to be set
   const model = new HuggingFaceInferenceEmbeddings({
     model: "intfloat/multilingual-e5-large",
   });
 
-  const docs = posts.map((post) => post.summary);
+  const docs = posts.map((p) => p.summary).filter((p) => p !== null);
   const embeddings = await model.embedDocuments(docs);
 
   return posts.map((post, i) => ({
@@ -48,14 +36,14 @@ const getFileHash = (path: string) => {
   return hash.digest("base64");
 };
 
-const summarize = async (post: PostSummary) => {
-  const postData = getPostData(post.ref);
+const summarize = async (post: RawPost) => {
+  // needs OPENAI_API_KEY to be set
   const llm = new ChatOpenAI({
     model: "gpt-4.1",
     maxTokens: 512,
   });
   const res = await llm.invoke(
-    `この記事を日本語で512 tokens以内で要約してください。\n\n---\n\n# ${postData.title}\n\n${postData.content}`
+    `この記事を日本語で512 tokens以内で要約してください。\n\n---\n\n# ${post.metadata.title}\n\n${post.content}`
   );
   console.log(res.usage_metadata?.output_tokens);
   return res.text;
@@ -63,17 +51,15 @@ const summarize = async (post: PostSummary) => {
 
 const vectorize = async () => {
   const index = loadSummaryIndex();
-  const posts = listPostSummaries().map((post) =>
-    convertSerializablePostSummaryToPostSummary(post)
-  );
+  const rawPosts = getRawPosts();
 
   const refs = Object.keys(index);
-  const unindexedPosts = posts.filter((post) => {
-    if (!refs.includes(post.ref)) return true;
+  const unindexedPosts = rawPosts.filter((p) => {
+    if (!refs.includes(p.metadata.ref)) return true;
 
-    const currentFileHash = getFileHash(post.filepath);
+    const currentFileHash = getFileHash(p.metadata.filepath);
 
-    return currentFileHash !== index[post.ref].fileHash;
+    return currentFileHash !== index[p.metadata.ref].fileHash;
   });
   console.log(`${unindexedPosts.length} file(s) are unindexed or updated.`);
 
@@ -87,8 +73,10 @@ const vectorize = async () => {
 
   const postsWithEmbedding = await embedPosts(summarizedPosts);
   for (const post of postsWithEmbedding) {
-    index[post.ref] = {
-      fileHash: getFileHash(post.filepath),
+    if (post.summary === null || post.embedding === null)
+      throw new Error("`summary` or `embedding` is null.");
+    index[post.metadata.ref] = {
+      fileHash: getFileHash(post.metadata.filepath),
       embedding: post.embedding,
       summary: post.summary,
     };

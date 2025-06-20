@@ -2,12 +2,12 @@ import type { ReactNode } from "react";
 import Header from "./Header";
 import Aside from "./Aside";
 import Footer from "./Footer";
-import type { SerializablePostData } from "../types/post";
+import type { SerializablePost, SerializablePostMeta } from "../types/post";
 
 type LayoutProps = {
   children?: ReactNode | undefined;
-  posts?: SerializablePostData[];
-  post?: SerializablePostData;
+  posts?: SerializablePostMeta[];
+  post?: SerializablePost;
 };
 
 export default function Layout({ children, posts, post }: LayoutProps) {

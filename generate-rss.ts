@@ -1,10 +1,13 @@
 import fs from "fs";
 import { orderBy } from "lodash";
 import { join } from "path";
-import type { PostSummary } from "./types/post";
+import type { PostMeta } from "./types/post";
 import { baseUrl, siteDescription, siteTitle } from "./utils/const";
-import { convertSerializablePostSummaryToPostSummary } from "./utils/posts";
-import { listPostSummaries } from "./utils/readPosts";
+import {
+  convertRawPostToSerializablePostMeta,
+  convertSerializablePostMetaToPostMeta,
+} from "./utils/posts";
+import { getRawPosts } from "./utils/readPosts";
 
 const RSS_URL = `${baseUrl}/feed.xml`;
 
@@ -17,7 +20,7 @@ const escapeHTML = (s: string): string => {
     .replace(/'/g, "&#39;");
 };
 
-const createFeed = (post: PostSummary) => {
+const createFeed = (post: PostMeta) => {
   const title = escapeHTML(post.title);
   const desc = escapeHTML(post.desc);
   return `    <item>
@@ -39,8 +42,10 @@ const writeRss = async (filePath: string, content: string) => {
 
 const generateRss = async () => {
   const posts = orderBy(
-    listPostSummaries().map((post) =>
-      convertSerializablePostSummaryToPostSummary(post)
+    getRawPosts().map((post) =>
+      convertSerializablePostMetaToPostMeta(
+        convertRawPostToSerializablePostMeta(post)
+      )
     ),
     (o) => o.date,
     "desc"

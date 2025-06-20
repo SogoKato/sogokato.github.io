@@ -1,49 +1,73 @@
 import { TagData } from "./tag";
 
-interface PostSummary {
+/*
+ * ビルド成果物で使用される投稿データ型
+ * - PostMeta: 記事の概要
+ * - RecommendedPost: おすすめされる記事
+ * - PostData: 記事本体
+ * - SerializablePostMeta: シリアライズ可能な記事の概要
+ * - SerializablePostMeta: シリアライズ可能なおすすめされる記事
+ * - SerializablePostData: シリアライズ可能な記事本体
+ */
+
+interface PostMeta {
   title: string;
   date: Date;
   ref: string;
   filepath: string;
   desc: string;
-  embedding: number[] | null;
   tags: TagData[];
   draft: boolean;
   showTerminalAside: boolean;
 }
 
-interface PostData extends PostSummary {
-  content: string;
+interface RecommendedPost extends PostMeta {
+  reason?: string;
 }
 
-interface SerializablePostSummary {
+interface Post extends PostMeta {
+  content: string;
+  recommendation: RecommendedPost[];
+}
+
+interface SerializablePostMeta {
   title: string;
   date: string;
   ref: string;
   filepath: string;
   desc: string;
-  embedding: number[] | null;
   tags: TagData[];
   draft: boolean;
   showTerminalAside: boolean;
 }
 
-interface SerializablePostData extends SerializablePostSummary {
-  content: string;
+interface SerializableRecommendedPost extends SerializablePostMeta {
+  reason?: string;
 }
 
-const isPostData = (arg: unknown): arg is PostData => {
-  return (
-    typeof arg === "object" &&
-    arg !== null &&
-    typeof (arg as PostData).content === "string"
-  );
-};
+interface SerializablePost extends SerializablePostMeta {
+  content: string;
+  recommendation: SerializableRecommendedPost[];
+}
 
-export { isPostData };
+/*
+ * ビルドで使用される投稿データ型
+ * - RawPost: 未変換の記事データ
+ */
+
+interface RawPost {
+  metadata: SerializablePostMeta;
+  content: string;
+  summary: string | null;
+  embedding: number[] | null;
+}
+
 export type {
-  PostData,
-  PostSummary,
-  SerializablePostData,
-  SerializablePostSummary,
+  RawPost,
+  RecommendedPost,
+  Post,
+  PostMeta,
+  SerializablePost,
+  SerializablePostMeta,
+  SerializableRecommendedPost,
 };

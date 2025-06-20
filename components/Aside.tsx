@@ -2,126 +2,36 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import Tags from "./Tags";
-import type {
-  PostSummary,
-  SerializablePostData,
-  SerializablePostSummary,
-} from "../types/post";
-import { convertSerializablePostSummaryToPostSummary } from "../utils/posts";
+import type { SerializablePost, SerializablePostMeta } from "../types/post";
+import { convertSerializableRecommendedPostToRecommendedPost } from "../utils/posts";
 import { aggregateTags } from "../utils/tag";
 import { useEffect } from "react";
-import { cosineSimilarity } from "../utils/vector";
-import { TagData } from "../types/tag";
 
 type AsideProps = {
   className?: string;
-  posts: SerializablePostData[];
-  post: SerializablePostData | undefined;
+  posts: SerializablePostMeta[];
+  post: SerializablePost | undefined;
 };
 
-const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
+const Aside: React.FC<AsideProps> = ({
+  className,
+  posts: JSONPosts,
+  post: JSONPost,
+}) => {
   const commonClassName = "mx-auto w-11/12 ";
-  const posts_ = posts.map((serializedPost) =>
-    convertSerializablePostSummaryToPostSummary(serializedPost)
-  );
+
   useEffect(() => {
     const el = document.getElementById("sidebarPyTerminalWrapper");
     if (!el) return;
     el.style.setProperty("--terminal-height", "9999px");
   }, []);
-  // TODO: おすすめの記事や人気の記事を出すようにする
-  const recommendedPosts = recommendPostsFromPost(posts, post);
-  const recommended = recommendedPosts.map((post, index) => {
-    const reason = post.reason ? (
-      <span className="ml-2">[{post.reason}]</span>
-    ) : null;
-    return (
-      <Link
-        href={post.ref}
-        key={index}
-        className="block mb-3 hover:opacity-75 transition-all"
-      >
-        <p className="mb-1 text-xs">{post.title}</p>
-        <p className="text-neutral-500 text-xs">
-          {post.date.getFullYear()}年{post.date.getMonth() + 1}月
-          {post.date.getDate()}日{reason}
-        </p>
-      </Link>
-    );
-  });
-  let terminal = null;
-  if (post?.showTerminalAside) {
-    const PyTerminal = dynamic(() => import("./PyTerminal"), { ssr: false });
-    terminal = (
-      <div className="sidebar-terminal-container md:sticky md:top-0 py-8 z-10">
-        <div className={commonClassName + "sidebar-terminal-inner-container"}>
-          <div className="flex justify-between">
-            <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
-              TERMINAL
-            </h2>
-            <button
-              className="bg-duchs-200 hover:bg-duchs-800 font-display px-2 rounded-full text-duchs-900 hover:text-duchs-100 text-xs transition-all"
-              onClick={() => {
-                const el = document.getElementById("sidebarPyTerminalWrapper");
-                if (!el) {
-                  console.error("#sidebarPyTerminalWrapper not found.");
-                  return;
-                }
-                const current = el.style.getPropertyValue("--terminal-height");
-                const changed = current === "0px" ? "9999px" : "0px";
-                el.style.setProperty("--terminal-height", changed);
-              }}
-            >
-              OPEN/CLOSE
-            </button>
-          </div>
-          <pre
-            id="sidebarPyTerminalWrapper"
-            className={"duration-300 text-xs transition-all"}
-            style={{
-              maxHeight: "var(--terminal-height)",
-            }}
-          >
-            <PyTerminal
-              id="sidebarPyTerminal"
-              className="my-3.5"
-              descStyle={{
-                display: "block",
-                marginTop: "0.625rem",
-                whiteSpace: "pre-wrap",
-              }}
-              linkStyle={{ textDecoration: "underline", cursor: "pointer" }}
-            />
-          </pre>
-        </div>
-        <style>{`
-        .sidebar-terminal-container::after {
-          display: block;
-          height: 100%;
-          width: 100%;
-          position: absolute;
-          top: 0;
-          z-index: -1;
-          mask: linear-gradient(to top, transparent, black 20px);
-          backdrop-filter: blur(8px);
-        }
-        .sidebar-terminal-inner-container {
-          max-height: calc(100vh - 4rem);
-          overflow: scroll;
-        }
-        .sidebar-terminal-container .py-terminal {
-          border-radius: 0.375rem;
-          padding: 0.75rem;
-        }
-        `}</style>
-        <style
-          dangerouslySetInnerHTML={{
-            __html: '.sidebar-terminal-container::after {content: ""}',
-          }}
-        ></style>
-      </div>
-    );
-  }
+
+  const recommended = JSONPost ? createRecommendedPostsElement(JSONPost) : null;
+
+  const terminal = JSONPost?.showTerminalAside
+    ? createTerminalElement(commonClassName)
+    : null;
+
   const arrowTopRight = (
     <svg
       className="fill-neutral-900 dark:fill-neutral-100 h-3 ml-2"
@@ -132,7 +42,7 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
       </g>
     </svg>
   );
-  const tags = aggregateTags(posts_);
+  const tags = aggregateTags(JSONPosts);
   const AdSense = dynamic(() => import("./AdSense"), { ssr: false });
   const adSenseClassName = terminal === null ? " mb-8 sticky top-8" : " mb-8";
   return (
@@ -228,95 +138,101 @@ const Aside: React.FC<AsideProps> = ({ className, posts, post }) => {
   );
 };
 
-interface RecommendedPost extends PostSummary {
-  reason?: string;
-}
-
-const recommendPostsFromPost = (
-  posts_: SerializablePostData[],
-  post: SerializablePostSummary | undefined
-): RecommendedPost[] => {
-  const posts = posts_.map((serializedPost) =>
-    convertSerializablePostSummaryToPostSummary(serializedPost)
-  );
-
-  // Recommend the latest five posts if `post` is undefined.
-  if (!post) {
-    posts.splice(5, posts.length - 5);
-    return posts;
-  }
-
-  const otherPosts = posts.filter((otherPost) => otherPost.ref !== post.ref);
-
-  const ret: RecommendedPost[] = [];
-
-  // Recommend related posts using embeddings.
-  if (post.embedding !== null) {
-    ret.splice(0, 0, ...recommendPostsByEmbedding(otherPosts, post.embedding));
-  }
-  if (ret.length >= 5) {
-    ret.splice(5, Infinity);
-    return posts;
-  }
-
-  // Recommend the posts which have the same tag.
-  ret.splice(ret.length, 0, ...recommendPostsByTags(otherPosts, post.tags));
-  if (ret.length >= 5) {
-    ret.splice(5, Infinity);
-    return ret;
-  }
-
-  // Recommend the latest posts which have not been seen.
-  const seenPostRefs = ret.map((post) => post.ref);
-  const notSeenPosts = otherPosts.filter(
-    (post) => !seenPostRefs.includes(post.ref)
-  );
-  ret.splice(ret.length, 0, ...notSeenPosts);
-
-  if (ret.length >= 5) {
-    ret.splice(5, Infinity);
-  }
-
-  return ret;
+const createRecommendedPostsElement = (post: SerializablePost) => {
+  return post.recommendation.map((p, index) => {
+    const recommendedPost =
+      convertSerializableRecommendedPostToRecommendedPost(p);
+    const reason = recommendedPost.reason ? (
+      <span className="ml-2">[{recommendedPost.reason}]</span>
+    ) : null;
+    return (
+      <Link
+        href={recommendedPost.ref}
+        key={index}
+        className="block mb-3 hover:opacity-75 transition-all"
+      >
+        <p className="mb-1 text-xs">{recommendedPost.title}</p>
+        <p className="text-neutral-500 text-xs">
+          {recommendedPost.date.getFullYear()}年
+          {recommendedPost.date.getMonth() + 1}月
+          {recommendedPost.date.getDate()}日{reason}
+        </p>
+      </Link>
+    );
+  });
 };
 
-const recommendPostsByEmbedding = (
-  otherPosts: PostSummary[],
-  embedding: number[]
-): RecommendedPost[] => {
-  return otherPosts.reduce((accumulator: RecommendedPost[], otherPost) => {
-    if (!Array.isArray(otherPost.embedding)) return accumulator;
-
-    const score = cosineSimilarity(embedding, otherPost.embedding);
-    if (score < 0.88) return accumulator;
-
-    accumulator.push({
-      ...otherPost,
-      reason: `類似度 ${(score * 100).toFixed(1)}%`,
-    });
-    return accumulator;
-  }, []);
-};
-
-const recommendPostsByTags = (
-  otherPosts: PostSummary[],
-  tags: TagData[]
-): RecommendedPost[] => {
-  const tagNames = tags.map((tag) => tag.name);
-  return otherPosts.reduce((accumulator: RecommendedPost[], otherPost) => {
-    const sameTags: string[] = [];
-    for (let i = 0; i < otherPost.tags.length; i++) {
-      if (tagNames.includes(otherPost.tags[i].name)) {
-        sameTags.push(otherPost.tags[i].name);
-      }
-    }
-
-    if (sameTags.length > 0) {
-      accumulator.push({ ...otherPost, reason: `🏷️ ${sameTags.join(", ")}` });
-    }
-
-    return accumulator;
-  }, []);
+const createTerminalElement = (className: string) => {
+  const PyTerminal = dynamic(() => import("./PyTerminal"), { ssr: false });
+  return (
+    <div className="sidebar-terminal-container md:sticky md:top-0 py-8 z-10">
+      <div className={className + "sidebar-terminal-inner-container"}>
+        <div className="flex justify-between">
+          <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
+            TERMINAL
+          </h2>
+          <button
+            className="bg-duchs-200 hover:bg-duchs-800 font-display px-2 rounded-full text-duchs-900 hover:text-duchs-100 text-xs transition-all"
+            onClick={() => {
+              const el = document.getElementById("sidebarPyTerminalWrapper");
+              if (!el) {
+                console.error("#sidebarPyTerminalWrapper not found.");
+                return;
+              }
+              const current = el.style.getPropertyValue("--terminal-height");
+              const changed = current === "0px" ? "9999px" : "0px";
+              el.style.setProperty("--terminal-height", changed);
+            }}
+          >
+            OPEN/CLOSE
+          </button>
+        </div>
+        <pre
+          id="sidebarPyTerminalWrapper"
+          className={"duration-300 text-xs transition-all"}
+          style={{
+            maxHeight: "var(--terminal-height)",
+          }}
+        >
+          <PyTerminal
+            id="sidebarPyTerminal"
+            className="my-3.5"
+            descStyle={{
+              display: "block",
+              marginTop: "0.625rem",
+              whiteSpace: "pre-wrap",
+            }}
+            linkStyle={{ textDecoration: "underline", cursor: "pointer" }}
+          />
+        </pre>
+      </div>
+      <style>{`
+        .sidebar-terminal-container::after {
+          display: block;
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          z-index: -1;
+          mask: linear-gradient(to top, transparent, black 20px);
+          backdrop-filter: blur(8px);
+        }
+        .sidebar-terminal-inner-container {
+          max-height: calc(100vh - 4rem);
+          overflow: scroll;
+        }
+        .sidebar-terminal-container .py-terminal {
+          border-radius: 0.375rem;
+          padding: 0.75rem;
+        }
+        `}</style>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: '.sidebar-terminal-container::after {content: ""}',
+        }}
+      ></style>
+    </div>
+  );
 };
 
 export default Aside;

@@ -1,34 +1,11 @@
 import fs from "fs";
 import matter from "gray-matter";
 import { basePostDir } from "./const";
-import type {
-  SerializablePostData,
-  SerializablePostSummary,
-} from "../types/post";
+import type { RawPost } from "../types/post";
 import { getTagRef } from "./tag";
 import { loadSummaryIndex } from "./vectorIndex";
 
-export const listPostSummaries = (): SerializablePostSummary[] => {
-  const posts = listPostsRaw();
-  return posts.map((post) => post.summary);
-};
-
-export const getPostData = (ref: string): SerializablePostData => {
-  const posts = listPostsRaw();
-  const post = posts.filter((post) => post.summary.ref === ref)[0];
-
-  return {
-    ...post.summary,
-    content: post.content,
-  };
-};
-
-interface PostRaw {
-  summary: SerializablePostSummary;
-  content: string;
-}
-
-const listPostsRaw = (): PostRaw[] => {
+export const getRawPosts = (): RawPost[] => {
   const posts: string[][] = [];
   getPostsRecursively(basePostDir, posts);
 
@@ -41,10 +18,11 @@ const listPostsRaw = (): PostRaw[] => {
     const fileContent = fs.readFileSync(filepath, "utf-8");
     const { data, content } = matter(fileContent);
 
+    const summary = vecIndex[ref]?.summary ? vecIndex[ref]?.summary : null;
     const embedding = vecIndex[ref]?.embedding ? vecIndex[ref].embedding : null;
 
     return {
-      summary: {
+      metadata: {
         title: data.title,
         date: data.date,
         ref: ref,
@@ -56,7 +34,6 @@ const listPostsRaw = (): PostRaw[] => {
               .replace("\n", " ")
               .replace(/\[(.+?)\]\(.+?\)/g, "$1")
               .slice(0, 256),
-        embedding,
         draft: data.draft ? data.draft : false,
         tags: (data.tags as string[]).map((tag) => ({
           name: tag,
@@ -67,16 +44,18 @@ const listPostsRaw = (): PostRaw[] => {
           : false,
       },
       content,
+      summary,
+      embedding,
     };
   });
   return allPosts.filter(
     (post) =>
-      !post.summary.draft ||
-      (process.env.NODE_ENV === "development" && post.summary.draft)
+      !post.metadata.draft ||
+      (process.env.NODE_ENV === "development" && post.metadata.draft)
   );
 };
 
-export const getPostsRecursively = (parentPath: string, posts: string[][]) => {
+const getPostsRecursively = (parentPath: string, posts: string[][]) => {
   const filesOrDirs = fs.readdirSync(parentPath);
   filesOrDirs.forEach((fileOrDir) => {
     if (fs.statSync(`${parentPath}/${fileOrDir}`).isDirectory()) {

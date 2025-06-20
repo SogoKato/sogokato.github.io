@@ -3,19 +3,28 @@ import type { GetStaticProps, NextPage } from "next";
 import Pagination from "../components/Pagination";
 import PostCard from "../components/PostCard";
 import Seo from "../components/Seo";
-import type { SerializablePostSummary } from "../types/post";
+import type { SerializablePostMeta } from "../types/post";
 import { postsPerPage, siteDescription, siteTitle } from "../utils/const";
-import { convertSerializablePostSummaryToPostSummary } from "../utils/posts";
-import { listPostSummaries } from "../utils/readPosts";
+import {
+  convertRawPostToSerializablePostMeta,
+  convertSerializablePostMetaToPostMeta,
+} from "../utils/posts";
+import PostListItem from "../components/PostListItem";
+import { getRawPosts } from "../utils/readPosts";
 
 type HomeProps = {
-  posts: SerializablePostSummary[];
-  slicedPosts: SerializablePostSummary[];
+  posts: SerializablePostMeta[];
+  slicedPosts: SerializablePostMeta[];
   pages: number[];
 };
 
 export const getStaticProps: GetStaticProps<HomeProps> = () => {
-  const posts = orderBy(listPostSummaries(), (o) => new Date(o.date), "desc");
+  const rawPosts = orderBy(
+    getRawPosts(),
+    (o) => new Date(o.metadata.date),
+    "desc"
+  );
+  const posts = rawPosts.map((p) => convertRawPostToSerializablePostMeta(p));
   const slicedPosts = posts.slice(0, postsPerPage);
   const pages = range(1, Math.ceil(posts.length / postsPerPage) + 1);
   return {
@@ -29,9 +38,10 @@ export const getStaticProps: GetStaticProps<HomeProps> = () => {
 
 const Home: NextPage<HomeProps> = ({ slicedPosts, pages }) => {
   const postCards = slicedPosts.map((serializedPost, index) => {
-    const post = convertSerializablePostSummaryToPostSummary(serializedPost);
-    return <PostCard key={index} post={post} />;
+    const post = convertSerializablePostMetaToPostMeta(serializedPost);
+    return <PostListItem key={index} post={post} />;
   });
+
   return (
     <div>
       <Seo
