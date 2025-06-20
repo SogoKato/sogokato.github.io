@@ -1,0 +1,1 @@
+dotenvx run -f .env.local -- pnpm vectorize && git add data/index.json

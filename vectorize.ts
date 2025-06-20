@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import fs from "fs";
+import "dotenv/config";
 import { ChatOpenAI } from "@langchain/openai";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import { loadSummaryIndex, saveSummaryIndex } from "./utils/vectorIndex";
