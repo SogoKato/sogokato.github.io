@@ -2,6 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-duchs-100: #ffeee8;
+  --color-duchs-200: #ebd6cf;
+  --color-duchs-400: #e38634;
+  --color-duchs-500: #d96236;
+  --color-duchs-600: #824007;
+  --color-duchs-800: #732c1d;
+  --color-duchs-900: #401a0d;
+
+  --font-display: rooney-sans, sans-serif;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
 html,
 body {
   padding: 0;

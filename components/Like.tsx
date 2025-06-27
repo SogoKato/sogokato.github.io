@@ -72,7 +72,7 @@ const Like: React.FC<LikeProps> = ({ path }) => {
     return (
       <button
         className={
-          "headlessLike__item bg-duchs-500 flex font-bold items-center mb-8 p-2 rounded-lg shadow-neutral-500 shadow text-neutral-50 transition-all " +
+          "headlessLike__item bg-duchs-500 flex font-bold items-center mb-8 p-2 rounded-lg shadow-neutral-500 shadow-sm text-neutral-50 transition-all " +
           statefulClassName
         }
         onClick={() => onClick()}

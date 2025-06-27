@@ -121,7 +121,7 @@ const Tiptap = () => {
     extensions,
     editorProps: {
       attributes: {
-        class: "focus:outline-none prose",
+        class: "focus:outline-hidden prose",
       },
     },
   });
