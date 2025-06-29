@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://use.typekit.net/suf5fdm.css");
+@import url("https://pyscript.net/releases/2024.11.1/core.css");
+
+@import "tailwindcss";
 
 @plugin '@tailwindcss/typography';
 
@@ -44,12 +45,12 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 * {
   box-sizing: border-box;
   word-break: break-all;
+}
+
+.py-overlay,
+.py-pop-up {
+  display: none;
 }

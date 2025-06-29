@@ -1,4 +1,6 @@
-import { useRouter } from "next/router";
+"use client";
+
+import { usePathname } from "next/navigation";
 import { googleAdsenseId } from "../utils/const";
 import { useEffect } from "react";
 
@@ -13,14 +15,15 @@ type AdSenseProps = {
 };
 
 export default function AdSense({ type, className }: AdSenseProps) {
-  const router = useRouter();
+  const pathname = usePathname();
   useEffect(() => {
     try {
       (adsbygoogle = window.adsbygoogle || []).push({});
     } catch (error) {
       console.error(error);
     }
-  }, [router.asPath]);
+  }, [pathname]);
+
   if (window.adsbygoogle === undefined) return null;
   const { adSlot, adFormat, fullWidthResponsive } = getSlotValue(type);
   const baseClassName = "overflow-hidden rounded-md ";
@@ -29,7 +32,7 @@ export default function AdSense({ type, className }: AdSenseProps) {
       <div className="bg-white h-80 text-black text-center w-full">広告</div>
     ) : null;
   return (
-    <div className={baseClassName + className} key={router.asPath}>
+    <div className={baseClassName + className} key={pathname}>
       {placeholder}
       <ins
         className="adsbygoogle"

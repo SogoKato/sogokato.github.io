@@ -1,25 +1,26 @@
-import { RawPost, SerializableRecommendedPost } from "../types/post";
+import { RawPost, Post, RecommendedPost } from "../types/post";
 import { TagData } from "../types/tag";
-import { convertRawPostToSerializablePostMeta } from "./posts";
+import {
+  convertPostToRecommendedPost,
+  convertRawPostToRecommendedPost,
+} from "./posts";
 import { cosineSimilarity } from "./vector";
 
-export const recommendPostsGlobal = (
-  posts: RawPost[]
-): SerializableRecommendedPost[] => {
+export const recommendPostsGlobal = (posts: Post[]): RecommendedPost[] => {
   return posts
     .filter((_, i) => i < 5)
-    .map((p) => convertRawPostToSerializablePostMeta(p));
+    .map((p) => convertPostToRecommendedPost(p));
 };
 
 export const recommendPostsFromPost = (
   posts: RawPost[],
   post: RawPost
-): SerializableRecommendedPost[] => {
+): RecommendedPost[] => {
   const otherPosts = posts.filter(
     (otherPost) => otherPost.metadata.ref !== post.metadata.ref
   );
 
-  const ret: SerializableRecommendedPost[] = [];
+  let ret: RecommendedPost[] = [];
 
   // Recommend related posts using embeddings.
   if (post.embedding !== null) {
@@ -27,14 +28,13 @@ export const recommendPostsFromPost = (
   }
   if (ret.length >= 5) {
     ret.splice(5, Infinity);
-    return posts.map((p) => convertRawPostToSerializablePostMeta(p));
+    return posts.map((p) => convertRawPostToRecommendedPost(p));
   }
 
   // Recommend the posts which have the same tag.
-  ret.splice(
-    ret.length,
-    0,
-    ...recommendPostsByTags(otherPosts, post.metadata.tags)
+  ret = mergeRecommendation(
+    ret,
+    recommendPostsByTags(otherPosts, post.metadata.tags)
   );
   if (ret.length >= 5) {
     ret.splice(5, Infinity);
@@ -44,9 +44,9 @@ export const recommendPostsFromPost = (
   // Recommend the latest posts which have not been seen.
   const seenPostRefs = ret.map((post) => post.ref);
   const notSeenPosts = otherPosts
-    .filter((post) => !seenPostRefs.includes(post.metadata.ref))
-    .map((p) => convertRawPostToSerializablePostMeta(p));
-  ret.splice(ret.length, 0, ...notSeenPosts);
+    .filter((p) => !seenPostRefs.includes(p.metadata.ref))
+    .map((p) => convertRawPostToRecommendedPost(p));
+  ret = mergeRecommendation(ret, notSeenPosts);
 
   if (ret.length >= 5) {
     ret.splice(5, Infinity);
@@ -55,49 +55,74 @@ export const recommendPostsFromPost = (
   return ret;
 };
 
+const mergeRecommendation = (
+  a: RecommendedPost[],
+  b: RecommendedPost[]
+): RecommendedPost[] => {
+  const ret = [...a.map((ap) => ({ ...ap }))];
+
+  const aRefs = a.map((ap) => ap.ref);
+  const bUnique = b.filter((bp) => {
+    if (!aRefs.includes(bp.ref)) return true;
+
+    ret.forEach((ap) => {
+      if (ap.ref !== bp.ref) return;
+      if (!bp.reason) return;
+
+      if (!ap.reason) {
+        ap.reason = bp.reason;
+        return;
+      }
+      ap.reason += ` | ${bp.reason}`;
+    });
+    return false;
+  });
+
+  ret.splice(ret.length, 0, ...bUnique);
+
+  return ret;
+};
+
 export const recommendPostsByEmbedding = (
   otherPosts: RawPost[],
   embedding: number[]
-): SerializableRecommendedPost[] => {
-  return otherPosts.reduce(
-    (accumulator: SerializableRecommendedPost[], otherPost) => {
-      if (!Array.isArray(otherPost.embedding)) return accumulator;
+): RecommendedPost[] => {
+  return otherPosts.reduce((accumulator: RecommendedPost[], otherPost) => {
+    if (!Array.isArray(otherPost.embedding)) return accumulator;
 
-      const score = cosineSimilarity(embedding, otherPost.embedding);
-      if (score < 0.88) return accumulator;
+    const score = cosineSimilarity(embedding, otherPost.embedding);
+    if (score < 0.88) return accumulator;
 
-      const p = convertRawPostToSerializablePostMeta(otherPost);
-      accumulator.push({
-        ...p,
-        reason: `類似度 ${(score * 100).toFixed(1)}%`,
-      });
-      return accumulator;
-    },
-    []
-  );
+    const p = convertRawPostToRecommendedPost(
+      otherPost,
+      `類似度 ${(score * 100).toFixed(1)}%`
+    );
+    accumulator.push(p);
+    return accumulator;
+  }, []);
 };
 
 export const recommendPostsByTags = (
   otherPosts: RawPost[],
   tags: TagData[]
-): SerializableRecommendedPost[] => {
+): RecommendedPost[] => {
   const tagNames = tags.map((tag) => tag.name);
-  return otherPosts.reduce(
-    (accumulator: SerializableRecommendedPost[], otherPost) => {
-      const sameTags: string[] = [];
-      for (const tag of otherPost.metadata.tags) {
-        if (tagNames.includes(tag.name)) {
-          sameTags.push(tag.name);
-        }
+  return otherPosts.reduce((accumulator: RecommendedPost[], otherPost) => {
+    const sameTags: string[] = [];
+    for (const tag of otherPost.metadata.tags) {
+      if (tagNames.includes(tag.name)) {
+        sameTags.push(tag.name);
       }
+    }
 
-      if (sameTags.length > 0) {
-        const p = convertRawPostToSerializablePostMeta(otherPost);
-        accumulator.push({ ...p, reason: `🏷️ ${sameTags.join(", ")}` });
-      }
+    if (sameTags.length > 0) {
+      const p = convertRawPostToRecommendedPost(
+        otherPost,
+        `🏷️ ${sameTags.join(", ")}`
+      );
+      accumulator.push(p);
+    }
 
-      return accumulator;
-    },
-    []
-  );
+    return accumulator;
+  }, []);
 };

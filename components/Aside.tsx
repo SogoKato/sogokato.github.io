@@ -1,36 +1,31 @@
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import Tags from "./Tags";
-import type { SerializablePost, SerializablePostMeta } from "../types/post";
-import { convertSerializableRecommendedPostToRecommendedPost } from "../utils/posts";
+import type { Post } from "../types/post";
 import { aggregateTags } from "../utils/tag";
-import { useEffect } from "react";
+import { recommendPostsGlobal } from "../utils/recommend";
+import Ad from "./Ad";
+import AsideTerminal from "./AsideTerminal";
+import Recommendation from "./Recommendation";
 
 type AsideProps = {
   className?: string;
-  posts: SerializablePostMeta[];
-  post: SerializablePost | undefined;
+  posts: Post[];
 };
 
-const Aside: React.FC<AsideProps> = ({
-  className,
-  posts: JSONPosts,
-  post: JSONPost,
-}) => {
+const Aside: React.FC<AsideProps> = ({ className, posts }) => {
   const commonClassName = "mx-auto w-11/12 ";
 
-  useEffect(() => {
-    const el = document.getElementById("sidebarPyTerminalWrapper");
-    if (!el) return;
-    el.style.setProperty("--terminal-height", "9999px");
-  }, []);
+  const globalRecommendation = recommendPostsGlobal(posts);
 
-  const recommended = JSONPost ? createRecommendedPostsElement(JSONPost) : null;
+  const recommended = (
+    <Recommendation
+      posts={posts}
+      defaultRecommendation={globalRecommendation}
+    />
+  );
 
-  const terminal = JSONPost?.showTerminalAside
-    ? createTerminalElement(commonClassName)
-    : null;
+  const terminal = <AsideTerminal posts={posts} className={commonClassName} />;
 
   const arrowTopRight = (
     <svg
@@ -42,8 +37,7 @@ const Aside: React.FC<AsideProps> = ({
       </g>
     </svg>
   );
-  const tags = aggregateTags(JSONPosts);
-  const AdSense = dynamic(() => import("./AdSense"), { ssr: false });
+  const tags = aggregateTags(posts);
   const adSenseClassName = terminal === null ? " mb-8 sticky top-8" : " mb-8";
   return (
     <aside className={className}>
@@ -108,7 +102,7 @@ const Aside: React.FC<AsideProps> = ({
         </h2>
         <ul className="mt-3.5">{recommended}</ul>
       </div>
-      <AdSense type="display" className={commonClassName + "mb-8"} />
+      <Ad type="display" className={commonClassName + "mb-8"} />
       <div className={commonClassName + "mb-8"}>
         <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
           TAGS
@@ -133,105 +127,8 @@ const Aside: React.FC<AsideProps> = ({
           <p className="flex items-center">GitHub {arrowTopRight}</p>
         </Link>
       </div>
-      <AdSense type="display" className={commonClassName + adSenseClassName} />
+      <Ad type="display" className={commonClassName + adSenseClassName} />
     </aside>
-  );
-};
-
-const createRecommendedPostsElement = (post: SerializablePost) => {
-  return post.recommendation.map((p, index) => {
-    const recommendedPost =
-      convertSerializableRecommendedPostToRecommendedPost(p);
-    const reason = recommendedPost.reason ? (
-      <span className="ml-2">[{recommendedPost.reason}]</span>
-    ) : null;
-    return (
-      <Link
-        href={recommendedPost.ref}
-        key={index}
-        className="block mb-3 hover:opacity-75 transition-all"
-      >
-        <p className="mb-1 text-xs">{recommendedPost.title}</p>
-        <p className="text-neutral-500 text-xs">
-          {recommendedPost.date.getFullYear()}年
-          {recommendedPost.date.getMonth() + 1}月
-          {recommendedPost.date.getDate()}日{reason}
-        </p>
-      </Link>
-    );
-  });
-};
-
-const createTerminalElement = (className: string) => {
-  const PyTerminal = dynamic(() => import("./PyTerminal"), { ssr: false });
-  return (
-    <div className="sidebar-terminal-container md:sticky md:top-0 py-8 z-10">
-      <div className={className + "sidebar-terminal-inner-container"}>
-        <div className="flex justify-between">
-          <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
-            TERMINAL
-          </h2>
-          <button
-            className="bg-duchs-200 hover:bg-duchs-800 font-display px-2 rounded-full text-duchs-900 hover:text-duchs-100 text-xs transition-all"
-            onClick={() => {
-              const el = document.getElementById("sidebarPyTerminalWrapper");
-              if (!el) {
-                console.error("#sidebarPyTerminalWrapper not found.");
-                return;
-              }
-              const current = el.style.getPropertyValue("--terminal-height");
-              const changed = current === "0px" ? "9999px" : "0px";
-              el.style.setProperty("--terminal-height", changed);
-            }}
-          >
-            OPEN/CLOSE
-          </button>
-        </div>
-        <pre
-          id="sidebarPyTerminalWrapper"
-          className={"duration-300 text-xs transition-all"}
-          style={{
-            maxHeight: "var(--terminal-height)",
-          }}
-        >
-          <PyTerminal
-            id="sidebarPyTerminal"
-            className="my-3.5"
-            descStyle={{
-              display: "block",
-              marginTop: "0.625rem",
-              whiteSpace: "pre-wrap",
-            }}
-            linkStyle={{ textDecoration: "underline", cursor: "pointer" }}
-          />
-        </pre>
-      </div>
-      <style>{`
-        .sidebar-terminal-container::after {
-          display: block;
-          height: 100%;
-          width: 100%;
-          position: absolute;
-          top: 0;
-          z-index: -1;
-          mask: linear-gradient(to top, transparent, black 20px);
-          backdrop-filter: blur(8px);
-        }
-        .sidebar-terminal-inner-container {
-          max-height: calc(100vh - 4rem);
-          overflow: scroll;
-        }
-        .sidebar-terminal-container .py-terminal {
-          border-radius: 0.375rem;
-          padding: 0.75rem;
-        }
-        `}</style>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: '.sidebar-terminal-container::after {content: ""}',
-        }}
-      ></style>
-    </div>
   );
 };
 

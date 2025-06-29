@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 import Script from "next/script";
 import ReactMarkdown from "react-markdown";
@@ -5,7 +7,7 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import CodeBlock from "./CodeBlock";
 import Tags from "./Tags";
-import { type Post, type PostMeta } from "../types/post";
+import { type Post } from "../types/post";
 import Social from "./Social";
 
 type PostCardProps = {

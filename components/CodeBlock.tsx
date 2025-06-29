@@ -1,10 +1,10 @@
-import dynamic from "next/dynamic";
 import { YouTubeEmbed } from "@next/third-parties/google";
 import { CodeComponent } from "react-markdown/lib/ast-to-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import toml from "toml";
 import PyConfig from "./PyConfig";
+import dynamic from "next/dynamic";
 
 const CodeBlock: CodeComponent = ({ inline, className, children }) => {
   if (inline) {
@@ -23,7 +23,7 @@ const CodeBlock: CodeComponent = ({ inline, className, children }) => {
   ) {
     filename = codeBlockParams.length > 2 ? filename : "";
     const PyScript = dynamic(() => import("./PyScript"), { ssr: false });
-    extra = <PyScript code={String(children)}></PyScript>;
+    extra = <PyScript code={String(children)} />;
   } else if (lang === "pyrepl") {
     const PyRepl = dynamic(() => import("./PyRepl"), { ssr: false });
     return <PyRepl code={code} />;
@@ -47,9 +47,10 @@ const CodeBlock: CodeComponent = ({ inline, className, children }) => {
     const config: Config = toml.parse(code);
     const files = config.files
       ? Object.values(config.files).map((v: string) => {
-        const tmp = v.split("/");
-        return `├─ ${tmp[tmp.length - 1]}\n`;
-      }) : [];
+          const tmp = v.split("/");
+          return `├─ ${tmp[tmp.length - 1]}\n`;
+        })
+      : [];
     return (
       <>
         <div>{files}</div>
@@ -57,7 +58,7 @@ const CodeBlock: CodeComponent = ({ inline, className, children }) => {
       </>
     );
   } else if (lang == "youtube") {
-    return <YouTubeEmbed videoid={code} />
+    return <YouTubeEmbed videoid={code} />;
   }
   return (
     <>

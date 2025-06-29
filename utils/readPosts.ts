@@ -4,6 +4,21 @@ import { basePostDir } from "./const";
 import type { RawPost } from "../types/post";
 import { getTagRef } from "./tag";
 import { loadSummaryIndex } from "./vectorIndex";
+import { cache } from "react";
+import { orderBy } from "lodash";
+import { convertRawPostToPost } from "./posts";
+
+/*
+ * Reactアプリで使用する記事メタデータリスト
+ */
+export const getAllPosts = cache(() => {
+  const rawPosts = orderBy(
+    getRawPosts(),
+    (o) => new Date(o.metadata.date),
+    "desc"
+  );
+  return rawPosts.map((p) => convertRawPostToPost(p, rawPosts));
+});
 
 export const getRawPosts = (): RawPost[] => {
   const posts: string[][] = [];

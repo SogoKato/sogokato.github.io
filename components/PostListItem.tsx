@@ -1,8 +1,8 @@
 import Tags from "./Tags";
-import { type PostMeta } from "../types/post";
+import { type Post } from "../types/post";
 
 type PostListItemProps = {
-  post: PostMeta;
+  post: Post;
 };
 
 const PostListItem: React.FC<PostListItemProps> = ({ post }) => {

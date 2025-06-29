@@ -4,8 +4,7 @@ const nextConfig = {
     unoptimized: true,
   },
   reactStrictMode: true,
-  swcMinify: true,
-  output: "export",
+  output: process.env.NODE_ENV === "development" ? undefined : "export", // 日本語slug/tagの問題
 };
 
 module.exports = nextConfig;

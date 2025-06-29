@@ -1,5 +1,5 @@
 import { orderBy, union } from "lodash";
-import { Post, PostMeta, SerializablePostMeta } from "../types/post";
+import { Post } from "../types/post";
 
 import { TagData } from "../types/tag";
 
@@ -7,7 +7,7 @@ export const getTagRef = (tagName: string): string => {
   return `/tags/${tagName.toLowerCase().replace("/", "-").replace(" ", "-")}`;
 };
 
-export const aggregateTags = (posts: SerializablePostMeta[]): TagData[] => {
+export const aggregateTags = (posts: Post[]): TagData[] => {
   const tagNames = union(
     posts.map((post) => post.tags.map((tag) => tag.name)).flat()
   );

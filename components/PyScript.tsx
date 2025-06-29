@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { pyTerminalExists, scrollToPyTerminal } from "../utils/pyscript";
 

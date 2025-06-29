@@ -1,9 +1,9 @@
 import Link from "next/link";
-import type { Post, PostMeta } from "../types/post";
+import type { Post } from "../types/post";
 
 type PostPaginationProps = {
   className?: string;
-  post: Post | PostMeta;
+  post: Post;
   isNext: boolean;
 };
 

@@ -1,12 +1,9 @@
 import { orderBy } from "lodash";
 import { google } from "googleapis";
-import type { PostMeta } from "./types/post";
+import type { Post } from "./types/post";
 import { baseUrl } from "./utils/const";
 import { getRawPosts } from "./utils/readPosts";
-import {
-  convertRawPostToSerializablePostMeta,
-  convertSerializablePostMetaToPostMeta,
-} from "./utils/posts";
+import { convertRawPostToPost } from "./utils/posts";
 
 const bingIndexNowKey = "8558162bf0de4b4fa018126dfc4e0cdb";
 
@@ -18,7 +15,7 @@ const jwtClient = new google.auth.JWT(
   undefined
 );
 
-const requestGoogle = (accessToken: string, post: PostMeta) => {
+const requestGoogle = (accessToken: string, post: Post) => {
   fetch("https://indexing.googleapis.com/v3/urlNotifications:publish", {
     method: "POST",
     headers: {
@@ -35,12 +32,9 @@ const requestGoogle = (accessToken: string, post: PostMeta) => {
 };
 
 const requestIndexing = () => {
+  const rawPosts = getRawPosts();
   const posts = orderBy(
-    getRawPosts().map((post) =>
-      convertSerializablePostMetaToPostMeta(
-        convertRawPostToSerializablePostMeta(post)
-      )
-    ),
+    rawPosts.map((p) => convertRawPostToPost(p, rawPosts)),
     (o) => o.date,
     "desc"
   );

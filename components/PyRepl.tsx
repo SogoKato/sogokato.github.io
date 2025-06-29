@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { pyTerminalExists, scrollToPyTerminal } from "../utils/pyscript";
 
@@ -9,7 +11,11 @@ const PyRepl: React.FC<PyReplProps> = ({ code }) => {
   const random = Math.random().toString(32).substring(2);
   const outputId = `py-output-${random}`;
   // @ts-ignore
-  const pyRepl = <script type="py-editor" env="shared" output={outputId}>{code}</script>;
+  const pyRepl = (
+    <script type="py-editor" env="shared" output={outputId}>
+      {code}
+    </script>
+  );
   const outputDescription = pyTerminalExists() ? (
     <>
       出力はターミナルを確認してください。
