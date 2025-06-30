@@ -3,6 +3,9 @@
  * @param vecA First vector
  * @param vecB Second vector
  * @returns A value between -1 and 1, where 1 means identical
+ *
+ * Acknowledgement:
+ * https://alexop.dev/posts/how-to-implement-a-cosine-similarity-function-in-typescript-for-vector-comparison/
  */
 export function cosineSimilarity(vecA: number[], vecB: number[]): number {
   if (vecA.length !== vecB.length) {
