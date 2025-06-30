@@ -27,13 +27,8 @@ export default function AdSense({ type, className }: AdSenseProps) {
   if (window.adsbygoogle === undefined) return null;
   const { adSlot, adFormat, fullWidthResponsive } = getSlotValue(type);
   const baseClassName = "overflow-hidden rounded-md ";
-  const placeholder =
-    process.env.NODE_ENV === "development" ? (
-      <div className="bg-white h-80 text-black text-center w-full">広告</div>
-    ) : null;
   return (
     <div className={baseClassName + className} key={pathname}>
-      {placeholder}
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
