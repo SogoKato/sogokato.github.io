@@ -28,7 +28,7 @@ export const recommendPostsFromPost = (
   }
   if (ret.length >= 5) {
     ret.splice(5, Infinity);
-    return posts.map((p) => convertRawPostToRecommendedPost(p));
+    return ret;
   }
 
   // Recommend the posts which have the same tag.
