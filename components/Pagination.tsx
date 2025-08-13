@@ -19,15 +19,25 @@ const Pagination: React.FC<PaginationProps> = ({
   const styleColor =
     "bg-duchs-200 hover:bg-duchs-800 text-duchs-900 hover:text-duchs-100 ";
   const styleColorCurrent = "bg-neutral-300 dark:bg-neutral-600 ";
-  const styleWidth = "w-11 sm:w-14 ";
-  const styleWidthLong = "w-14 sm:w-20 ";
   const className =
-    "font-display h-11 sm:h-14 sm:h-14 mb-2 mr-2 sm:mr-5 last:mr-0 px-4 py-2 rounded-full text-xl sm:text-4xl text-center transition-all";
+    "font-display h-11 sm:h-14 sm:h-14 mb-2 mr-2 sm:mr-5 last:mr-0 px-4 py-2 rounded-full shrink-0 text-xl sm:text-4xl text-center transition-all whitespace-nowrap";
+
+  const getWidthClass = (content: string | number) => {
+    const text = content.toString();
+    const widthMap: { [key: number]: string } = {
+      1: "w-11 sm:w-14 ",
+      2: "w-14 sm:w-20 ", 
+      3: "w-20 sm:w-28 ",
+    };
+    return widthMap[text.length] || "w-24 sm:w-32 ";
+  };
 
   const createPageElement = (page: number, isCurrent = false) => {
+    const widthClass = getWidthClass(page);
+    
     if (isCurrent) {
       return (
-        <div className={styleColorCurrent + styleWidth + className} key={page}>
+        <div className={styleColorCurrent + widthClass + className} key={page}>
           {page}
         </div>
       );
@@ -35,7 +45,7 @@ const Pagination: React.FC<PaginationProps> = ({
     
     const href = page === 1 ? topPath : `${parentPath}/${page}`;
     return (
-      <Link href={href} key={page} className={styleColor + styleWidth + className}>
+      <Link href={href} key={page} className={styleColor + widthClass + className}>
         <div>{page}</div>
       </Link>
     );
@@ -45,9 +55,10 @@ const Pagination: React.FC<PaginationProps> = ({
     const href = direction === 'first' ? topPath : `${parentPath}/${pages.length}`;
     const symbol = direction === 'first' ? '<<' : '>>';
     const key = direction === 'first' ? 0 : pages.length + 1;
+    const widthClass = getWidthClass(symbol);
     
     return (
-      <Link href={href} key={key} className={styleColor + styleWidthLong + className}>
+      <Link href={href} key={key} className={styleColor + widthClass + className}>
         <div>{symbol}</div>
       </Link>
     );
