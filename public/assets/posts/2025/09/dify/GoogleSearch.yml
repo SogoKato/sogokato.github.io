@@ -1,0 +1,670 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 情報探索とナレッジ追加 (Google)
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.5.4@22fa3d100c55f8fc4b2837d8fb0831e3c8de333a5a5b028e073d502d2df9cb35
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/google:0.0.9@d360bbc433f39be1b11909cb9c32e6be4a17ea06af083f9e1c7613bb802bf517
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: 5cc72d57-aec2-4c3d-ac1a-4b955b3e9a9d
+    name: DIFY_DATASET_ID
+    selector:
+    - env
+    - DIFY_DATASET_ID
+    value: ''
+    value_type: secret
+  - description: ''
+    id: dfaaa243-8a74-441c-893a-dfca93684b62
+    name: DIFY_API_KEY
+    selector:
+    - env
+    - DIFY_API_KEY
+    value: ''
+    value_type: secret
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1757669840013-source-answer-target
+      source: '1757669840013'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1757669193618-source-1757671434565-target
+      source: '1757669193618'
+      sourceHandle: source
+      target: '1757671434565'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: 1757671434565-source-1757897978739-target
+      source: '1757671434565'
+      sourceHandle: source
+      target: '1757897978739'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: agent
+      id: 1757897978739-source-1757898183525-target
+      source: '1757897978739'
+      sourceHandle: source
+      target: '1757898183525'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: agent
+        targetType: llm
+      id: 1757898183525-source-1757899182605-target
+      source: '1757898183525'
+      sourceHandle: source
+      target: '1757899182605'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1757899182605-source-1757669840013-target
+      source: '1757899182605'
+      sourceHandle: source
+      target: '1757669840013'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 54
+      id: '1757669193618'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '"{{#1757671434565.text#}}" で Google を検索し、まとめました。
+
+
+          {{#1757899182605.text#}}'
+        desc: ''
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 139
+      id: answer
+      position:
+        x: 2033.3233904729427
+        y: 282
+      positionAbsolute:
+        x: 2033.3233904729427
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import os\nimport requests\n\ndef main(doc_name: str, text: str, api_key:\
+          \ str, dataset_id: str) -> dict:\n    url = f\"https://api.dify.ai/v1/datasets/{dataset_id}/document/create-by-text\"\
+          \n\n    res = requests.post(\n        url,\n        headers={\n        \
+          \    \"Authorization\": f\"Bearer {api_key}\",\n        },\n        json={\n\
+          \            \"name\": doc_name,\n            \"text\": text,\n        \
+          \    \"indexing_technique\": \"economy\",\n            \"process_rule\"\
+          : {\n                \"mode\": \"automatic\",\n            },\n        },\n\
+          \    )\n\n    return {\n        \"result\": res.text,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: コード実行
+        type: code
+        variables:
+        - value_selector:
+          - '1757671434565'
+          - text
+          value_type: string
+          variable: doc_name
+        - value_selector:
+          - '1757899182605'
+          - text
+          value_type: string
+          variable: text
+        - value_selector:
+          - env
+          - DIFY_API_KEY
+          value_type: secret
+          variable: api_key
+        - value_selector:
+          - env
+          - DIFY_DATASET_ID
+          value_type: string
+          variable: dataset_id
+      height: 54
+      id: '1757669840013'
+      position:
+        x: 1730.11589890464
+        y: 282
+      positionAbsolute:
+        x: 1730.11589890464
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: da933e3e-fdbb-40b8-89a1-52969091e31b
+          role: system
+          text: ユーザの質問をGoogle検索クエリに変換し、検索クエリだけを出力せよ。
+        - id: 43a7a7e6-39d5-4b2e-af79-c34c40c0d7ce
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: 検索クエリ作成
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1757671434565'
+      position:
+        x: 470.98386534235044
+        y: 282
+      positionAbsolute:
+        x: 470.98386534235044
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: used for searching
+            ja_JP: used for searching
+            pt_BR: used for searching
+            zh_Hans: 用于搜索网页内容
+          label:
+            en_US: Query string
+            ja_JP: Query string
+            pt_BR: Query string
+            zh_Hans: 查询语句
+          llm_description: key words for searching
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Parameter defines the language to use for the Google search. It's
+              a two-letter language code. (e.g., en for English, es for Spanish, or
+              fr for French). Head to https://serpapi.com/google-languages for a full
+              list of supported Google languages.
+            ja_JP: Parameter defines the language to use for the Google search. It's
+              a two-letter language code. (e.g., en for English, es for Spanish, or
+              fr for French). Head to https://serpapi.com/google-languages for a full
+              list of supported Google languages.
+            pt_BR: Parameter defines the language to use for the Google search. It's
+              a two-letter language code. (e.g., en for English, es for Spanish, or
+              fr for French). Head to https://serpapi.com/google-languages for a full
+              list of supported Google languages.
+            zh_Hans: 此参数定义用于 Google 搜索的语言。它是一个两字母的语言代码。 (例如，en 代表英语，es 代表西班牙语，fr 代表法语)。请前往
+              https://serpapi.com/google-languages 查看完整的支持 Google 语言列表。
+          label:
+            en_US: Language
+            ja_JP: Language
+            pt_BR: Language
+            zh_Hans: 语言
+          llm_description: Language
+          max: null
+          min: null
+          name: hl
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Parameter defines the country to use for the Google search. It's
+              a two-letter country code. (e.g., us for the United States, uk for United
+              Kingdom, or fr for France). Head to the https://serpapi.com/google-countries
+              for a full list of supported Google countries.
+            ja_JP: Parameter defines the country to use for the Google search. It's
+              a two-letter country code. (e.g., us for the United States, uk for United
+              Kingdom, or fr for France). Head to the https://serpapi.com/google-countries
+              for a full list of supported Google countries.
+            pt_BR: Parameter defines the country to use for the Google search. It's
+              a two-letter country code. (e.g., us for the United States, uk for United
+              Kingdom, or fr for France). Head to the https://serpapi.com/google-countries
+              for a full list of supported Google countries.
+            zh_Hans: 此参数定义用于 Google 搜索的国家。它是一个两字母的国家代码。 (例如，us 代表美国，uk 代表英国，fr 代表法国)。请前往
+              https://serpapi.com/google-countries 查看完整的支持 Google 国家列表。
+          label:
+            en_US: Country
+            ja_JP: Country
+            pt_BR: Country
+            zh_Hans: 国家
+          llm_description: Country
+          max: null
+          min: null
+          name: gl
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Parameter defines from where you want the search to originate.
+              If several locations match the location requested, we'll pick the most
+              popular one. Head to the /locations.json API if you need more precise
+              control. The location and uule parameters can't be used together. It
+              is recommended to specify location at the city level in order to simulate
+              a real user’s search. If location is omitted, the search may take on
+              the location of the proxy.
+            ja_JP: Parameter defines from where you want the search to originate.
+              If several locations match the location requested, we'll pick the most
+              popular one. Head to the /locations.json API if you need more precise
+              control. The location and uule parameters can't be used together. It
+              is recommended to specify location at the city level in order to simulate
+              a real user’s search. If location is omitted, the search may take on
+              the location of the proxy.
+            pt_BR: Parameter defines from where you want the search to originate.
+              If several locations match the location requested, we'll pick the most
+              popular one. Head to the /locations.json API if you need more precise
+              control. The location and uule parameters can't be used together. It
+              is recommended to specify location at the city level in order to simulate
+              a real user’s search. If location is omitted, the search may take on
+              the location of the proxy.
+            zh_Hans: 此参数定义搜索的位置。如果有多个位置与请求的位置匹配，我们将选择最受欢迎的一个。如果需要更精确的控制，请前往 /locations.json
+              API。location 和 uule 参数不能同时使用。建议在城市级别指定位置，以模拟真实用户的搜索。如果省略位置，则搜索可能会采用代理的位置。
+          label:
+            en_US: Location
+            ja_JP: Location
+            pt_BR: Location
+            zh_Hans: 位置
+          llm_description: Location
+          max: null
+          min: null
+          name: location
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          gl: ''
+          hl: ''
+          location: ''
+          query: ''
+        provider_id: langgenius/google/google
+        provider_name: langgenius/google/google
+        provider_type: builtin
+        selected: false
+        title: GoogleSearch
+        tool_configurations: {}
+        tool_description: A tool for performing a Google SERP search and extracting
+          snippets and webpages.Input should be a search query.
+        tool_label: GoogleSearch
+        tool_name: google_search
+        tool_node_version: '2'
+        tool_parameters:
+          gl:
+            type: mixed
+            value: jp
+          hl:
+            type: mixed
+            value: ja
+          location:
+            type: mixed
+            value: null
+          query:
+            type: mixed
+            value: '{{#1757671434565.text#}}'
+        type: tool
+      height: 54
+      id: '1757897978739'
+      position:
+        x: 765.7177980479679
+        y: 282
+      positionAbsolute:
+        x: 765.7177980479679
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: Google検索結果を解析し、検索結果に含まれる URL を Web Scraper tool で開き、情報を収集せよ。ユーザへの追加確認は不要。
+          model:
+            type: constant
+            value:
+              completion_params: {}
+              mode: chat
+              model: gemini-2.5-flash
+              model_type: llm
+              provider: langgenius/gemini/google
+              type: model-selector
+          query:
+            type: constant
+            value: '検索クエリ: {{#1757671434565.text#}}
+
+
+              検索結果:
+
+              {{#1757897978739.json#}}'
+          tools:
+            type: constant
+            value:
+            - enabled: true
+              extra:
+                description: A tool for scraping webpages.
+              parameters:
+                url:
+                  auto: 1
+                  value: null
+              provider_name: webscraper
+              provider_show_name: webscraper
+              schemas:
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: used for linking to webpages
+                  ja_JP: used for linking to webpages
+                  pt_BR: used for linking to webpages
+                  zh_Hans: 用于链接到网页
+                label:
+                  en_US: URL
+                  ja_JP: URL
+                  pt_BR: URL
+                  zh_Hans: 网页链接
+                llm_description: url for scraping
+                max: null
+                min: null
+                name: url
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+                  (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+                form: form
+                human_description:
+                  en_US: used for identifying the browser.
+                  ja_JP: used for identifying the browser.
+                  pt_BR: used for identifying the browser.
+                  zh_Hans: 用于识别浏览器。
+                label:
+                  en_US: User Agent
+                  ja_JP: User Agent
+                  pt_BR: User Agent
+                  zh_Hans: User Agent
+                llm_description: null
+                max: null
+                min: null
+                name: user_agent
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: 'false'
+                form: form
+                human_description:
+                  en_US: If true, the crawler will only return the page summary content.
+                  ja_JP: If true, the crawler will only return the page summary content.
+                  pt_BR: If true, the crawler will only return the page summary content.
+                  zh_Hans: 如果启用，爬虫将仅返回页面摘要内容。
+                label:
+                  en_US: Whether to generate summary
+                  ja_JP: Whether to generate summary
+                  pt_BR: Whether to generate summary
+                  zh_Hans: 是否生成摘要
+                llm_description: null
+                max: null
+                min: null
+                name: generate_summary
+                options:
+                - icon: null
+                  label:
+                    en_US: 'Yes'
+                    ja_JP: 'Yes'
+                    pt_BR: 'Yes'
+                    zh_Hans: 是
+                  value: 'true'
+                - icon: null
+                  label:
+                    en_US: 'No'
+                    ja_JP: 'No'
+                    pt_BR: 'No'
+                    zh_Hans: 否
+                  value: 'false'
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: boolean
+              settings:
+                generate_summary:
+                  value:
+                    type: constant
+                    value: 'false'
+                user_agent:
+                  value:
+                    type: mixed
+                    value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+                      (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+              tool_description: A tool for scraping webpages.
+              tool_label: Web Scraper
+              tool_name: webscraper
+              type: builtin
+        agent_strategy_label: FunctionCalling
+        agent_strategy_name: function_calling
+        agent_strategy_provider_name: langgenius/agent/agent
+        desc: ''
+        meta:
+          minimum_dify_version: 1.7.0
+          version: 0.0.2
+        output_schema: null
+        plugin_unique_identifier: langgenius/agent:0.0.24@0274c08e62efaa28f6327e7bdba655e16559ec28d4f41f2fa3ef553e6327c0f6
+        selected: false
+        title: エージェント
+        tool_node_version: '2'
+        type: agent
+      height: 198
+      id: '1757898183525'
+      position:
+        x: 1069.4814278456165
+        y: 282
+      positionAbsolute:
+        x: 1069.4814278456165
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 21edabab-4b04-4de1-8ffc-813b8997e3ea
+          role: system
+          text: 検索クエリに関して Google 検索を行い、情報を収集したのでこれを分かりやすいレポートにまとめよ。出力はレポート本文のみとする。
+        - id: 355fcc9c-fa66-46af-b80a-a37239d4d6ad
+          role: user
+          text: '検索クエリ: {{#1757671434565.text#}}
+
+
+            収集結果:
+
+            {{#1757898183525.text#}}'
+        selected: false
+        title: まとめ
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1757899182605'
+      position:
+        x: 1412.187960661902
+        y: 282
+      positionAbsolute:
+        x: 1412.187960661902
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -1141.897093923811
+      y: 147.08588964511242
+      zoom: 0.7536674547791965
