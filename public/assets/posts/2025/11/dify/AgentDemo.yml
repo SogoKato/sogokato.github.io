@@ -1,0 +1,1169 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: でも
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.5.6@6937ac6c3f88d0ef5021881b00eab58e0722e1b3cc186087b023688679abd074
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 2587ae7b-74e0-47f5-899d-7cdd3f189f96
+    name: context
+    selector:
+    - conversation
+    - context
+    value: []
+    value_type: array[string]
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: true
+        loop_id: '1761919488391'
+        sourceType: loop-start
+        targetType: agent
+      id: 1761919488391start-source-1761919534075-target
+      selected: false
+      source: 1761919488391start
+      sourceHandle: source
+      target: '1761919534075'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: true
+        loop_id: '1761919488391'
+        sourceType: agent
+        targetType: assigner
+      id: 1761919534075-source-1761920653636-target
+      selected: false
+      source: '1761919534075'
+      sourceHandle: source
+      target: '1761920653636'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: true
+        loop_id: '1761919488391'
+        sourceType: assigner
+        targetType: llm
+      id: 1761920653636-source-1761920129304-target
+      selected: false
+      source: '1761920653636'
+      sourceHandle: source
+      target: '1761920129304'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: loop
+        targetType: llm
+      id: 1761919488391-source-1761920809564-target
+      selected: false
+      source: '1761919488391'
+      sourceHandle: source
+      target: '1761920809564'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1761920809564-source-1761920705765-target
+      selected: false
+      source: '1761920809564'
+      sourceHandle: source
+      target: '1761920705765'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: loop
+      id: 1761830164524-source-1761919488391-target
+      selected: false
+      source: '1761830164524'
+      sourceHandle: source
+      target: '1761919488391'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: true
+        loop_id: '1761919488391'
+        sourceType: llm
+        targetType: assigner
+      id: 1761920129304-source-1761923495448-target
+      selected: false
+      source: '1761920129304'
+      sourceHandle: source
+      target: '1761923495448'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: llm
+      id: 1762265768912-source-1762265782094-target
+      source: '1762265768912'
+      sourceHandle: source
+      target: '1762265782094'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1762265782094-source-1762265840294-target
+      source: '1762265782094'
+      sourceHandle: source
+      target: '1762265840294'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: agent
+        targetType: answer
+      id: 1762265888428-source-1762265966560-target
+      source: '1762265888428'
+      sourceHandle: source
+      target: '1762265966560'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 52
+      id: '1761830164524'
+      position:
+        x: 267.3861241651636
+        y: 749.7610514093938
+      positionAbsolute:
+        x: 267.3861241651636
+        y: 749.7610514093938
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        break_conditions:
+        - comparison_operator: not empty
+          id: 16e255dc-33ef-4c5d-8c01-91e2b7472ad1
+          value: ''
+          varType: object
+          variable_selector:
+          - '1761920129304'
+          - structured_output
+          - satisfied
+        error_handle_mode: terminated
+        height: 282
+        logical_operator: and
+        loop_count: 2
+        loop_variables: []
+        selected: false
+        start_node_id: 1761919488391start
+        title: ループ
+        type: loop
+        width: 1210
+      height: 282
+      id: '1761919488391'
+      position:
+        x: 569.5660987906633
+        y: 749.7610514093938
+      positionAbsolute:
+        x: 569.5660987906633
+        y: 749.7610514093938
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 1210
+      zIndex: 1
+    - data:
+        desc: ''
+        isInLoop: true
+        selected: false
+        title: ''
+        type: loop-start
+      draggable: false
+      height: 48
+      id: 1761919488391start
+      parentId: '1761919488391'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 593.5660987906633
+        y: 817.7610514093938
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-loop-start
+      width: 44
+      zIndex: 1002
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: ツールを使って天気を取得してください。
+          model:
+            type: constant
+            value:
+              completion_params: {}
+              mode: chat
+              model: gemini-2.5-flash
+              model_type: llm
+              provider: langgenius/gemini/google
+              type: model-selector
+          query:
+            type: constant
+            value: 'ユーザの質問: {{#sys.query#}}
+
+
+              コンテキスト: {{#conversation.context#}}
+
+              '
+          tools:
+            type: constant
+            value:
+            - enabled: true
+              extra:
+                description: Weather forecast inquiry
+              parameters:
+                city:
+                  auto: 1
+                  value: null
+              provider_name: langgenius/openweather/openweather
+              provider_show_name: langgenius/openweather/openweather
+              schemas:
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: Target city for weather forecast query
+                  ja_JP: Target city for weather forecast query
+                  pt_BR: Cidade de destino para consulta de previsão do tempo
+                  zh_Hans: 天气预报查询的目标城市
+                label:
+                  en_US: city
+                  ja_JP: city
+                  pt_BR: cidade
+                  zh_Hans: 城市
+                llm_description: If you don't know you can extract the city name from
+                  the question or you can reply：Please tell me your city. You have
+                  to extract the Chinese city name from the question.If the input
+                  region is in Chinese characters for China, it should be replaced
+                  with the corresponding English name, such as '北京' for correct input
+                  is 'Beijing'
+                max: null
+                min: null
+                name: city
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: zh_cn
+                form: form
+                human_description:
+                  en_US: language
+                  ja_JP: language
+                  pt_BR: language
+                  zh_Hans: 语言
+                label:
+                  en_US: language
+                  ja_JP: language
+                  pt_BR: language
+                  zh_Hans: 语言
+                llm_description: ''
+                max: null
+                min: null
+                name: lang
+                options:
+                - icon: ''
+                  label:
+                    en_US: cn
+                    ja_JP: cn
+                    pt_BR: cn
+                    zh_Hans: 中国
+                  value: zh_cn
+                - icon: ''
+                  label:
+                    en_US: usa
+                    ja_JP: usa
+                    pt_BR: usa
+                    zh_Hans: 美国
+                  value: en_us
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: select
+              - auto_generate: null
+                default: metric
+                form: form
+                human_description:
+                  en_US: units for temperature
+                  ja_JP: units for temperature
+                  pt_BR: units for temperature
+                  zh_Hans: 温度单位
+                label:
+                  en_US: units
+                  ja_JP: units
+                  pt_BR: units
+                  zh_Hans: 单位
+                llm_description: ''
+                max: null
+                min: null
+                name: units
+                options:
+                - icon: ''
+                  label:
+                    en_US: metric
+                    ja_JP: metric
+                    pt_BR: metric
+                    zh_Hans: ℃
+                  value: metric
+                - icon: ''
+                  label:
+                    en_US: imperial
+                    ja_JP: imperial
+                    pt_BR: imperial
+                    zh_Hans: ℉
+                  value: imperial
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: select
+              settings:
+                lang:
+                  value:
+                    type: constant
+                    value: en_us
+                units:
+                  value:
+                    type: constant
+                    value: metric
+              tool_description: Weather forecast inquiry
+              tool_label: Open Weather Query
+              tool_name: weather
+              type: builtin
+        agent_strategy_label: FunctionCalling
+        agent_strategy_name: function_calling
+        agent_strategy_provider_name: langgenius/agent/agent
+        isInIteration: false
+        isInLoop: true
+        loop_id: '1761919488391'
+        meta:
+          minimum_dify_version: 1.7.0
+          version: 0.0.2
+        output_schema: {}
+        plugin_unique_identifier: langgenius/agent:0.0.25@3507a9a417ea8d76e5de6b2803953ca891851b6b336fafe1315471782711730f
+        selected: false
+        title: 天気Agent
+        tool_node_version: '2'
+        type: agent
+      height: 196
+      id: '1761919534075'
+      parentId: '1761919488391'
+      position:
+        x: 91.78410078039497
+        y: 65
+      positionAbsolute:
+        x: 661.3501995710583
+        y: 814.7610514093938
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        isInIteration: false
+        isInLoop: true
+        loop_id: '1761919488391'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 6440de43-9332-4446-997f-23cbba2c4215
+          role: system
+          text: 'コンテキストには agent 同士の会話が含まれています。ユーザの質問を回答するための材料が揃っているかを確認してください。
+
+
+            夢の国は千葉県浦安市にあります。他のエージェントはそれがどこにあるかを知らないかもなのでフィードバックしてあげてください。'
+        - id: c7237e3d-3688-4d4a-b0e0-f9b51b20efae
+          role: user
+          text: 'ユーザの質問: {{#sys.query#}}
+
+
+            コンテキスト: {{#conversation.context#}}'
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              feedback:
+                description: フィードバック
+                type: string
+              satisfied:
+                description: ユーザが求めている情報が満たされている。満たされていればyes。満たされていない場合は必ず空文字にすること。
+                type: string
+            required: []
+            type: object
+        structured_output_enabled: true
+        title: LLM 2
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1761920129304'
+      parentId: '1761919488391'
+      position:
+        x: 628.7535498743225
+        y: 65
+      positionAbsolute:
+        x: 1198.3196486649858
+        y: 814.7610514093938
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: true
+        items:
+        - input_type: variable
+          operation: append
+          value:
+          - '1761919534075'
+          - text
+          variable_selector:
+          - conversation
+          - context
+          write_mode: over-write
+        loop_id: '1761919488391'
+        selected: false
+        title: 変数代入
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1761920653636'
+      parentId: '1761919488391'
+      position:
+        x: 355.4264734185724
+        y: 65
+      positionAbsolute:
+        x: 924.9925722092357
+        y: 814.7610514093938
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 1002
+    - data:
+        answer: '{{#1761920809564.text#}}'
+        selected: false
+        title: 回答 2
+        type: answer
+        variables: []
+      height: 103
+      id: '1761920705765'
+      position:
+        x: 2120.7406973501065
+        y: 749.7610514093938
+      positionAbsolute:
+        x: 2120.7406973501065
+        y: 749.7610514093938
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 76de8817-bf31-4675-b683-8115b40855e6
+          role: system
+          text: コンテキストには agent 同士の会話が含まれています。ユーザの質問に対して最終的な回答を作成してください。
+        - id: ff0e4549-3980-42fa-bade-e834399a02e3
+          role: user
+          text: 'ユーザの質問: {{#sys.query#}}
+
+
+            コンテキスト: {{#conversation.context#}}'
+        selected: false
+        title: LLM 3
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1761920809564'
+      position:
+        x: 1827.0235908957848
+        y: 749.7610514093938
+      positionAbsolute:
+        x: 1827.0235908957848
+        y: 749.7610514093938
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        isInIteration: false
+        isInLoop: true
+        items:
+        - input_type: variable
+          operation: append
+          value:
+          - '1761920129304'
+          - structured_output
+          - feedback
+          variable_selector:
+          - conversation
+          - context
+          write_mode: over-write
+        loop_id: '1761919488391'
+        selected: false
+        title: 変数代入 2
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1761923495448'
+      parentId: '1761919488391'
+      position:
+        x: 907.4193129762727
+        y: 65
+      positionAbsolute:
+        x: 1476.985411766936
+        y: 814.7610514093938
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 1002
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: '%Y-%m-%d %H:%M:%S'
+          form: form
+          human_description:
+            en_US: Time format in strftime standard.
+            ja_JP: Time format in strftime standard.
+            pt_BR: Time format in strftime standard.
+            zh_Hans: strftime 标准的时间格式。
+          label:
+            en_US: Format
+            ja_JP: Format
+            pt_BR: Format
+            zh_Hans: 格式
+          llm_description: null
+          max: null
+          min: null
+          name: format
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: UTC
+          form: form
+          human_description:
+            en_US: Timezone
+            ja_JP: Timezone
+            pt_BR: Timezone
+            zh_Hans: 时区
+          label:
+            en_US: Timezone
+            ja_JP: Timezone
+            pt_BR: Timezone
+            zh_Hans: 时区
+          llm_description: null
+          max: null
+          min: null
+          name: timezone
+          options:
+          - icon: null
+            label:
+              en_US: UTC
+              ja_JP: UTC
+              pt_BR: UTC
+              zh_Hans: UTC
+            value: UTC
+          - icon: null
+            label:
+              en_US: America/New_York
+              ja_JP: America/New_York
+              pt_BR: America/New_York
+              zh_Hans: 美洲/纽约
+            value: America/New_York
+          - icon: null
+            label:
+              en_US: America/Los_Angeles
+              ja_JP: America/Los_Angeles
+              pt_BR: America/Los_Angeles
+              zh_Hans: 美洲/洛杉矶
+            value: America/Los_Angeles
+          - icon: null
+            label:
+              en_US: America/Chicago
+              ja_JP: America/Chicago
+              pt_BR: America/Chicago
+              zh_Hans: 美洲/芝加哥
+            value: America/Chicago
+          - icon: null
+            label:
+              en_US: America/Sao_Paulo
+              ja_JP: America/Sao_Paulo
+              pt_BR: América/São Paulo
+              zh_Hans: 美洲/圣保罗
+            value: America/Sao_Paulo
+          - icon: null
+            label:
+              en_US: Asia/Shanghai
+              ja_JP: Asia/Shanghai
+              pt_BR: Asia/Shanghai
+              zh_Hans: 亚洲/上海
+            value: Asia/Shanghai
+          - icon: null
+            label:
+              en_US: Asia/Ho_Chi_Minh
+              ja_JP: Asia/Ho_Chi_Minh
+              pt_BR: Ásia/Ho Chi Minh
+              zh_Hans: 亚洲/胡志明市
+            value: Asia/Ho_Chi_Minh
+          - icon: null
+            label:
+              en_US: Asia/Tokyo
+              ja_JP: Asia/Tokyo
+              pt_BR: Asia/Tokyo
+              zh_Hans: 亚洲/东京
+            value: Asia/Tokyo
+          - icon: null
+            label:
+              en_US: Asia/Dubai
+              ja_JP: Asia/Dubai
+              pt_BR: Asia/Dubai
+              zh_Hans: 亚洲/迪拜
+            value: Asia/Dubai
+          - icon: null
+            label:
+              en_US: Asia/Kolkata
+              ja_JP: Asia/Kolkata
+              pt_BR: Asia/Kolkata
+              zh_Hans: 亚洲/加尔各答
+            value: Asia/Kolkata
+          - icon: null
+            label:
+              en_US: Asia/Seoul
+              ja_JP: Asia/Seoul
+              pt_BR: Asia/Seoul
+              zh_Hans: 亚洲/首尔
+            value: Asia/Seoul
+          - icon: null
+            label:
+              en_US: Asia/Singapore
+              ja_JP: Asia/Singapore
+              pt_BR: Asia/Singapore
+              zh_Hans: 亚洲/新加坡
+            value: Asia/Singapore
+          - icon: null
+            label:
+              en_US: Europe/London
+              ja_JP: Europe/London
+              pt_BR: Europe/London
+              zh_Hans: 欧洲/伦敦
+            value: Europe/London
+          - icon: null
+            label:
+              en_US: Europe/Berlin
+              ja_JP: Europe/Berlin
+              pt_BR: Europe/Berlin
+              zh_Hans: 欧洲/柏林
+            value: Europe/Berlin
+          - icon: null
+            label:
+              en_US: Europe/Moscow
+              ja_JP: Europe/Moscow
+              pt_BR: Europe/Moscow
+              zh_Hans: 欧洲/莫斯科
+            value: Europe/Moscow
+          - icon: null
+            label:
+              en_US: Australia/Sydney
+              ja_JP: Australia/Sydney
+              pt_BR: Australia/Sydney
+              zh_Hans: 澳大利亚/悉尼
+            value: Australia/Sydney
+          - icon: null
+            label:
+              en_US: Pacific/Auckland
+              ja_JP: Pacific/Auckland
+              pt_BR: Pacific/Auckland
+              zh_Hans: 太平洋/奥克兰
+            value: Pacific/Auckland
+          - icon: null
+            label:
+              en_US: Africa/Cairo
+              ja_JP: Africa/Cairo
+              pt_BR: Africa/Cairo
+              zh_Hans: 非洲/开罗
+            value: Africa/Cairo
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        params:
+          format: ''
+          timezone: ''
+        provider_id: time
+        provider_name: time
+        provider_type: builtin
+        selected: false
+        title: Current Time
+        tool_configurations:
+          format:
+            type: mixed
+            value: '%Y-%m-%d %H:%M:%S'
+          timezone:
+            type: constant
+            value: Asia/Tokyo
+        tool_description: A tool for getting the current time.
+        tool_label: Current Time
+        tool_name: current_time
+        tool_node_version: '2'
+        tool_parameters: {}
+        type: tool
+      height: 114
+      id: '1762265768912'
+      position:
+        x: 579.7201645490867
+        y: 244.21742890240603
+      positionAbsolute:
+        x: 579.7201645490867
+        y: 244.21742890240603
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 50c73e86-178a-45d4-8e76-6fbd65bff873
+          role: system
+          text: 今日は {{#1762265768912.text#}} です。
+        - id: 1643d9ec-c988-40ab-9374-6bafc7638dc2
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1762265782094'
+      position:
+        x: 881.7201645490867
+        y: 244.21742890240603
+      positionAbsolute:
+        x: 881.7201645490867
+        y: 244.21742890240603
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#1762265782094.text#}}'
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 103
+      id: '1762265840294'
+      position:
+        x: 1183.7201645490868
+        y: 244.21742890240603
+      positionAbsolute:
+        x: 1183.7201645490868
+        y: 244.21742890240603
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: ユーザの要求を達成するようツールを使ってください。
+          model:
+            type: constant
+            value:
+              completion_params: {}
+              mode: chat
+              model: gemini-2.5-flash
+              model_type: llm
+              provider: langgenius/gemini/google
+              type: model-selector
+          query:
+            type: constant
+            value: '{{#sys.query#}}'
+          tools:
+            type: constant
+            value:
+            - enabled: true
+              extra:
+                description: A tool for getting the current time.
+              parameters: {}
+              provider_name: time
+              provider_show_name: time
+              schemas:
+              - auto_generate: null
+                default: '%Y-%m-%d %H:%M:%S'
+                form: form
+                human_description:
+                  en_US: Time format in strftime standard.
+                  ja_JP: Time format in strftime standard.
+                  pt_BR: Time format in strftime standard.
+                  zh_Hans: strftime 标准的时间格式。
+                label:
+                  en_US: Format
+                  ja_JP: Format
+                  pt_BR: Format
+                  zh_Hans: 格式
+                llm_description: null
+                max: null
+                min: null
+                name: format
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: UTC
+                form: form
+                human_description:
+                  en_US: Timezone
+                  ja_JP: Timezone
+                  pt_BR: Timezone
+                  zh_Hans: 时区
+                label:
+                  en_US: Timezone
+                  ja_JP: Timezone
+                  pt_BR: Timezone
+                  zh_Hans: 时区
+                llm_description: null
+                max: null
+                min: null
+                name: timezone
+                options:
+                - icon: null
+                  label:
+                    en_US: UTC
+                    ja_JP: UTC
+                    pt_BR: UTC
+                    zh_Hans: UTC
+                  value: UTC
+                - icon: null
+                  label:
+                    en_US: America/New_York
+                    ja_JP: America/New_York
+                    pt_BR: America/New_York
+                    zh_Hans: 美洲/纽约
+                  value: America/New_York
+                - icon: null
+                  label:
+                    en_US: America/Los_Angeles
+                    ja_JP: America/Los_Angeles
+                    pt_BR: America/Los_Angeles
+                    zh_Hans: 美洲/洛杉矶
+                  value: America/Los_Angeles
+                - icon: null
+                  label:
+                    en_US: America/Chicago
+                    ja_JP: America/Chicago
+                    pt_BR: America/Chicago
+                    zh_Hans: 美洲/芝加哥
+                  value: America/Chicago
+                - icon: null
+                  label:
+                    en_US: America/Sao_Paulo
+                    ja_JP: America/Sao_Paulo
+                    pt_BR: América/São Paulo
+                    zh_Hans: 美洲/圣保罗
+                  value: America/Sao_Paulo
+                - icon: null
+                  label:
+                    en_US: Asia/Shanghai
+                    ja_JP: Asia/Shanghai
+                    pt_BR: Asia/Shanghai
+                    zh_Hans: 亚洲/上海
+                  value: Asia/Shanghai
+                - icon: null
+                  label:
+                    en_US: Asia/Ho_Chi_Minh
+                    ja_JP: Asia/Ho_Chi_Minh
+                    pt_BR: Ásia/Ho Chi Minh
+                    zh_Hans: 亚洲/胡志明市
+                  value: Asia/Ho_Chi_Minh
+                - icon: null
+                  label:
+                    en_US: Asia/Tokyo
+                    ja_JP: Asia/Tokyo
+                    pt_BR: Asia/Tokyo
+                    zh_Hans: 亚洲/东京
+                  value: Asia/Tokyo
+                - icon: null
+                  label:
+                    en_US: Asia/Dubai
+                    ja_JP: Asia/Dubai
+                    pt_BR: Asia/Dubai
+                    zh_Hans: 亚洲/迪拜
+                  value: Asia/Dubai
+                - icon: null
+                  label:
+                    en_US: Asia/Kolkata
+                    ja_JP: Asia/Kolkata
+                    pt_BR: Asia/Kolkata
+                    zh_Hans: 亚洲/加尔各答
+                  value: Asia/Kolkata
+                - icon: null
+                  label:
+                    en_US: Asia/Seoul
+                    ja_JP: Asia/Seoul
+                    pt_BR: Asia/Seoul
+                    zh_Hans: 亚洲/首尔
+                  value: Asia/Seoul
+                - icon: null
+                  label:
+                    en_US: Asia/Singapore
+                    ja_JP: Asia/Singapore
+                    pt_BR: Asia/Singapore
+                    zh_Hans: 亚洲/新加坡
+                  value: Asia/Singapore
+                - icon: null
+                  label:
+                    en_US: Europe/London
+                    ja_JP: Europe/London
+                    pt_BR: Europe/London
+                    zh_Hans: 欧洲/伦敦
+                  value: Europe/London
+                - icon: null
+                  label:
+                    en_US: Europe/Berlin
+                    ja_JP: Europe/Berlin
+                    pt_BR: Europe/Berlin
+                    zh_Hans: 欧洲/柏林
+                  value: Europe/Berlin
+                - icon: null
+                  label:
+                    en_US: Europe/Moscow
+                    ja_JP: Europe/Moscow
+                    pt_BR: Europe/Moscow
+                    zh_Hans: 欧洲/莫斯科
+                  value: Europe/Moscow
+                - icon: null
+                  label:
+                    en_US: Australia/Sydney
+                    ja_JP: Australia/Sydney
+                    pt_BR: Australia/Sydney
+                    zh_Hans: 澳大利亚/悉尼
+                  value: Australia/Sydney
+                - icon: null
+                  label:
+                    en_US: Pacific/Auckland
+                    ja_JP: Pacific/Auckland
+                    pt_BR: Pacific/Auckland
+                    zh_Hans: 太平洋/奥克兰
+                  value: Pacific/Auckland
+                - icon: null
+                  label:
+                    en_US: Africa/Cairo
+                    ja_JP: Africa/Cairo
+                    pt_BR: Africa/Cairo
+                    zh_Hans: 非洲/开罗
+                  value: Africa/Cairo
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: select
+              settings:
+                format:
+                  value:
+                    type: mixed
+                    value: '%Y-%m-%d %H:%M:%S'
+                timezone:
+                  value:
+                    type: constant
+                    value: Asia/Tokyo
+              tool_description: A tool for getting the current time.
+              tool_label: Current Time
+              tool_name: current_time
+              type: builtin
+        agent_strategy_label: FunctionCalling
+        agent_strategy_name: function_calling
+        agent_strategy_provider_name: langgenius/agent/agent
+        meta:
+          minimum_dify_version: 1.7.0
+          version: 0.0.2
+        output_schema: {}
+        plugin_unique_identifier: langgenius/agent:0.0.25@3507a9a417ea8d76e5de6b2803953ca891851b6b336fafe1315471782711730f
+        selected: false
+        title: エージェント
+        tool_node_version: '2'
+        type: agent
+      height: 196
+      id: '1762265888428'
+      position:
+        x: 579.7201645490867
+        y: 452.64773304716664
+      positionAbsolute:
+        x: 579.7201645490867
+        y: 452.64773304716664
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#1762265888428.text#}}'
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 103
+      id: '1762265966560'
+      position:
+        x: 881.7201645490867
+        y: 452.64773304716664
+      positionAbsolute:
+        x: 881.7201645490867
+        y: 452.64773304716664
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -9.765678203448374
+      y: 26.781704911517807
+      zoom: 0.5471729483045559
+  rag_pipeline_variables: []
