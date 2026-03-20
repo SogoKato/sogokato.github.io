@@ -1,7 +1,7 @@
 ---
 title: "Difyでミニマルに学ぶLLM/RAG/Agentの違い"
 date: "2025-11-04"
-tags: ["Dify"]
+tags: ["Dify", "LLM", "RAG"]
 ---
 
 毎日 AI Agent についての話題は絶えないですが、一方で「Agent って何？」みたいな人もいるかと思います。

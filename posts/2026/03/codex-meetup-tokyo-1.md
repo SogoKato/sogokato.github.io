@@ -1,7 +1,7 @@
 ---
 title: "Codex Meetup Tokyo #1に参加しました"
 date: "2026-03-19"
-tags: ["コーディング", "Codex"]
+tags: ["OpenAI", "会議", "開発環境"]
 ---
 
 [Codex Meetup Tokyo #1](https://aiau.connpass.com/event/384679/) に参加してきました。私自身は仕事で GitHub Copilot や Roo Code を使うことが多いので、Codex の話を聞けるのは新鮮でした。去年一瞬だけ ChatGPT Plus 課金してて使ってたけど、2026年になってからはコミットの勢いが段違いみたいなので全然様相が違うのかも、と思ったりしました。
