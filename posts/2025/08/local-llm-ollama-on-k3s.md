@@ -66,11 +66,17 @@ dcgmExporter:
   enabled: false
   config:
     name: ""
+devicePlugin:
+  enabled: true
 ```
 
 [NVIDIA GPU Operator のページ](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/getting-started.html) に書かれているように、ノード上にドライバと container toolkit がインストールされている場合は `driver.enabled=false` `toolkit.enabled=false` を設定して OK です。
 
 `dcgmExporter` の項目は helm install 時にコケたので入れているだけで、なしでいけるならなしでいいです。
+
+**2026-04-13 追記**
+
+NVIDIA GPU Operator 26.3.0 でインストールし直したときに `devicePlugin.enabled=true` も指定する必要があったので追記してます。
 
 ## Ollama デプロイ
 
