@@ -9,6 +9,12 @@ import Footer from "../components/Footer";
 import { getAllPosts } from "../utils/readPosts";
 
 export const metadata: Metadata = {
+  authors: [
+    {
+      name: "Sogo Kato",
+      url: "https://sogo.dev/profile",
+    },
+  ],
   alternates: {
     types: {
       "application/rss+xml": "/feed.xml",
@@ -33,6 +39,13 @@ export default function RootLayout({
 
   return (
     <html lang="ja">
+      <head>
+        <link
+          rel="describedby"
+          href="/.well-known/site-description.json"
+          type="application/json"
+        />
+      </head>
       <body className="bg-neutral-200 dark:bg-neutral-900">
         <div className="duration-400 min-h-screen text-neutral-900 dark:text-neutral-50 transition-all">
           <div className="grid grid-cols-10 justify-center max-w-7xl mx-auto">

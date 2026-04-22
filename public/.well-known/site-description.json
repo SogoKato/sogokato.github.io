@@ -1,0 +1,29 @@
+{
+  "name": "Sogo.dev",
+  "url": "https://sogo.dev/",
+  "description": "Personal technical blog by Sogo Kato with posts about software engineering, infrastructure, cloud, and AI.",
+  "inLanguage": [
+    "ja"
+  ],
+  "publisher": {
+    "name": "Sogo Kato",
+    "url": "https://sogo.dev/profile"
+  },
+  "resources": [
+    {
+      "rel": "describedby",
+      "href": "https://sogo.dev/sitemap.xml",
+      "type": "application/xml"
+    },
+    {
+      "rel": "alternate",
+      "href": "https://sogo.dev/feed.xml",
+      "type": "application/rss+xml"
+    },
+    {
+      "rel": "author",
+      "href": "https://sogo.dev/profile",
+      "type": "text/html"
+    }
+  ]
+}
