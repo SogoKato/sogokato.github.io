@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { googleAdsenseId } from "../utils/const";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 declare global {
   var adsbygoogle: unknown[];
@@ -16,13 +16,23 @@ type AdSenseProps = {
 
 export default function AdSense({ type, className }: AdSenseProps) {
   const pathname = usePathname();
-
-  if (window.adsbygoogle === undefined) return null;
   const { adSlot, adFormat, fullWidthResponsive } = getSlotValue(type);
+  const insRef = useRef<HTMLModElement>(null);
+
+  useEffect(() => {
+    if (insRef.current?.getAttribute("data-adsbygoogle-status")) return;
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.error(e);
+    }
+  }, [pathname]);
+
   const baseClassName = "overflow-hidden rounded-md ";
   return (
     <div className={baseClassName + className} key={pathname}>
       <ins
+        ref={insRef}
         className="adsbygoogle"
         style={{ display: "block" }}
         data-ad-client={googleAdsenseId}
