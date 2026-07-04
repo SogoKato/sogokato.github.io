@@ -102,7 +102,11 @@ const Aside: React.FC<AsideProps> = ({ className, posts }) => {
         </h2>
         <ul className="mt-3.5">{recommended}</ul>
       </div>
-      <Ad type="display" className={commonClassName + "mb-8"} />
+      <Ad
+        type="display"
+        className={commonClassName + "mb-8 rounded-xl"}
+        fullWidthResponsive={false}
+      />
       <div className={commonClassName + "mb-8"}>
         <h2 className="font-black font-display text-duchs-900 dark:text-duchs-100 text-xl">
           TAGS
@@ -127,7 +131,11 @@ const Aside: React.FC<AsideProps> = ({ className, posts }) => {
           <p className="flex items-center">GitHub {arrowTopRight}</p>
         </Link>
       </div>
-      <Ad type="display" className={commonClassName + adSenseClassName} />
+      <Ad
+        type="display"
+        className={commonClassName + adSenseClassName + " rounded-xl"}
+        fullWidthResponsive={false}
+      />
     </aside>
   );
 };

@@ -6,7 +6,7 @@ import {
   siteDescription,
   siteTitle,
 } from "../utils/const";
-import PostListItem from "../components/PostListItem";
+import PostList from "../components/PostList";
 import { getAllPosts } from "../utils/readPosts";
 import { Metadata } from "next";
 
@@ -34,13 +34,9 @@ export default async function Home() {
 
   const pages = range(1, Math.ceil(posts.length / postsPerPage) + 1);
 
-  const postListItems = slicedPosts.map((p, index) => {
-    return <PostListItem key={index} post={p} />;
-  });
-
   return (
     <div>
-      {postListItems}
+      <PostList posts={slicedPosts} />
       <Pagination
         pages={pages}
         currentPage={1}

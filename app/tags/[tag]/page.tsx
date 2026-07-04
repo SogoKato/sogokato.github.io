@@ -1,6 +1,6 @@
 import { range } from "lodash";
 import Pagination from "../../../components/Pagination";
-import PostListItem from "../../../components/PostListItem";
+import PostList from "../../../components/PostList";
 import {
   baseUrl,
   postsPerPage,
@@ -32,11 +32,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tags = aggregateTags(posts);
 
   const matchedTags = tags.filter(
-    (tag) => tag.ref.replace("/tags/", "") === tagSlug
+    (tag) => tag.ref.replace("/tags/", "") === tagSlug,
   );
   if (matchedTags.length !== 1)
     throw new Error(
-      `Expected a tag (${tagSlug}), but got ${matchedTags.length}.`
+      `Expected a tag (${tagSlug}), but got ${matchedTags.length}.`,
     );
 
   const tag = matchedTags[0];
@@ -73,11 +73,11 @@ export default async function Tag({
   const tags = aggregateTags(posts);
 
   const matchedTags = tags.filter(
-    (tag) => tag.ref.replace("/tags/", "") === tagSlug
+    (tag) => tag.ref.replace("/tags/", "") === tagSlug,
   );
   if (matchedTags.length !== 1)
     throw new Error(
-      `Expected a tag (${tagSlug}), but got ${matchedTags.length}.`
+      `Expected a tag (${tagSlug}), but got ${matchedTags.length}.`,
     );
 
   const tag = matchedTags[0];
@@ -86,12 +86,9 @@ export default async function Tag({
 
   const pages = range(1, Math.ceil(filteredPosts.length / postsPerPage) + 1);
 
-  const postCards = slicedPosts.map((p, index) => {
-    return <PostListItem key={index} post={p} />;
-  });
   return (
     <div>
-      {postCards}
+      <PostList posts={slicedPosts} />
       <Pagination
         pages={pages}
         currentPage={1}

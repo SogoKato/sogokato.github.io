@@ -1,6 +1,6 @@
 import { range } from "lodash";
 import Pagination from "../../../components/Pagination";
-import PostListItem from "../../../components/PostListItem";
+import PostList from "../../../components/PostList";
 import {
   baseUrl,
   postsPerPage,
@@ -56,17 +56,13 @@ export default async function Page({
 
   const slicedPosts = posts.slice(
     postsPerPage * (currentPage - 1),
-    postsPerPage * currentPage
+    postsPerPage * currentPage,
   );
   const pages = range(1, Math.ceil(posts.length / postsPerPage) + 1);
 
-  const postCards = slicedPosts.map((p, index) => {
-    return <PostListItem key={index} post={p} />;
-  });
-
   return (
     <div>
-      {postCards}
+      <PostList posts={slicedPosts} />
       <Pagination
         pages={pages}
         currentPage={currentPage}

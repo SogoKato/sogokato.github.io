@@ -11,13 +11,28 @@ declare global {
 type AdType = "display" | "multiplex";
 type AdSenseProps = {
   type: AdType;
+  format?: string;
+  fullWidthResponsive?: boolean;
   className?: string;
 };
 
-export default function AdSense({ type, className }: AdSenseProps) {
+export default function AdSense({
+  type,
+  format,
+  fullWidthResponsive: fullWidthResponsiveProp,
+  className,
+}: AdSenseProps) {
   const pathname = usePathname();
-  const { adSlot, adFormat, fullWidthResponsive } = getSlotValue(type);
+  const {
+    adSlot,
+    adFormat,
+    fullWidthResponsive: defaultFullWidthResponsive,
+  } = getSlotValue(type);
   const insRef = useRef<HTMLModElement>(null);
+  const fullWidthResponsive =
+    fullWidthResponsiveProp !== undefined
+      ? String(fullWidthResponsiveProp)
+      : defaultFullWidthResponsive;
 
   useEffect(() => {
     if (insRef.current?.getAttribute("data-adsbygoogle-status")) return;
@@ -28,7 +43,7 @@ export default function AdSense({ type, className }: AdSenseProps) {
     }
   }, [pathname]);
 
-  const baseClassName = "overflow-hidden rounded-md ";
+  const baseClassName = "overflow-hidden ";
   return (
     <div className={baseClassName + className} key={pathname}>
       <ins
@@ -37,7 +52,7 @@ export default function AdSense({ type, className }: AdSenseProps) {
         style={{ display: "block" }}
         data-ad-client={googleAdsenseId}
         data-ad-slot={adSlot}
-        data-ad-format={adFormat}
+        data-ad-format={format ?? adFormat}
         data-full-width-responsive={fullWidthResponsive}
       />
     </div>
