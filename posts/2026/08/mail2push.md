@@ -99,6 +99,10 @@ Queue を使う理由はもう1つあります。
 
 なお、このサービスは Claude Code と一緒に作りました。その過程の話は次の記事で書くつもりです。
 
+**2026-08-08 追記**
+
+[](/posts/2026/08/mail2push-with-ai) を公開しました。
+
 ## 参考文献
 
 * [SogoKato/mail2push](https://github.com/SogoKato/mail2push)
