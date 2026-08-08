@@ -34,7 +34,6 @@
     "@dotenvx/dotenvx": "^1.51.4",
     "@huggingface/hub": "^2.7.1",
     "@huggingface/inference": "^4.13.6",
-    "@langchain/community": "^1.1.29",
     "@langchain/core": "^1.2.5",
     "@langchain/openai": "^1.5.6",
     "@tailwindcss/line-clamp": "^0.4.4",
