@@ -7,13 +7,11 @@ import { convertRawPostToPost } from "./utils/posts";
 
 const bingIndexNowKey = "8558162bf0de4b4fa018126dfc4e0cdb";
 
-const jwtClient = new google.auth.JWT(
-  process.env.GOOGLE_SA_CLIENT_EMAIL,
-  undefined,
-  process.env.GOOGLE_SA_PRIVATE_KEY,
-  ["https://www.googleapis.com/auth/indexing"],
-  undefined
-);
+const jwtClient = new google.auth.JWT({
+  email: process.env.GOOGLE_SA_CLIENT_EMAIL,
+  key: process.env.GOOGLE_SA_PRIVATE_KEY,
+  scopes: ["https://www.googleapis.com/auth/indexing"],
+});
 
 const requestGoogle = (accessToken: string, post: Post) => {
   fetch("https://indexing.googleapis.com/v3/urlNotifications:publish", {
