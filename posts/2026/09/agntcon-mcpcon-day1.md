@@ -4,7 +4,7 @@ date: "2026-09-10"
 tags: ["会議", "MCP", "認証/認可"]
 ---
 
-[AGNTCon + MCPCon Japan](https://events.linuxfoundation.org/agntcon-mcpcon-japan/) に参加してきました。1日目のメモです。
+[AGNTCon + MCPCon Japan](https://events.linuxfoundation.org/agntcon-mcpcon-japan/) に参加してきました。1日目のメモです。2日目は [AGNTCon + MCPCon Japanに参加しました（2日目）](/posts/2026/09/agntcon-mcpcon-day2) に書いています。
 
 いろんなスピーカーの口から「demo から production へ」という言葉が出てきていました。キーノートの Kaz Sato さんによる A2A の紹介の中で、WeChat が A2A でメッセージや通話・ビデオ通話ができるようになったという話があり、個人的に [LINE Messaging APIでAG-UIを使えるアダプタを作った](/posts/2026/03/line-agui-adapter) ので、メッセージングアプリが A2A 対応したという点は興味深かったです。
 
@@ -218,4 +218,4 @@ Meko: OSS として公開
 
 「demo から production へ」という言葉が象徴的で、本番運用に耐えるエージェントで必要になる要素をどう実現していくかの実践知が集まったイベントでした。使われている部品もクラウドネイティブの世界で見慣れたものや、オープンソースとして公開されたものがほとんどで、Linux Foundation のイベントらしいなと思いました。
 
-明日も参加するのでまとめていきたいと思っています。
+2日目は [AGNTCon + MCPCon Japanに参加しました（2日目）](/posts/2026/09/agntcon-mcpcon-day2) に続きます。
