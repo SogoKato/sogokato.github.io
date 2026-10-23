@@ -1,57 +1,27 @@
 import crypto from "crypto";
 import fs from "fs";
 import { ChatOpenAI } from "@langchain/openai";
-import {
-  InferenceClient,
-  type FeatureExtractionOutput,
-} from "@huggingface/inference";
+import { pipeline } from "@huggingface/transformers";
 import { loadSummaryIndex, saveSummaryIndex } from "./utils/vectorIndex";
 import { RawPost } from "./types/post";
 import { getRawPosts } from "./utils/readPosts";
 
-// Client errors will never succeed on a retry, so fail fast on them.
-const noRetryStatuses = [400, 401, 402, 403, 404, 405, 406, 407, 409];
-
-const statusOf = (e: unknown) =>
-  typeof e === "object" && e !== null && "httpResponse" in e
-    ? (e.httpResponse as { status?: number }).status
-    : undefined;
-
-// The inference API returns 503 while a model is still loading, so retry.
-const withRetry = async <T>(fn: () => Promise<T>, maxRetries = 6) => {
-  for (let i = 0; ; i++) {
-    try {
-      return await fn();
-    } catch (e) {
-      const status = statusOf(e);
-      if (status !== undefined && noRetryStatuses.includes(status)) throw e;
-      if (i >= maxRetries) throw e;
-      await new Promise((r) => setTimeout(r, 1000 * 2 ** i));
-    }
-  }
-};
-
-const isEmbeddings = (out: FeatureExtractionOutput): out is number[][] =>
-  out.every((v) => Array.isArray(v) && v.every((n) => typeof n === "number"));
-
 const embedPosts = async (posts: RawPost[]): Promise<RawPost[]> => {
-  // needs HUGGINGFACEHUB_API_KEY to be set
-  const client = new InferenceClient(process.env.HUGGINGFACEHUB_API_KEY);
-
   const docs = posts
     .map((p) => p.summary)
     .filter((p) => p !== null)
     .map((p) => p.replace(/\n/g, " "));
   if (docs.length === 0) return posts;
 
-  const embeddings = await withRetry(() =>
-    client.featureExtraction({
-      model: "intfloat/multilingual-e5-large",
-      inputs: docs,
-    }),
+  // ONNX port of intfloat/multilingual-e5-large, run locally.
+  // fp32 + mean pooling + normalize matches what the HF Inference API returned.
+  const extractor = await pipeline(
+    "feature-extraction",
+    "Xenova/multilingual-e5-large",
+    { dtype: "fp32" },
   );
-  if (!isEmbeddings(embeddings))
-    throw new Error("Unexpected feature extraction output.");
+  const output = await extractor(docs, { pooling: "mean", normalize: true });
+  const embeddings = output.tolist() as number[][];
 
   return posts.map((post, i) => ({
     ...post,
