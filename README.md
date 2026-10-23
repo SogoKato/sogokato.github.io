@@ -41,8 +41,8 @@ title: "自己紹介"
 
 * Microsoft Certified: Azure AI Engineer Associate (2025年9月, 805/1000)
 * 応用情報技術者 (2023年12月, 77.5/100 + 76.0/100)
-* AWS Certified Solutions Architect - Professional (2023年9月, 799/1000)
-* AWS Certified Solutions Architect - Associate (2023年8月, 825/1000)
+* ~~AWS Certified Solutions Architect - Professional (2023年9月, 799/1000)~~
+* ~~AWS Certified Solutions Architect - Associate (2023年8月, 825/1000)~~
 * ~~Certified Kubernetes Application Developer (2023年3月, 91/100)~~
 * Google Professional Cloud Architect (2022年9月)
 * ~~Google Cloud Associate Cloud Engineer (2022年9月)~~
