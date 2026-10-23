@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://agentgateway.dev/schema/config
+mcp:
+  port: 3001
+  policies:
+    cors:
+      allowOrigins: ["*", http://localhost:15000]
+      allowHeaders:
+        - mcp-protocol-version
+        - content-type
+        - mcp-session-id
+        - '*'
+      exposeHeaders:
+        - Mcp-Session-Id
+      allowMethods:
+        - GET
+        - POST
+    mcpAuthorization:
+      rules:
+        - 'mcp.tool.name == "echo"'
+    authorization:
+      rules:
+        - require: 'mcp.methodName != "tools/call" || mcp.tool.name != "echo" || !mcp.tool.arguments.message.contains("secret")'
+  targets:
+    - name: everything
+      stdio:
+        cmd: npx
+        args: ["-y", "@modelcontextprotocol/server-everything@2026.8.31"]
