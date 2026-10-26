@@ -6,6 +6,8 @@ tags: ["Ubuntu", "開発環境", "VS Code", "GPU", "K3s", "自宅サーバー"]
 
 前回 [個人的Ubuntu24.04 Desktopセットアップメモ](/posts/2025/06/setup-ubuntu-desktop) を書きましたが、結局 Ubuntu Server に切り替えたのでその時のメモ。
 
+**2026-10-26 更新：Tailscale, GitHub, GitLab を追加しました。**
+
 ## 環境
 
 * Ubuntu 24.04 Server
@@ -29,6 +31,15 @@ tags: ["Ubuntu", "開発環境", "VS Code", "GPU", "K3s", "自宅サーバー"]
 * パスワード認証の禁止
 * root ログインを禁止
 * SSH のポート変更
+
+### Tailscale
+
+外から自宅サーバに入れるように Tailscale を入れた。[公式ドキュメント](https://tailscale.com/docs/install/linux) に従ってインストール。
+
+```sh
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+```
 
 ### Nvidia ドライバ導入
 
@@ -243,6 +254,18 @@ AI 系
 ```sh
 brew install gemini-cli
 brew install --cask claude-code
+```
+
+GitHub
+
+```sh
+brew install gh
+```
+
+GitLab
+
+```sh
+brew install glab
 ```
 
 ## おわりに
