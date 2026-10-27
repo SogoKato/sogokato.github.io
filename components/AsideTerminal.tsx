@@ -1,9 +1,10 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Post } from "../types/post";
 import { usePathname } from "next/navigation";
+import { useHydrated } from "../utils/useHydrated";
 
 const PyTerminal = dynamic(() => import("./PyTerminal"), { ssr: false });
 
@@ -14,12 +15,11 @@ type AsideTerminalProps = {
 
 const AsideTerminal: React.FC<AsideTerminalProps> = ({ posts, className }) => {
   const pathname = usePathname();
-  const [post, setPost] = useState<Post>();
-
-  useEffect(() => {
-    if (pathname === null) return;
-    setPost(posts.filter((p) => p.ref === pathname)[0]);
-  }, [pathname, posts]);
+  const hydrated = useHydrated();
+  const post =
+    hydrated && pathname !== null
+      ? posts.filter((p) => p.ref === pathname)[0]
+      : undefined;
 
   useEffect(() => {
     const el = document.getElementById("sidebarPyTerminalWrapper");
