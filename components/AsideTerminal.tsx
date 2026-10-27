@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { Post } from "../types/post";
 import { usePathname } from "next/navigation";
 
+const PyTerminal = dynamic(() => import("./PyTerminal"), { ssr: false });
+
 type AsideTerminalProps = {
   posts: Post[];
   className?: string;
@@ -26,8 +28,6 @@ const AsideTerminal: React.FC<AsideTerminalProps> = ({ posts, className }) => {
   }, []);
 
   if (!post?.showTerminalAside) return null;
-
-  const PyTerminal = dynamic(() => import("./PyTerminal"), { ssr: false });
 
   return (
     <div className="sidebar-terminal-container md:sticky md:top-0 py-8 z-10">

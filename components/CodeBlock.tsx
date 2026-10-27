@@ -6,6 +6,10 @@ import toml from "toml";
 import PyConfig from "./PyConfig";
 import dynamic from "next/dynamic";
 
+const PyScript = dynamic(() => import("./PyScript"), { ssr: false });
+const PyRepl = dynamic(() => import("./PyRepl"), { ssr: false });
+const PyTerminal = dynamic(() => import("./PyTerminal"), { ssr: false });
+
 const CodeBlock: CodeComponent = ({ inline, className, children }) => {
   if (inline) {
     return <code className={className}>{children}</code>;
@@ -22,13 +26,10 @@ const CodeBlock: CodeComponent = ({ inline, className, children }) => {
     codeBlockParams.includes("pyscript")
   ) {
     filename = codeBlockParams.length > 2 ? filename : "";
-    const PyScript = dynamic(() => import("./PyScript"), { ssr: false });
     extra = <PyScript code={String(children)} />;
   } else if (lang === "pyrepl") {
-    const PyRepl = dynamic(() => import("./PyRepl"), { ssr: false });
     return <PyRepl code={code} />;
   } else if (lang === "pyterminal") {
-    const PyTerminal = dynamic(() => import("./PyTerminal"), { ssr: false });
     return (
       <PyTerminal
         id="inlinePyTerminal"

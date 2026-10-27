@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 
+const AdSense = dynamic(() => import("./AdSense"), { ssr: false });
+
 type AdType = "display" | "multiplex";
 type AdProps = {
   type: AdType;
@@ -16,7 +18,6 @@ export default function Ad({
   fullWidthResponsive,
   className,
 }: AdProps) {
-  const AdSense = dynamic(() => import("./AdSense"), { ssr: false });
   return (
     <AdSense
       type={type}
