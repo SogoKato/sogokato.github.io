@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { Post, RecommendedPost } from "../types/post";
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useHydrated } from "../utils/useHydrated";
 
 type RecommendationProps = {
   posts: Post[];
@@ -15,12 +15,11 @@ const Recommendation: React.FC<RecommendationProps> = ({
   defaultRecommendation,
 }) => {
   const pathname = usePathname();
-  const [post, setPost] = useState<Post>();
-
-  useEffect(() => {
-    if (pathname === null) return;
-    setPost(posts.filter((p) => p.ref === pathname)[0]);
-  }, [pathname, posts]);
+  const hydrated = useHydrated();
+  const post =
+    hydrated && pathname !== null
+      ? posts.filter((p) => p.ref === pathname)[0]
+      : undefined;
 
   const recommendation = post ? post.recommendation : defaultRecommendation;
 

@@ -10,6 +10,8 @@ import Tags from "./Tags";
 import { type Post } from "../types/post";
 import Social from "./Social";
 
+const LikeButtons = dynamic(() => import("./Like"), { ssr: false });
+
 type PostCardProps = {
   className?: string;
   post: Post;
@@ -27,7 +29,6 @@ const PostCard: React.FC<PostCardProps> = ({
       {post.date.getDate()}日
     </p>
   ) : null;
-  const LikeButtons = dynamic(() => import("./Like"), { ssr: false });
   const shareButtons = !isStaticPostPage ? (
     <Social
       className="flex justify-end"

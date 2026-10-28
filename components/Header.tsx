@@ -6,15 +6,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 
+const ThemeSelector = dynamic(() => import("./ThemeSelector"), {
+  ssr: false,
+});
+
 type HeaderProps = {
   className?: string;
 };
 
 const Header: React.FC<HeaderProps> = ({ className }) => {
   const pathname = usePathname();
-  const ThemeSelector = dynamic(() => import("./ThemeSelector"), {
-    ssr: false,
-  });
   const logoImage = (
     <Image src="/images/logo.svg" alt="logo" width="480" height="160" />
   );

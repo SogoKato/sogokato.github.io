@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { pyTerminalExists, scrollToPyTerminal } from "../utils/pyscript";
 
 type PyReplProps = {
@@ -8,7 +8,7 @@ type PyReplProps = {
 };
 
 const PyRepl: React.FC<PyReplProps> = ({ code }) => {
-  const random = Math.random().toString(32).substring(2);
+  const [random] = useState(() => Math.random().toString(32).substring(2));
   const outputId = `py-output-${random}`;
   // @ts-ignore
   const pyRepl = (
