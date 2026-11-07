@@ -90,7 +90,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
   const buildPaginationElements = () => {
     const { start, end } = getVisiblePageRange();
-    const elements: JSX.Element[] = [];
+    const elements: React.JSX.Element[] = [];
     const sideItems = Math.floor(MAX_ELEMENTS / 2) - 1;
     
     if (currentPage > sideItems + 2) {
