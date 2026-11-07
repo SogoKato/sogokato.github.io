@@ -1,5 +1,6 @@
 import { YouTubeEmbed } from "@next/third-parties/google";
-import { CodeComponent } from "react-markdown/lib/ast-to-react";
+import { Children, isValidElement } from "react";
+import { type Components } from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import toml from "toml";
@@ -10,10 +11,12 @@ const PyScript = dynamic(() => import("./PyScript"), { ssr: false });
 const PyRepl = dynamic(() => import("./PyRepl"), { ssr: false });
 const PyTerminal = dynamic(() => import("./PyTerminal"), { ssr: false });
 
-const CodeBlock: CodeComponent = ({ inline, className, children }) => {
-  if (inline) {
-    return <code className={className}>{children}</code>;
-  }
+type CodeBlockProps = {
+  className?: string;
+  children?: React.ReactNode;
+};
+
+const CodeBlock: React.FC<CodeBlockProps> = ({ className, children }) => {
   const match = /language-(\w+)/.exec(className || "");
   const lang = match && match[1] ? match[1] : "";
   const codeBlockParams = className ? className.split(":") : [];
@@ -72,4 +75,18 @@ const CodeBlock: CodeComponent = ({ inline, className, children }) => {
   );
 };
 
-export default CodeBlock;
+// react-markdown 9 no longer tells the code component whether it is a block,
+// so a code block is found by its parent <pre>, as react-markdown 8 did.
+const Pre: Components["pre"] = ({ node: _node, children, ...props }) => (
+  <pre {...props}>
+    {Children.map(children, (child) =>
+      isValidElement<CodeBlockProps>(child) && child.type === "code" ? (
+        <CodeBlock {...child.props} />
+      ) : (
+        child
+      ),
+    )}
+  </pre>
+);
+
+export default Pre;

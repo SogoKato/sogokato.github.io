@@ -5,7 +5,7 @@ import Script from "next/script";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import CodeBlock from "./CodeBlock";
+import Pre from "./CodeBlock";
 import Tags from "./Tags";
 import { type Post } from "../types/post";
 import Social from "./Social";
@@ -48,7 +48,7 @@ const PostCard: React.FC<PostCardProps> = ({
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw]}
-            components={{ code: CodeBlock }}
+            components={{ pre: Pre }}
           >
             {post.content}
           </ReactMarkdown>
