@@ -1,0 +1,81 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:best-practices", ":timezone(Asia/Tokyo)"],
+
+  enabledManagers: [
+    "npm",
+    "github-actions",
+    // .nvmrc holds the Node version that CI and the deploy workflow use
+    "nvm",
+  ],
+
+  // Every merge to main deploys to production, so nothing is merged automatically.
+  automerge: false,
+  dependencyDashboard: true,
+  commitMessagePrefix: "⬆️",
+
+  schedule: ["* 0-11 * * 1"],
+  lockFileMaintenance: {
+    enabled: true,
+    schedule: ["* 0-11 1 * *"],
+  },
+
+  minimumReleaseAge: "3 days",
+  internalChecksFilter: "strict",
+
+  prConcurrentLimit: 3,
+  prHourlyLimit: 2,
+
+  // Security fixes ignore the schedule, minimumReleaseAge and the PR limits above.
+  vulnerabilityAlerts: {
+    enabled: true,
+  },
+
+  packageRules: [
+    {
+      description: "These update types have no release timestamp, so minimumReleaseAge would hold them forever",
+      matchUpdateTypes: ["lockFileMaintenance", "pin", "replacement", "bump", "lockfileUpdate", "rollback"],
+      minimumReleaseAge: null,
+    },
+    {
+      description: "Keep devDependencies ranges like dependencies instead of pinning them (overrides :pinDevDependencies)",
+      matchDepTypes: ["devDependencies"],
+      rangeStrategy: "auto",
+    },
+
+    // Groups. The catch-all comes first so that the named groups below override it.
+    {
+      groupName: "non-major dependencies",
+      matchUpdateTypes: ["minor", "patch", "digest"],
+      matchPackageNames: ["*"],
+    },
+    {
+      groupName: "Next.js",
+      matchPackageNames: ["next", "eslint-config-next", "@next/*"],
+    },
+    {
+      groupName: "React",
+      matchPackageNames: ["react", "react-dom", "scheduler", "@types/react", "@types/react-dom"],
+    },
+    {
+      groupName: "react-markdown",
+      matchPackageNames: ["react-markdown", "remark-*", "rehype-*", "unified"],
+    },
+    {
+      groupName: "Tailwind CSS",
+      matchPackageNames: ["tailwindcss", "@tailwindcss/*"],
+    },
+
+    {
+      matchUpdateTypes: ["major"],
+      labels: ["dependencies", "major"],
+      automerge: false,
+    },
+    {
+      description: "Move Node.js and @types/node to the next LTS together, so @types/node never gets ahead of Node",
+      groupName: "Node.js",
+      matchPackageNames: ["node", "@types/node"],
+      matchUpdateTypes: ["major"],
+    },
+  ],
+}
