@@ -29,7 +29,7 @@
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
     "scheduler": "^0.25.0",
-    "toml": "^3.0.0"
+    "toml": "^5.0.0"
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.51.4",
