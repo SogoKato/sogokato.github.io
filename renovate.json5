@@ -34,7 +34,7 @@
   packageRules: [
     {
       description: "These update types have no release timestamp, so minimumReleaseAge would hold them forever",
-      matchUpdateTypes: ["lockFileMaintenance", "pin", "replacement", "bump", "lockfileUpdate", "rollback"],
+      matchUpdateTypes: ["lockFileMaintenance", "pin", "pinDigest", "replacement", "bump", "lockfileUpdate", "rollback"],
       minimumReleaseAge: null,
     },
     {
