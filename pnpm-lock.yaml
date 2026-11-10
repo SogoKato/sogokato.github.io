@@ -65,7 +65,7 @@ importers:
         version: 1.3.5(openai@7.53.0(google-auth-library@10.5.0(supports-color@7.2.0))(undici@7.30.2)(ws@8.21.3)(zod@4.4.3))(ws@8.21.3)
       '@langchain/openai':
         specifier: ^1.5.6
-        version: 1.8.0(@langchain/core@1.3.5(openai@7.53.0(google-auth-library@10.5.0(supports-color@7.2.0))(undici@7.30.2)(ws@8.21.3)(zod@4.4.3))(ws@8.21.3))(google-auth-library@10.5.0(supports-color@7.2.0))(undici@7.30.2)(ws@8.21.3)
+        version: 1.8.2(@langchain/core@1.3.5(openai@7.53.0(google-auth-library@10.5.0(supports-color@7.2.0))(undici@7.30.2)(ws@8.21.3)(zod@4.4.3))(ws@8.21.3))(google-auth-library@10.5.0(supports-color@7.2.0))(undici@7.30.2)(ws@8.21.3)
       '@tailwindcss/line-clamp':
         specifier: ^0.4.4
         version: 0.4.4(tailwindcss@4.1.18)
@@ -624,11 +624,11 @@ packages:
     resolution: {integrity: sha512-7mk6lrHhD9vGZ+HnUhbHJzWTuJVktV+XSgDFmDlFu6qOHuNao4iuu5wqOgFNyx3Khjv7PydgbWOwcYeRXZ/ygA==}
     engines: {node: '>=20'}
 
-  '@langchain/openai@1.8.0':
-    resolution: {integrity: sha512-HstN9V0rUkNnOyzMSylP2e5z6VbyuZXyoliuepO2Tf59bezrhvB/sljLfREN1lAGsy4YysD5hUeCN/2ynAZKjQ==}
+  '@langchain/openai@1.8.2':
+    resolution: {integrity: sha512-pA0ns3ikApRpCbvrShDqmIkPisbbZ3Ygr1HSsmJdrl+gqkVBeLKxS+P0c+DIpzXKoGVg0nuvQCb/ZXLM5Ti+iw==}
     engines: {node: '>=22'}
     peerDependencies:
-      '@langchain/core': ^1.3.1
+      '@langchain/core': ^1.3.5
 
   '@napi-rs/wasm-runtime@0.2.12':
     resolution: {integrity: sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ==}
@@ -3775,7 +3775,7 @@ snapshots:
       - openai
       - ws
 
-  '@langchain/openai@1.8.0(@langchain/core@1.3.5(openai@7.53.0(google-auth-library@10.5.0(supports-color@7.2.0))(undici@7.30.2)(ws@8.21.3)(zod@4.4.3))(ws@8.21.3))(google-auth-library@10.5.0(supports-color@7.2.0))(undici@7.30.2)(ws@8.21.3)':
+  '@langchain/openai@1.8.2(@langchain/core@1.3.5(openai@7.53.0(google-auth-library@10.5.0(supports-color@7.2.0))(undici@7.30.2)(ws@8.21.3)(zod@4.4.3))(ws@8.21.3))(google-auth-library@10.5.0(supports-color@7.2.0))(undici@7.30.2)(ws@8.21.3)':
     dependencies:
       '@langchain/core': 1.3.5(openai@7.53.0(google-auth-library@10.5.0(supports-color@7.2.0))(undici@7.30.2)(ws@8.21.3)(zod@4.4.3))(ws@8.21.3)
       js-tiktoken: 1.0.21
