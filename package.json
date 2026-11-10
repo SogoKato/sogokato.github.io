@@ -32,7 +32,7 @@
     "toml": "^5.0.0"
   },
   "devDependencies": {
-    "@dotenvx/dotenvx": "^1.51.4",
+    "@dotenvx/dotenvx": "^2.0.0",
     "@langchain/core": "^1.2.5",
     "@langchain/openai": "^1.5.6",
     "@tailwindcss/line-clamp": "^0.4.4",
