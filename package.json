@@ -18,7 +18,7 @@
     "@next/third-parties": "16.4.5",
     "@noroch/like-widget": "^1.0.2",
     "@tailwindcss/postcss": "^4.1.18",
-    "googleapis": "^174.0.1",
+    "googleapis": "^189.0.0",
     "gray-matter": "^4.0.3",
     "lodash": "^4.17.21",
     "next": "16.4.5",
