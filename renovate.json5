@@ -67,6 +67,13 @@
     },
 
     {
+      description: "Hold TypeScript within what typescript-eslint (used by eslint-config-next) supports",
+      // hold-follows: typescript-eslint peerDependencies.typescript
+      matchPackageNames: ["typescript"],
+      allowedVersions: ">=4.8.4 <6.1.0",
+    },
+
+    {
       matchUpdateTypes: ["major"],
       labels: ["dependencies", "major"],
       automerge: false,
