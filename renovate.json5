@@ -67,6 +67,12 @@
     },
 
     {
+      description: "Hold TypeScript 7: typescript-eslint (used by eslint-config-next) does not support it yet",
+      // unblock-when: typescript-eslint peerDependencies.typescript satisfies 7.0.0
+      matchPackageNames: ["typescript"],
+      allowedVersions: "<7",
+    },
+    {
       matchUpdateTypes: ["major"],
       labels: ["dependencies", "major"],
       automerge: false,
