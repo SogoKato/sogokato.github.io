@@ -28,7 +28,7 @@
     "react-markdown": "^10.1.0",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
-    "scheduler": "^0.25.0",
+    "scheduler": "^0.28.0",
     "toml": "^5.0.0"
   },
   "devDependencies": {
