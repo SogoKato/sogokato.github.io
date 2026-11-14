@@ -11,6 +11,10 @@
 
   // Every merge to main deploys to production, so nothing is merged automatically.
   automerge: false,
+  // With automerge off and no "require branches to be up to date" rule, the default ("auto") rebases
+  // only on conflicts. A fix merged to main (for example allowBuilds for pnpm 11+) would then never
+  // reach a PR that is merely behind, and its CI would stay red. Rebase whenever main moves on.
+  rebaseWhen: "behind-base-branch",
   dependencyDashboard: true,
   commitMessagePrefix: "⬆️",
 
