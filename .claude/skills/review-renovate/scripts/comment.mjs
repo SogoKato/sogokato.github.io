@@ -68,13 +68,15 @@ if (header.length + content.length > LIMIT) {
 }
 const body = header + content + "\n";
 
-// The comment to update: ours, with the marker. Our login is unknown with an Actions token, so fall back to the marker alone.
+// The comment to update: ours, with the marker. A GitHub App token (Actions) cannot read /user, so
+// there "ours" means a bot's. A comment posted from someone's local run cannot be edited by the bot;
+// the bot then posts its own, and updates that one from then on.
 let me = null;
 try {
   me = gh(["api", "user", "-q", ".login"]).trim();
 } catch {}
 const comments = JSON.parse(gh(["api", "--paginate", "--slurp", `repos/${repo}/issues/${prNumber}/comments?per_page=100`])).flat();
-const mine = comments.filter((c) => c.body?.includes(MARKER) && (!me || c.user?.login === me));
+const mine = comments.filter((c) => c.body?.includes(MARKER) && (me ? c.user?.login === me : c.user?.type === "Bot"));
 const target = mine.at(-1);
 
 if (dry) {
