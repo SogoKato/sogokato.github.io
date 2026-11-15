@@ -1,0 +1,74 @@
+name: Review Renovate PR
+
+# Runs the review-renovate skill (.claude/skills/review-renovate) on a Renovate PR:
+#   - when Renovate opens, reopens or rebases one (pushes by anyone else, such as the fix commits
+#     this job itself adds, do not start it again)
+#   - when someone with write access comments "/review-renovate" on a PR
+# The skill builds base and PR, compares their output, comments the result on the PR and, when the
+# PR fails, opens the fix PR. It never merges.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write # push fix branches, and commits onto Renovate branches
+  pull-requests: write # comment, open fix PRs, tick Renovate's rebase checkbox
+  issues: write # PR comments go through the issues API
+  actions: read # read failed CI logs
+  checks: read
+  id-token: write # the action exchanges it for the Claude GitHub App token
+
+concurrency:
+  group: review-renovate-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: >-
+      (github.event_name == 'pull_request' &&
+        github.event.pull_request.user.login == 'renovate[bot]' &&
+        github.event.sender.login == 'renovate[bot]') ||
+      (github.event_name == 'issue_comment' &&
+        github.event.issue.pull_request &&
+        startsWith(github.event.comment.body, '/review-renovate'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
+    steps:
+      # verify.mjs needs about 10 GB per PR (two worktrees with node_modules and build output).
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      # The default branch, not the PR head: the skill fetches the PR itself and works in worktrees.
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version-file: ".nvmrc"
+
+      # verify.mjs takes the Chromium in ~/.cache/ms-playwright; --with-deps adds the system libraries.
+      - name: Install Chromium for screenshots
+        run: npx -y playwright-core install --with-deps chromium
+
+      - name: Review
+        uses: anthropics/claude-code-action@f3b070c88125d33dbae5653df5f143101d4ea9dc # v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          allowed_bots: "renovate[bot]"
+          prompt: |
+            review-renovate スキル（.claude/skills/review-renovate/SKILL.md）に従って、PR #${{ env.PR_NUMBER }} を確認する。
+            GitHub Actions での実行なので、SKILL.md の「GitHub Actions で動くとき」にも従う。
+          claude_args: |
+            --permission-mode acceptEdits
+            --allowedTools "Read,Grep,Glob,Edit,Write,WebFetch,Bash(node .claude/skills/review-renovate/scripts/collect.mjs:*),Bash(node .claude/skills/review-renovate/scripts/verify.mjs:*),Bash(node .claude/skills/review-renovate/scripts/comment.mjs:*),Bash(node .claude/skills/review-renovate/scripts/in-worktree.mjs:*),Bash(git fetch:*),Bash(git worktree:*),Bash(git log:*),Bash(git show:*),Bash(git diff:*),Bash(git grep:*),Bash(git status:*),Bash(git merge-base:*),Bash(git rev-parse:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(gh pr checks:*),Bash(gh pr diff:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh run view:*),Bash(gh issue list:*),Bash(gh issue view:*),Bash(npm view:*),Bash(npx -y --package renovate renovate-config-validator:*),Bash(ls:*),Bash(cat:*),Bash(df:*)"
