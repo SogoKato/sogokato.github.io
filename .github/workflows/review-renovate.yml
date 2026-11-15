@@ -25,10 +25,6 @@ permissions:
   checks: read
   id-token: write # the action exchanges it for the Claude GitHub App token
 
-concurrency:
-  group: review-renovate-${{ github.event.pull_request.number || github.event.issue.number }}
-  cancel-in-progress: true
-
 jobs:
   review:
     if: >-
@@ -39,6 +35,11 @@ jobs:
         github.event.issue.pull_request &&
         github.event.issue.user.login == 'renovate[bot]' &&
         startsWith(github.event.comment.body, '/review-renovate'))
+    # Job level, not workflow level: the bot's own comment is an issue_comment event too. Its run is
+    # skipped by the condition above, but a workflow-level group would still cancel this run.
+    concurrency:
+      group: review-renovate-${{ github.event.pull_request.number || github.event.issue.number }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
@@ -79,9 +80,10 @@ jobs:
           prompt: |
             review-renovate スキル（.claude/skills/review-renovate/SKILL.md）に従って、PR #${{ env.PR_NUMBER }} を確認する。
             GitHub Actions での実行なので、SKILL.md の「GitHub Actions で動くとき」にも従う。
+            作業ディレクトリ（<scratchpad>）は ${{ runner.temp }}/review-renovate。
           claude_args: |
             --permission-mode acceptEdits
-            --allowedTools "Read,Grep,Glob,Edit,Write,WebFetch,Bash(node .claude/skills/review-renovate/scripts/collect.mjs:*),Bash(node .claude/skills/review-renovate/scripts/verify.mjs:*),Bash(node .claude/skills/review-renovate/scripts/comment.mjs:*),Bash(node .claude/skills/review-renovate/scripts/in-worktree.mjs:*),Bash(git fetch:*),Bash(git worktree:*),Bash(git log:*),Bash(git show:*),Bash(git diff:*),Bash(git grep:*),Bash(git status:*),Bash(git merge-base:*),Bash(git rev-parse:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(gh pr checks:*),Bash(gh pr diff:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh run view:*),Bash(gh issue list:*),Bash(gh issue view:*),Bash(npm view:*),Bash(npx -y --package renovate renovate-config-validator:*),Bash(ls:*),Bash(cat:*),Bash(df:*)"
+            --allowedTools "Read,Grep,Glob,Edit,Write,WebFetch,Bash(node .claude/skills/review-renovate/scripts/collect.mjs:*),Bash(node .claude/skills/review-renovate/scripts/verify.mjs:*),Bash(node .claude/skills/review-renovate/scripts/comment.mjs:*),Bash(node .claude/skills/review-renovate/scripts/in-worktree.mjs:*),Bash(git fetch:*),Bash(git worktree:*),Bash(git log:*),Bash(git show:*),Bash(git diff:*),Bash(git grep:*),Bash(git status:*),Bash(git merge-base:*),Bash(git rev-parse:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(gh pr checks:*),Bash(gh pr diff:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh run view:*),Bash(gh issue list:*),Bash(gh issue view:*),Bash(npm view:*),Bash(npx -y --package renovate renovate-config-validator:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(grep:*),Bash(mkdir:*),Bash(df:*)"
 
       # The action reports success even when every command was denied and nothing was checked.
       # Fail the job then, so a run that did nothing does not look like a passed review.
