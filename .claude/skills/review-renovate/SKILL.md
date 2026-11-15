@@ -280,7 +280,7 @@ git worktree remove --force <scratchpad>/renovate-fix-<PR番号>
 `.github/workflows/review-renovate.yml` が、次のときにこのスキルを動かす。プロンプトで PR の番号を1つ渡す。
 
 - Renovate が PR を作った、開き直した、rebase した（Renovate 以外の push では動かない。B のコミットで自分を呼び直さないため）
-- 書き込み権限のある人が PR に `/review-renovate` とコメントした
+- 書き込み権限のある人が、Renovate の PR に `/review-renovate` とコメントした（ほかの人の PR では動かない。PR のコードを、push できるジョブで動かすことになるため）
 
 手元との違い:
 
