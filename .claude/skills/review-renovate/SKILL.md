@@ -36,7 +36,6 @@ Renovate の PR ごとに、CI では確かめられないことを洗い出し�
    - マージ済みの PR を指定したときは、マージコミットの1つ前を比較の基点にする。
 
    - 引数がなければ、開いている Renovate の PR をすべて対象にする。
-   - gh が PATH にない環境では `GH_BIN=/home/linuxbrew/.linuxbrew/bin/gh` を付ける（`verify.mjs` も同じ）。
    - 出力に入るもの:
      - チェックの結果。失敗した Actions のジョブは、失敗したステップのログから原因の行を抜き出す
      - ロックファイル以外の差分
@@ -286,7 +285,7 @@ git worktree remove --force <scratchpad>/renovate-fix-<PR番号>
 手元との違い:
 
 - 見るのは渡された PR だけ。collect.mjs と verify.mjs にもその番号だけを渡す。
-- `<scratchpad>` は `$RUNNER_TEMP/review-renovate` にする。`GH_BIN` は要らない。
+- `<scratchpad>` は `$RUNNER_TEMP/review-renovate` にする。
 - 結果を読む人はその場にいない。主な出力は PR へのコメント（手順9）で、まとめはジョブのログにしか残らない。
   - 「判断が必要」のときは、選択肢をコメントに書いて終える。
   - AskUserQuestion は使わない。
