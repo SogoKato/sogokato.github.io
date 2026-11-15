@@ -291,7 +291,8 @@ git worktree remove --force <scratchpad>/renovate-fix-<PR番号>
   - AskUserQuestion は使わない。
 - 使えるコマンドは、ワークフローの `--allowedTools` にあるものだけ。ほかのコマンドが要るときは、断られる前提で、何が要ったかをコメントに書く。
   - コマンドは1つずつ実行する。`&&`、`;`、`|`、`2>&1` でつながない。つないだ全体が許可リストに合わず、断られる（実際に `mkdir -p … && node collect.mjs … | head` が断られた）。
-  - 作業ディレクトリは collect.mjs と verify.mjs が作るので、`mkdir` は要らない。
+  - 作業ディレクトリはワークフローが作るので、`mkdir` は要らない。
+  - `gh api` は使えない（`-X PUT` で PR のマージまでできてしまうので許可していない）。リリースのリンク先や CHANGELOG のような外部の文書は、WebFetch で github.com の URL を読む。
   - 長い出力は、ファイルに保存されたもの（レポート、`--notes` のリリースノート）を Read で読む。`head` でパイプしない。
   - 拒否が1件でもあると、ワークフローはジョブを失敗にする（コメントは残る）。
 - 対処の PR と push は、Claude の GitHub App の権限で行う。そのため、作った PR でも CI が動く。push は `in-worktree.mjs` を通す（`git push` を直接は許していない）。
