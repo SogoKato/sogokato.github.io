@@ -400,6 +400,16 @@ function codeOnly(b, h) {
   return { langs, textChanged };
 }
 
+// git diff of two texts, one line per tag so minified HTML or a one-line sitemap gives a readable diff.
+function textDiff2(a, b) {
+  const tmp = fs.mkdtempSync(path.join(WORK, "diff-"));
+  fs.writeFileSync(path.join(tmp, "base"), a.replace(/></g, ">\n<"));
+  fs.writeFileSync(path.join(tmp, "head"), b.replace(/></g, ">\n<"));
+  const d = shTry("git", ["-C", tmp, "diff", "--no-index", "--no-color", "-U1", "base", "head"]);
+  fs.rmSync(tmp, { recursive: true, force: true });
+  return d.out;
+}
+
 const changedPages = [];
 const codeOnlyPages = new Set();
 const codeLangs = new Map();
@@ -412,7 +422,9 @@ if (bothBuilt) {
   const removed = [...bp].filter((p) => !hp.has(p));
   let textDiff = 0;
   let htmlDiff = 0;
+  let htmlSpaceOnly = 0;
   const samples = [];
+  const htmlSamples = [];
   for (const p of [...hp].filter((p) => bp.has(p))) {
     const [b, h] = [fs.readFileSync(path.join(outs.base, p), "utf8"), fs.readFileSync(path.join(outs.head, p), "utf8")];
     const [tb, th] = [visibleText(b), visibleText(h)];
@@ -432,7 +444,16 @@ if (bothBuilt) {
       }
     } else if (normalizeHtml(b) !== normalizeHtml(h)) {
       htmlDiff++;
+      // Whitespace between tags only (e.g. blank lines before a <table> after a parse5 update): it
+      // does not change the rendering of block elements, so it is counted apart.
+      const squash = (s) => normalizeHtml(s).replace(/\s+/g, " ").replace(/> </g, "><");
+      if (squash(b) === squash(h)) {
+        htmlSpaceOnly++;
+        continue;
+      }
       if (changedPages.length < 50) changedPages.push(p);
+      // Written to a file below: in Actions, Claude can Read a file but cannot run diff pipelines.
+      if (htmlSamples.length < 5) htmlSamples.push(`# ${p}（script とアセットのハッシュは置き換えて比べた）\n${textDiff2(normalizeHtml(b), normalizeHtml(h))}`);
     }
   }
   const css = (dir) => walk(dir).filter((f) => f.endsWith(".css")).sort().map((f) => fs.readFileSync(path.join(dir, f), "utf8")).join("\n");
@@ -448,6 +469,12 @@ if (bothBuilt) {
   say(`- 表示テキストが変わったページ: ${textDiff}`);
   say(...samples.map((s) => `  ${s}`));
   say(`- テキストは同じで HTML 構造だけ変わったページ: ${htmlDiff}（script とアセットのハッシュは無視）`);
+  if (htmlSpaceOnly) say(`  - うち、タグの間の空白だけが違うページ: ${htmlSpaceOnly}（表示に影響しないので、撮影と差分ファイルから外した）`);
+  if (htmlSamples.length) {
+    const htmlFile = path.join(WORK, `pr-${prNumber}-html.diff.txt`);
+    fs.writeFileSync(htmlFile, htmlSamples.join("\n"));
+    say(`  - 差分（最初の ${htmlSamples.length} ページ）: ${htmlFile}`);
+  }
   say(`- コードブロック（pre）の中だけが変わったページ: ${codeOnlyPages.size}（コードのテキストは同じで、色付けの span と class だけが違う。上の2つには数えていない）`);
   if (codeLangs.size) {
     say(`  - 変わったブロックの言語: ${[...codeLangs].map(([l, ps]) => `${l}（${ps.length}ページ）`).join("、")}`);
@@ -501,12 +528,7 @@ if (bothBuilt) {
         parts.push(`# ${f}: バイナリが変わった`);
         continue;
       }
-      // Diff the normalized text, one line per tag so a one-line sitemap still gives a readable diff.
-      const tmp = fs.mkdtempSync(path.join(WORK, "extras-"));
-      for (const [k, dir] of Object.entries(outs)) fs.writeFileSync(path.join(tmp, k), readExtra(dir, f).replace(/></g, ">\n<"));
-      const d = shTry("git", ["-C", tmp, "diff", "--no-index", "--no-color", "-U1", "base", "head"]);
-      fs.rmSync(tmp, { recursive: true, force: true });
-      parts.push(`# ${f}（時刻は <時刻> に置き換えて比べた）`, d.out);
+      parts.push(`# ${f}（時刻は <時刻> に置き換えて比べた）`, textDiff2(readExtra(outs.base, f), readExtra(outs.head, f)));
     }
     fs.writeFileSync(diffFile, parts.join("\n"));
     say(`  - 変わった: ${eChanged.slice(0, 10).join(", ")}`, `  - 差分: ${diffFile}`);
