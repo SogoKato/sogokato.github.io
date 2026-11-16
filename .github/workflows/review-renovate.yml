@@ -88,24 +88,39 @@ jobs:
           claude_args: |
             --permission-mode acceptEdits
             --add-dir ${{ runner.temp }}/review-renovate
-            --allowedTools "Read,Grep,Glob,Edit,Write,WebFetch,Bash(node .claude/skills/review-renovate/scripts/collect.mjs:*),Bash(node .claude/skills/review-renovate/scripts/verify.mjs:*),Bash(node .claude/skills/review-renovate/scripts/comment.mjs:*),Bash(node .claude/skills/review-renovate/scripts/in-worktree.mjs:*),Bash(git fetch:*),Bash(git worktree:*),Bash(git log:*),Bash(git show:*),Bash(git diff:*),Bash(git grep:*),Bash(git status:*),Bash(git merge-base:*),Bash(git rev-parse:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(gh pr checks:*),Bash(gh pr diff:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh run view:*),Bash(gh issue list:*),Bash(gh issue view:*),Bash(npm view:*),Bash(npx -y --package renovate renovate-config-validator:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(grep:*),Bash(mkdir:*),Bash(df:*)"
+            --allowedTools "Read,Grep,Glob,Edit,Write,WebFetch,Bash(node .claude/skills/review-renovate/scripts/collect.mjs:*),Bash(node .claude/skills/review-renovate/scripts/verify.mjs:*),Bash(node .claude/skills/review-renovate/scripts/comment.mjs:*),Bash(node .claude/skills/review-renovate/scripts/in-worktree.mjs:*),Bash(git fetch:*),Bash(git worktree:*),Bash(git log:*),Bash(git show:*),Bash(git diff:*),Bash(git grep:*),Bash(git status:*),Bash(git merge-base:*),Bash(git rev-parse:*),Bash(git ls-remote:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(gh pr checks:*),Bash(gh pr diff:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh run view:*),Bash(gh issue list:*),Bash(gh issue view:*),Bash(npm view:*),Bash(npx -y --package renovate renovate-config-validator:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(grep:*),Bash(mkdir:*),Bash(df:*)"
 
       # The action reports success even when every command was denied and nothing was checked.
-      # Fail the job then, so a run that did nothing does not look like a passed review.
-      - name: Fail when commands were denied
+      # Fail the job when the run errored or no review of the current PR head was posted, so a run
+      # that did nothing does not look like a passed review. A denied command that Claude worked
+      # around (it posted the review anyway) is only a warning: it shows what to allow or forbid
+      # next, but it should not turn a mergeable PR red.
+      - name: Check the review was posted
         if: always() && steps.review.outputs.execution_file != ''
         env:
           EXECUTION_FILE: ${{ steps.review.outputs.execution_file }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           node -e '
             const fs = require("fs");
+            const { execFileSync } = require("child_process");
+            const gh = (args) => execFileSync("gh", args, { encoding: "utf8" });
             const text = fs.readFileSync(process.env.EXECUTION_FILE, "utf8");
             let items;
             try { items = [].concat(JSON.parse(text)); } catch { items = text.split("\n").filter(Boolean).map((l) => JSON.parse(l)); }
             const result = items.filter((m) => m.type === "result").at(-1);
             if (!result) { console.log("::error::no result in the execution file"); process.exit(1); }
-            const denied = result.permission_denials_count ?? (result.permission_denials || []).length;
-            for (const d of result.permission_denials || []) console.log(`denied: ${d.tool_name} ${JSON.stringify(d.tool_input).slice(0, 200)}`);
+            const denials = result.permission_denials || [];
+            const denied = result.permission_denials_count ?? denials.length;
+            for (const d of denials) console.log(`denied: ${d.tool_name} ${JSON.stringify(d.tool_input).slice(0, 500)}`);
             console.log(`turns: ${result.num_turns}, denied: ${denied}, error: ${result.is_error}`);
-            if (result.is_error || denied > 0) { console.log(`::error::${denied} tool calls were denied; the review may be incomplete`); process.exit(1); }
+            if (result.is_error) { console.log("::error::the review run ended with an error"); process.exit(1); }
+
+            const repo = process.env.GITHUB_REPOSITORY;
+            const pr = process.env.PR_NUMBER;
+            const head = gh(["api", `repos/${repo}/pulls/${pr}`, "-q", ".head.sha"]).trim();
+            const comments = JSON.parse(gh(["api", "--paginate", "--slurp", `repos/${repo}/issues/${pr}/comments?per_page=100`])).flat();
+            const posted = comments.some((c) => c.user?.type === "Bot" && c.body?.includes("<!-- review-renovate -->") && c.body.includes(`確かめたコミット: ${head.slice(0, 8)}`));
+            if (!posted) { console.log(`::error::no review of ${head.slice(0, 8)} was posted on #${pr} (${denied} tool calls denied)`); process.exit(1); }
+            if (denied > 0) console.log(`::warning::the review of ${head.slice(0, 8)} was posted, but ${denied} tool calls were denied; see this step for the commands`);
           '
