@@ -8,6 +8,7 @@ import remarkGfm from "remark-gfm";
 import Pre from "./CodeBlock";
 import Tags from "./Tags";
 import { type Post } from "../types/post";
+import remarkCallout from "../utils/callout";
 import Social from "./Social";
 
 const LikeButtons = dynamic(() => import("./Like"), { ssr: false });
@@ -46,7 +47,7 @@ const PostCard: React.FC<PostCardProps> = ({
         {shareButtons}
         <div className={"mb-16 mt-8 " + className}>
           <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
+            remarkPlugins={[remarkGfm, remarkCallout]}
             rehypePlugins={[rehypeRaw]}
             components={{ pre: Pre }}
           >

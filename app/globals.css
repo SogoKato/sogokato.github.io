@@ -8,6 +8,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  --color-duchs-50: #fff6f3;
   --color-duchs-100: #ffeee8;
   --color-duchs-200: #ebd6cf;
   --color-duchs-400: #e38634;
@@ -53,4 +54,68 @@ body {
 .py-overlay,
 .py-pop-up {
   display: none;
+}
+
+/*
+  Callout blocks written as GitHub alerts, "> [!NOTE]" (utils/callout.ts).
+  Like GitHub, the box starts with an icon and a title such as "Note" in
+  the type's colour.
+*/
+.callout {
+  --callout-color: #4f6f8f;
+  margin: 1.5em 0;
+  padding: 0.875rem 1.25rem 1rem;
+  border-radius: 0.75rem;
+  background-color: var(--color-duchs-50);
+}
+.dark .callout {
+  background-color: var(--color-neutral-700);
+}
+.callout-tip {
+  --callout-color: #6f8f3a;
+}
+.callout-warning {
+  --callout-color: var(--color-duchs-400);
+}
+.callout-caution {
+  --callout-color: #b5452f;
+}
+.dark .callout-note {
+  --callout-color: #7f9fbf;
+}
+.dark .callout-tip {
+  --callout-color: #a3c06a;
+}
+.dark .callout-warning {
+  --callout-color: #e9a05e;
+}
+.dark .callout-caution {
+  --callout-color: #d96a52;
+}
+.callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+  color: var(--callout-color);
+  font-size: 0.875em;
+}
+.callout-title svg {
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.callout-body {
+  min-width: 0;
+}
+.callout-body > :first-child {
+  margin-top: 0;
+}
+.callout-body > :last-child {
+  margin-bottom: 0;
 }
