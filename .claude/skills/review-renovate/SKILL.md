@@ -54,6 +54,7 @@ Renovate の PR ごとに、CI では確かめられないことを洗い出し�
    ```
 
    - `--work` には必ず scratchpad の中を指定する。worktree、ツール、スクリーンショットがそこに置かれる。
+   - フォークからの PR は、終了コード 5 で止まって確かめない。PR のコードを install して build するので、このリポジトリのブランチ（Renovate の PR と、対処で作った PR）だけを対象にする。
    - worktree は node_modules と build の出力を持つので、1つで数 GB になる。`verify.mjs` は始めるときに次を消す。
      - `--work` の中の、今回使わない worktree（前に確認した PR、別の base）。PR 側の worktree の node_modules を調べたいときは、次の PR の `verify.mjs` を実行する前に調べる
      - ほかのセッションの scratchpad にある、同じ名前の作業ディレクトリの中の worktree

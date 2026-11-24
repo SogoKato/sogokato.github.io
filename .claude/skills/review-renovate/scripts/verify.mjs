@@ -72,7 +72,14 @@ const report = [];
 const say = (...lines) => report.push(...lines);
 
 // ---------- worktrees ----------
-const pr = JSON.parse(sh(GH, ["pr", "view", prNumber, "--json", "headRefName,baseRefName,headRefOid,title"]));
+const pr = JSON.parse(sh(GH, ["pr", "view", prNumber, "--json", "headRefName,baseRefName,headRefOid,title,isCrossRepository"]));
+// Only branches of this repository: Renovate's, and the fix PRs this skill opens. A fork's PR carries
+// code anyone can write, and this script installs and builds it (in Actions, in a job that can push),
+// so it refuses one whoever asks for it.
+if (pr.isCrossRepository) {
+  console.error(`#${prNumber} はフォークからの PR なので確かめない（PR のコードを install して build するため）`);
+  process.exit(5);
+}
 sh("git", ["fetch", "--quiet", "origin",
   `+refs/heads/${pr.baseRefName}:refs/remotes/origin/${pr.baseRefName}`,
   `+refs/pull/${prNumber}/head:refs/remotes/origin/pr/${prNumber}`]);
